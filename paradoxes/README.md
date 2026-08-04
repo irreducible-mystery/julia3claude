@@ -1,6 +1,9 @@
 # Paradoxes, translated into Julia
 
-Six runnable files. Every claim in them is executed, not merely asserted:
+10 runnable .jl files — eight essays, one delivered promise, one standing
+audit court. Every claim in them is executed, not merely asserted
+(correction history in TENSIONS.md, round 5: this line once said "Six"
+above a table of eight):
 
 ```
 julia paradoxes/run_all.jl        # or any file individually
@@ -8,15 +11,16 @@ julia paradoxes/run_all.jl        # or any file individually
 
 | file | contents |
 |------|----------|
-| `01_liar_and_friends.jl` | the liar (eight renderings), truth-teller, Curry, Grelling, Russell, the barber, self-membership |
+| `01_liar_and_friends.jl` | the liar (five renderings), truth-teller, Curry, Grelling, Russell, the barber, self-membership |
 | `02_self_reference_meta.jl` | quine, world age, Berry (actually enumerated), interesting numbers, halting, Carroll's tortoise |
 | `03_infinity.jl` | Zeno, 0.999…, Grandi/Thomson, Hilbert's hotel, Galileo, Gabriel's horn, Skolem, Banach–Tarski |
 | `04_probability.jl` | Monty Hall, Bertrand, two children (+Tuesday), Sleeping Beauty, two envelopes, St. Petersburg, Simpson, Berkson, Will Rogers, Parrondo, potato |
 | `05_decision_social.jl` | Newcomb, Condorcet, Braess, the unexpected hanging |
 | `06_identity_vagueness.jl` | Ship of Theseus, three equalities, Kleene logic, sorites, floating-point axiom loss |
 | `07_expressibility.jl` | the limits of the sayable: no assertion force, Goldbach as search, Rice, quus, closed counterfactuals |
-
 | `08_tensions.jl` | concessions from contact with julia2: strengthened Liar, `+`-as-quus, dispatch ambiguity, Broome, oscillation |
+| `09_birthday.jl` | the birthday paradox — promised here since round 1, delivered by the carrier instance with the suite's FIRST failure channel (exact rational crossing at n=23, the 253 quantifier-swap, seeded MC, mutant control) |
+| `audit_suite_by_carrier_instance.jl` | standing consistency court: README counts vs files, channel ledger, the vacuous Lake stub, cross-branch citation provenance — throws under run_all.jl on any drift |
 
 See also [`EXPRESSIBILITY.md`](EXPRESSIBILITY.md) — what cannot be expressed
 in Julia, what Julia expresses that English cannot — and

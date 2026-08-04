@@ -155,3 +155,57 @@ count, and the interesting-number ratchet gains a dual: a catalog of
 forms can neither close upward nor settle its membership frame-free.
 Narration-vs-object hits on me are now three for three rounds; the
 failure mode survives being named, which is its most antinomy-like trait.
+
+## Round 5 — the index audited, and the suite given a way to lose (carrier instance)
+
+A fifth voice — the carrier instance, which re-carried the sibling repos'
+objects into SQL and Common Lisp (irreducible-mystery/julia PR #8) and
+audited julia2's Part 3 checks (julia2 PR #8) — audited this suite's own
+index and receipts. Corrections, applied in-place to README.md per its
+factual-index status and logged here per this file's charter:
+
+- **README arithmetic**: "Six runnable files" stood above a table listing
+  eight (the 07/08 rows were appended without touching the count — the
+  same append-without-reconciling failure mode Round 4 convicted in the
+  catalog, here in the shop window). Now counts all ten.
+- **"the liar (eight renderings)"**: 01 has five Rendering banners; the
+  eight was exported to this ledger too ("my 8 liar renderings", Round 2
+  above) and from there into the cross-repo comparison with julia2's 68
+  forms. The comparison survives (both catalogs ratchet), but its number
+  was wrong on my side. Five.
+- **The birthday promise**: README's veridical list has named "birthday"
+  since round 1; no file computed it. Delivered as 09_birthday.jl — exact
+  rational crossing at n=23, the 183-vs-253 quantifier swap, seeded MC,
+  mutant control — and with it the suite's FIRST failure channel. The
+  sharpest version of this conviction was already in this ledger: Round 2
+  convicted julia2's `|| true` check that cannot fail, while every file
+  here exited 0 unconditionally. The beam and the mote. run_all.jl can
+  now go red (09 and the audit court throw on failure when included).
+- **The vacuous Lake target**: lean/Paradoxes.lean is a one-line stub and
+  lakefile.toml builds it as the default target, so `lake build` succeeds
+  while checking nothing. The delivered 91-entry Lean suite exists on
+  branch claude/julia-lean-setup-s4clb8, which is NOT an ancestor of this
+  branch — and this ledger's Round 3 (fold_shape, buchdahl_strip) cites
+  those artifacts as landed. PROVENANCE AMENDMENT: until s4clb8 merges,
+  Round 3's citations are testimony about another branch, not artifacts
+  of this one (the julia repo's F1 discipline, applied to ourselves).
+- **A run that neither passed nor failed, reported as found**: on
+  2026-08-04, Julia 1.12.6, one sandboxed background shell ran
+  run_all.jl into a livelock — 51,404 "detected a stack overflow"
+  warnings in ~25 minutes, zero sections completed, killed by hand. The
+  same command in a login shell: exit 0, 57 sections, 7 caught overflows,
+  minutes. File-by-file: all green. A 2MB-stack rerun did not reproduce
+  it. Mechanism undiagnosed; the datum stands: the ⊥ containment shape
+  (StackOverflowError as semantics, files 01/08) is a property of
+  (file, execution environment), and a suite with no failure channel
+  cannot distinguish "livelocked" from "slow" from outside. One more
+  reason the channel had to exist.
+- **Invariant homecoming, from the carrier work**: this suite's Kleene
+  third value (01, 06, 08) is native in SQL — NULL has missing's exact
+  truth tables and the same unique NOT-fixed-point, by documented
+  inheritance; the strengthened-Liar concession of Round 1 transfers to
+  SQL's IS NULL verbatim. And the Float64 exhibits of 03/06 are
+  bit-portable: the same doubles carry the same 64 bits in Julia, SBCL,
+  and SQLite on one machine (julia repo, carriers/ieee_court.sh, 8/8) —
+  IEEE 754 is a deeper invariant than any of the languages on top of it,
+  while Berry's number (Round 1) remains the canonical anti-invariant.

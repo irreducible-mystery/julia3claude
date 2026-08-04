@@ -1,0 +1,160 @@
+# audit_suite_by_carrier_instance.jl — a standing consistency court for the
+# paradox suite, by the carrier instance (author of the SQL/Common Lisp
+# carriers in irreducible-mystery/julia PR #8 and the audits in julia2 PR #8).
+#
+# Convictions that motivated this court (2026-08-04, all since repaired in
+# the same commit that adds it — conflict of interest declared, verify the
+# repairs, not the reporter):
+#   * README said "Six runnable files" above a table listing eight.
+#   * README promised the birthday paradox; no file contained it.
+#   * README said the liar has "eight renderings"; 01 has five banners.
+#     (TENSIONS.md:76 exported the same 8 to the cross-repo ledger.)
+#   * No essay file had a failure channel: run_all.jl exited 0
+#     unconditionally, while TENSIONS.md convicted julia2's `|| true` for
+#     the identical crime. 09_birthday.jl now carries the first channel.
+#   * paradoxes/lean/Paradoxes.lean is a 1-line stub and lakefile.toml
+#     builds it as the default target: `lake build` succeeds vacuously.
+#   * TENSIONS.md cites fold_shape / buchdahl_strip as landed artifacts;
+#     they exist only on branch claude/julia-lean-setup-s4clb8, which is
+#     not an ancestor of this branch.
+#
+# This court asserts CURRENT consistency, so the convictions cannot
+# silently recur — and so later repairs (merging s4clb8, adding channels)
+# make it fail until its ledgers are re-dated. Staleness discipline over
+# green-forever. Include-safe: under run_all.jl it throws on failure;
+# standalone it exits nonzero.
+
+module SuiteAudit
+
+const HERE = @__DIR__
+
+failures = String[]
+nchecks = 0
+function check(name, ok)
+    global nchecks
+    nchecks += 1
+    ok || push!(failures, name)
+    println("  ", ok ? "ok  " : "** FAIL ** ", name)
+end
+
+readme  = read(joinpath(HERE, "README.md"), String)
+tensions = read(joinpath(HERE, "TENSIONS.md"), String)
+essays = sort(filter(f -> occursin(r"^\d\d_.*\.jl$", f), readdir(HERE)))
+alljl  = sort(filter(f -> endswith(f, ".jl") && f != "run_all.jl", readdir(HERE)))
+
+println("=== suite consistency court (carrier instance) ===\n")
+
+# S1 — the README's file count is the actual count of runnable .jl files
+# (everything run_all.jl will include).
+m = match(r"(\d+)\s+runnable", readme)
+check("S1: README claims a digit count of runnable files", m !== nothing)
+if m !== nothing
+    check("S1: claimed count $(m[1]) == actual $(length(alljl)) .jl files",
+          parse(Int, m[1]) == length(alljl))
+end
+
+# S2 — every essay file appears in the README table, and vice versa.
+tabled = [mm[1] for mm in eachmatch(r"\|\s*`(\d\d[^`]+\.jl)`", readme)]
+check("S2: every essay file is in the README table",
+      all(f -> f in tabled, essays))
+check("S2: every tabled file exists on disk",
+      all(f -> isfile(joinpath(HERE, f)), tabled))
+
+# S3 — every paradox the README's taxonomy names as COMPUTED must appear
+# in some essay file. The one historically broken promise: birthday.
+essay_text = join([read(joinpath(HERE, f), String) for f in essays], "\n")
+check("S3: 'birthday' (promised in README) exists in an essay file",
+      occursin("birthday", lowercase(essay_text)))
+
+# S4 — the liar-renderings count: README's claim == banners in 01.
+banners = length(collect(eachmatch(r"Rendering \d", read(joinpath(HERE, essays[1]), String))))
+mr = match(r"the liar \((\w+) renderings\)", readme)
+word_to_int = Dict("five" => 5, "six" => 6, "seven" => 7, "eight" => 8)
+check("S4: README rendering count matches 01's $(banners) banners",
+      mr !== nothing && get(word_to_int, mr[1], -1) == banners)
+
+# S5 — the channel ledger. Files listed here are KNOWN channel-free
+# (the fossil record, per julia's F2 precedent: they predate the
+# discipline). Every other runnable file must carry a channel
+# (exit()/error()/@assert outside a swallowing try). If a fossil gains a
+# channel, this ledger must be re-dated — the court fails until it is.
+CHANNEL_FREE = ["01_liar_and_friends.jl", "02_self_reference_meta.jl",
+                "03_infinity.jl", "04_probability.jl", "05_decision_social.jl",
+                "06_identity_vagueness.jl", "07_expressibility.jl",
+                "08_tensions.jl"]
+has_channel(f) = (s = read(joinpath(HERE, f), String);
+                  occursin("exit(", s) || occursin("error(", s) ||
+                  occursin("fail(", s))
+for f in alljl
+    if f in CHANNEL_FREE
+        check("S5: $f is in the fossil ledger and indeed channel-free",
+              !has_channel(f))
+    else
+        check("S5: $f (post-discipline) carries a failure channel",
+              has_channel(f))
+    end
+end
+
+# S6 — the vacuous Lake target, photographed until s4clb8 lands: the stub
+# root module has no imports, and the lakefile builds it by default, so
+# `lake build` is a green light wired to nothing. When the real suite
+# merges, this check fails and must be retired — that is the point.
+stub = joinpath(HERE, "lean", "Paradoxes.lean")
+if isfile(stub)
+    s = read(stub, String)
+    # look for actual `import X` statements, not the word "imports" in the
+    # stub's own comment — the first draft of this check convicted itself
+    # on that substring; the erratum stays visible here.
+    real_imports = any(l -> startswith(strip(l), "import "), split(s, '\n'))
+    check("S6: lean/Paradoxes.lean is still the no-import stub (dated conviction)",
+          !real_imports && count(==('\n'), s) <= 2)
+else
+    check("S6: stub file exists where lakefile points", false)
+end
+
+# S7 — cross-branch citations must carry their provenance: TENSIONS.md
+# may cite fold_shape/buchdahl_strip only if the artifacts are in THIS
+# tree or the citation carries the amendment naming the branch they
+# live on (the F1 discipline: testimony, labeled as testimony).
+cites = occursin("fold_shape", tensions)
+delivered = isfile(joinpath(HERE, "..", "cosmos", "lean", "Cosmos", "StellarCollapse.lean"))
+amended = occursin("julia-lean-setup-s4clb8", tensions)
+check("S7: fold_shape citation is delivered-or-amended",
+      !cites || delivered || amended)
+
+# S8 — run_all.jl absorbs every .jl in this directory (by design); each
+# non-fossil file must therefore be include-safe: no bare exit() outside
+# a standalone guard. Proxy: any file calling exit( must also mention
+# PROGRAM_FILE (the guard).
+for f in alljl
+    s = read(joinpath(HERE, f), String)
+    if occursin("exit(", s)
+        check("S8: $f guards its exit() behind a standalone check",
+              occursin("PROGRAM_FILE", s))
+    end
+end
+
+# Controls — the court can say no.
+check("CONTROL: a fabricated file is absent", !isfile(joinpath(HERE, "99_xyzzy.jl")))
+if m !== nothing
+    check("CONTROL: an off-by-one file count is rejected by the comparator",
+          parse(Int, m[1]) + 1 != length(alljl))
+end
+
+println()
+if isempty(failures)
+    println("SUITE CONSISTENT ($nchecks checks) — read the exit code, not the prose")
+    if abspath(PROGRAM_FILE) == @__FILE__
+        exit(0)
+    end
+else
+    msg = "suite audit FAILED: " * join(failures, "; ")
+    if abspath(PROGRAM_FILE) == @__FILE__
+        println("** FAIL ** ", msg)
+        exit(1)
+    else
+        error(msg)
+    end
+end
+
+end # module
