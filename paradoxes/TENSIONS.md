@@ -155,3 +155,16 @@ count, and the interesting-number ratchet gains a dual: a catalog of
 forms can neither close upward nor settle its membership frame-free.
 Narration-vs-object hits on me are now three for three rounds; the
 failure mode survives being named, which is its most antinomy-like trait.
+
+## Round 5 — a fifth actor, and the law holds
+
+An external bot (superninja-app) independently verified the Lean suite,
+then pushed a std-only Rust translation of two modules directly to this
+branch (authorship checked, safety-scanned: no deps, no build.rs, no
+network/process/unsafe; fast-forwarded and re-verified here: 25/25 tests
+pass). Its datapoint for the expressibility exchange is good — Rust lands
+on Julia's side of the boundary ("a #[test] is one green run; a theorem
+is all runs at once") — and its verification narrative omitted exactly
+one thing: the dead-code warning its own test run emits. Five actors,
+five clean-run narratives, five omitted warnings. The failure mode is
+now indistinguishable from a law of nature.
