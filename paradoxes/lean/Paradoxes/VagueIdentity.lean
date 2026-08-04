@@ -286,7 +286,11 @@ rules against me, I have not yet won a case, so I need not pay
 
 Formalized: `V` = the court rules for Protagoras (orders payment).  The
 four advocated conditionals `V → Pay`, `¬V → Pay`, `V → ¬Pay`, `¬V → ¬Pay`
-are jointly inconsistent, by excluded middle on `V`.
+are jointly inconsistent — and NO excluded middle is needed (an earlier
+version of this file proved it with `Classical.em` and miscredited EM as
+the engine; the external audit caught that).  The proof is intuitionistic:
+`V → Pay` and `V → ¬Pay` together refute `V`, and `¬V` fed to `¬V → Pay`
+and `¬V → ¬Pay` yields `False` outright.
 
 Resolution / lesson: each advocate cherry-picks which authority — verdict
 or contract — governs each branch, and the four picks cannot all be right:
@@ -300,10 +304,9 @@ theorem court_paradox (V Pay : Prop)
     (protagoras_verdict : V → Pay)
     (protagoras_contract : ¬V → Pay)
     (euathlus_contract : V → ¬Pay)
-    (euathlus_verdict : ¬V → ¬Pay) : False := by
-  cases Classical.em V with
-  | inl hv => exact euathlus_contract hv (protagoras_verdict hv)
-  | inr hnv => exact euathlus_verdict hnv (protagoras_contract hnv)
+    (euathlus_verdict : ¬V → ¬Pay) : False :=
+  have hnv : ¬V := fun hv => euathlus_contract hv (protagoras_verdict hv)
+  euathlus_verdict hnv (protagoras_contract hnv)
 
 #eval String.intercalate " | "
   ([(true, "verdict", "contract"), (false, "contract", "verdict")].map
@@ -457,7 +460,7 @@ def catalog : List (String × String) :=
    ("Omnipotence paradox",
     "THEOREM: 'can make a stone its maker cannot lift' refutes 'can do every task'; Aquinas restricts omnipotence to the logically possible"),
    ("Protagoras v. Euathlus",
-    "THEOREM: the four advocated verdict/contract conditionals are jointly inconsistent by excluded middle on the verdict"),
+    "THEOREM: the four advocated verdict/contract conditionals are jointly inconsistent, fully constructively — the V-branch pair refutes V and the ¬V-branch pair then explodes; no excluded middle (the audit caught an earlier EM miscredit)"),
    ("Carroll's Tortoise",
     "THEOREM: modus ponens is the proof term fun hp f => f hp — a rule, not a premise; the added premise still needs the rule, hence the regress"),
    ("Drinker paradox",

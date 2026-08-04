@@ -105,17 +105,25 @@ constant, so its defining equation `liarRun () = !liarRun ()` is *not*
 available to the logic.  The kernel never unfolds `liarRun`; it knows only
 that some inhabitant of `Unit → Bool` exists (which is why `partial`
 requires the return type to be `Inhabited` — soundness needs the sealed
-constant to denote *something*).  Consequence, demonstrated below: the
-liar's fixed-point equation is UNPROVABLE.  Lean quarantines divergence
-from `Prop`; the diverging liar exists but carries zero assertoric
-content.  Julia's containment (run it and hang) and Lean's containment
-(admit it and strip its meaning) are the same wall, seen from the two
-sides: Julia keeps the running and loses nothing else because it never had
-assertion; Lean keeps assertion and therefore must confiscate the run. -/
+constant to denote *something*).  Consequence, demonstrated below — and
+sharpened by the external audit ("chiasmus v3"): because the sealed
+constant is, to the logic, a TOTAL inhabitant of `Unit → Bool`, the
+defining equation `liarRun () = !liarRun ()` is not merely unprovable, it
+is REFUTABLE — `liarRun ()` is some bit, and no `Bool` equals its own
+negation (theorem `liarRun_ne` below).  Lean does not strip the sealed
+liar of meaning; it ASSIGNS it one — an unknown but definite bit — and
+then refutes the equation the runtime obeys.  Julia's containment (run it
+and hang) and Lean's containment (admit it, seal the run, and judge the
+sealed thing) are the same wall seen from the two sides: Julia keeps the
+running and never had assertion; Lean keeps assertion and therefore must
+confiscate the run — but what it keeps, it still judges. -/
 partial def liarRun (_ : Unit) : Bool := !liarRun ()
 
 /- The confiscation, exhibited twice.  `rfl` fails: there is no definitional
-   unfolding of `liarRun` for the kernel to compute with.  -/
+   unfolding of `liarRun` for the kernel to compute with.  (Both guards below
+   remain true after the audit's v3 reading — what changed is only their
+   interpretation: the equation is not "stuck with no content", it is stuck
+   for computation and FALSE for the logic.)  -/
 
 /--
 error: Type mismatch
@@ -151,6 +159,16 @@ After unfolding the instances `instDecidableEqBool` and `Bool.decEq`, reduction 
 #guard_msgs in
 example : liarRun () = !liarRun () := by decide
 
+/-- Chiasmus v3 — the audit's strengthening of door (c).  A `partial def`
+is, in the logic, a total inhabitant: `liarRun ()` IS one of the two bits,
+even though no proof can say which and no kernel reduction can produce it.
+And no `Bool` equals its own negation — so the sealed liar's defining
+equation is REFUTABLE, not meaning-free.  Lean assigns the sealed liar a
+meaning and refutes the equation its runtime obeys: the verb deleted is
+*run*; the verb kept, unexpectedly, is *judge*. -/
+theorem liarRun_ne : liarRun () ≠ !liarRun () := by
+  cases liarRun () <;> decide
+
 /- ----------------------------------------------------------------------
    Door (d) — the TOTAL liar: make the divergence itself an inspectable
    object by paying for it in fuel.  `liarFuel n` runs the liar's negation
@@ -179,7 +197,8 @@ theorem liarFuel_none : ∀ n, liarFuel n = none
   | n + 1 => by rw [liarFuel, liarFuel_none n]; rfl
 
 #eval s!"E1 liar: door (a) positivity-rejected, door (b) termination-rejected, \
-door (c) partial compiles but is opaque (equation unprovable, decide stuck), \
+door (c) partial compiles but is sealed — and the sealed equation is REFUTABLE \
+(theorem liarRun_ne; rfl/decide still stick on the opaque constant), \
 door (d) fuel: liarFuel n = none for ALL n (theorem liarFuel_none)"
 
 /- ======================================================================
@@ -552,7 +571,7 @@ Lean asserts only with warrant"
 
 def catalog : List (String × String) := [
   ("E1 The liar's fate (Q1)",
-   "GUARDED: propositional liar dies at kernel POSITIVITY, definitional liar at TERMINATION, partial VALUE rejected; partial liarRun compiles but is opaque — its equation unprovable (rfl and decide both guarded); THEOREM: liarFuel n = none at every fuel"),
+   "GUARDED: propositional liar dies at kernel POSITIVITY, definitional liar at TERMINATION, partial VALUE rejected; partial liarRun compiles but is sealed — and its equation is REFUTABLE, not merely unprovable: a partial def is a total inhabitant in the logic and no Bool equals its own negation (theorem liarRun_ne, the audit's chiasmus v3; rfl and decide still guarded-stuck); THEOREM: liarFuel n = none at every fuel"),
   ("E2 Curry's price (Q2)",
    "GUARDED: the Curry fixed point (C → False) → C dies at the same positivity wall — Curry is the liar with a payload; Prop keeps impredicativity, pays with positivity + proof irrelevance + restricted large elimination"),
   ("E3 Girard / universe wall (Q2)",
@@ -570,11 +589,12 @@ def catalog : List (String × String) := [
 ]
 
 /- The verdict on the essay's closing conjecture, as one sentence. -/
-#eval s!"Chiasmus verdict: confirmed, with one refinement — Julia contains paradox by \
-refusing to ASSERT (meaning = execution, so the liar merely runs forever), and Lean \
-contains it not by refusing divergence outright but by QUARANTINING it from Prop \
-(partial divergence may exist but carries no assertoric content, choice may be \
-spoken but never run) — and the trade is asymmetric: Julia loses the objects, \
-Lean only loses one verb."
+#eval s!"Chiasmus verdict (v3, after the audit): confirmed, twice refined — Julia \
+contains paradox by refusing to ASSERT (meaning = execution, so the liar merely runs \
+forever), and Lean contains it not by refusing divergence outright but by SEALING it: \
+the partial liar is admitted as a total-but-unknown value whose runtime equation the \
+logic then REFUTES (liarRun_ne), and choice may be spoken but never run — the trade \
+is asymmetric: Julia loses the objects; Lean deletes the verb 'run' and keeps, \
+unexpectedly, the verb 'judge'."
 
 end Paradoxes.Expressibility

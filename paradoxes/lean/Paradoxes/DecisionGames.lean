@@ -245,10 +245,15 @@ minutes.  Adding a free road made every single driver worse off.
 Formalized (in centiminutes, so all arithmetic is exact in Nat: a
 congestible leg with x drivers costs x, a fixed leg costs 4500):
 (i) before the shortcut, the 2000/2000 split is an equilibrium — a lone
-deviator would pay 6501 > 6500; (ii) after the shortcut, all-4000-on-the-
+deviator would pay 6501 > 6500; (ii) the load-bearing step the audit
+found missing: the moment the shortcut opens, that old 2000/2000 split
+STOPS being an equilibrium — a top-route driver who switches to the
+shortcut path keeps the A→C leg at load 2000 (they are still on it) and
+joins the D→B leg at load 2001, paying 4001 < 6500, a strict gain — so
+the system must move; (iii) after the shortcut, all-4000-on-the-
 shortcut-path is an equilibrium — a deviator to top or bottom still
 shares a congestible leg with all 4000 cars and pays 8500 > 8000;
-(iii) 8000 > 6500: the new equilibrium is worse for everyone.  All by
+(iv) 8000 > 6500: the new equilibrium is worse for everyone.  All by
 `decide`.
 
 Resolution/lesson: Nash equilibria need not be Pareto-efficient, and the
@@ -272,6 +277,15 @@ theorem braess_before :
     topRoute 2000 = 6500 ∧ botRoute 2000 = 6500 ∧
     botRoute 2001 > topRoute 2000 ∧ topRoute 2001 > botRoute 2000 := by decide
 
+/-- The audit's missing link: once the shortcut exists, the old 2000/2000
+    split is no equilibrium at all.  A driver on the top route (cost 6500)
+    who deviates to A→C→D→B still shares A→C with its 2000 cars (themselves
+    included) and joins D→B, raising its load to 2001 — total 4001 < 6500,
+    a strict gain.  The shortcut is irresistible; the slide to the worse
+    equilibrium is forced, not optional. -/
+theorem braess_old_split_destabilized :
+    shortcutRoute 2000 2001 < topRoute 2000 := by decide
+
 /-- After the free shortcut opens: everyone on A→C→D→B pays 8000, and a lone
     deviator to top or bottom (still sharing one congestible leg with all
     4000 cars, itself included) would pay 8500 — so nobody moves: equilibrium. -/
@@ -284,7 +298,7 @@ theorem braess_after :
 theorem braess_everyone_worse :
     shortcutRoute 4000 4000 > topRoute 2000 := by decide
 
-#eval s!"Braess: before shortcut each driver pays {topRoute 2000} centimin (deviating: {botRoute 2001}); after free shortcut each pays {shortcutRoute 4000 4000} (deviating: {topRoute 4000}) — a free road cost everyone 15 minutes"
+#eval s!"Braess: before shortcut each driver pays {topRoute 2000} centimin (deviating: {botRoute 2001}); the moment it opens, deviating to it costs {shortcutRoute 2000 2001} < {topRoute 2000} — the old split dies; after everyone follows, each pays {shortcutRoute 4000 4000} (deviating: {topRoute 4000}) — a free road cost everyone 15 minutes"
 
 /-
 ## 10. Parrondo's paradox  (game theory / stochastic processes)
@@ -381,11 +395,11 @@ def catalog : List (String × String) := [
   ("Ellsberg paradox",
    "NOTE: ambiguity aversion — the Allais inconsistency pattern with subjective probabilities in place of utilities"),
   ("Newcomb's problem",
-   "THEOREM: two-boxing dominates by exactly 1000 in each box state, yet one-boxing's 100x-scaled expected value 99,000,000 beats two-boxing's 1,100,000 (both decide) — EDT and CDT provably disagree"),
+   "IDENTITY: two-boxing dominates by exactly 1000 in each box state — unfolds to the modeling definitions, the content is the model, not the derivation; the EV comparison stays VERIFIED: one-boxing's 100x-scaled expected value 99,000,000 beats two-boxing's 1,100,000 (both decide) — EDT and CDT provably disagree"),
   ("St. Petersburg paradox",
    "NOTE: cross-reference — formalized in this suite's Infinity file"),
   ("Braess's paradox",
-   "THEOREM: 2000/2000 split at cost 6500 is an equilibrium; after a free shortcut, all-on-the-shortcut is an equilibrium costing everyone 8000 (decide; its uniqueness is classical but not formalized here) — adding a road hurts all"),
+   "THEOREM: 2000/2000 split at cost 6500 is an equilibrium; the instant the shortcut opens that split is destabilized — deviating to the shortcut pays 4001 < 6500 (braess_old_split_destabilized, the audit's missing load-bearing fact) — and all-on-the-shortcut is an equilibrium costing everyone 8000 (decide; its uniqueness is classical but not formalized here) — adding a road hurts all"),
   ("Parrondo's paradox",
    "DEMO: exact integer DP over the capital distribution — A-only and B-only drift down (98.5, 98.04) but ABAB alternation drifts up (99.46) after 50 rounds (#eval)"),
   ("Jevons paradox / paradox of thrift",
@@ -395,6 +409,6 @@ def catalog : List (String × String) := [
 private def countStatus (pfx : String) : Nat :=
   catalog.countP fun e => e.2.startsWith pfx
 
-#eval s!"DecisionGames catalog: {catalog.length} paradoxes — {countStatus "THEOREM"} theorems, {countStatus "VERIFIED"} verified, {countStatus "DEMO"} demo, {countStatus "NOTE"} notes"
+#eval s!"DecisionGames catalog: {catalog.length} paradoxes — {countStatus "THEOREM"} theorems, {countStatus "IDENTITY"} identity, {countStatus "VERIFIED"} verified, {countStatus "DEMO"} demo, {countStatus "NOTE"} notes"
 
 end Paradoxes.DecisionGames

@@ -206,15 +206,26 @@ Formalized.  No decode : Nat → (Nat → Bool) is surjective.  From
 decode k = g, `congrFun` at k gives decode k k = !(decode k k),
 killed by cases on the Boolean.
 
-Teaches.  This IS the halting problem's diagonal: if halting were
-decidable, an interpreter plus negation would realize exactly the map
-k ↦ (n ↦ !(decode n n)) inside the enumeration — so no total computable
-enumeration contains all total computable predicates, and the halting
-function is not computable.  Richard's paradox (1905) — diagonalize the
-enumeration of all French-definable reals, changing the n-th digit of
-the n-th real — is the same theorem with digits for Booleans: what
-explodes is the assumption that "definable" is itself a definable total
-enumeration.  The paradox becomes a theorem about enumerations.
+Teaches.  The honest moral of the THEOREM is a cardinality fact: there
+is no total enumeration of all of Nat → Bool — Cantor's theorem on
+total functions.  "No universal halting decider" does NOT follow from
+it (the external audit's correction): the computable predicates ARE
+countable, so a surjection Nat → (computable predicates) exists — it is
+just not computable — and this theorem quantifies over arbitrary
+decode, computable or not.
+
+Informal Turing bridge (commentary only, NOT proved here): genuine
+undecidability needs a machine model in which the flipped diagonal
+k ↦ !(decode k k) is itself computable whenever decode is — an
+interpreter plus negation.  In such a model the diagonal argument then
+shows no computable decode enumerates all total computable predicates,
+which is the road to the unsolvability of halting.  None of that
+machinery (machines, interpreters, a computability predicate) exists in
+this file.  Richard's paradox (1905) — diagonalize the enumeration of
+all French-definable reals, changing the n-th digit of the n-th real —
+is the same theorem with digits for Booleans: what explodes is the
+assumption that "definable" is itself a definable total enumeration.
+The paradox becomes a theorem about enumerations.
 ==================================================================== -/
 
 theorem halting_diagonal (decode : Nat → (Nat → Bool)) :
@@ -238,7 +249,7 @@ at that row's own index. -/
 theorem demoDiag_escapes :
     ∀ e : Fin 8, demoDiag e.val ≠ demoDecode e.val e.val := by decide
 
-#eval s!"[Turing diagonal] decode e at its own index, e = 0..7: {(List.range 8).map (fun e => demoDecode e e)}; flipped diagonal: {(List.range 8).map demoDiag} — disagrees with every row at that row's index (decide-verified), so no decode : Nat → (Nat → Bool) is onto: no universal halting decider"
+#eval s!"[Turing diagonal] decode e at its own index, e = 0..7: {(List.range 8).map (fun e => demoDecode e e)}; flipped diagonal: {(List.range 8).map demoDiag} — disagrees with every row at that row's index (decide-verified): no total enumeration of all of Nat → Bool (a cardinality fact; the step to 'no halting decider' needs a machine model where the flipped diagonal is itself computable — informal commentary here, not a theorem)"
 
 /- ====================================================================
 7.  THE HYPERGAME PARADOX  —  game theory / foundations (Zwicker, 1987)
@@ -329,7 +340,7 @@ def catalog : List (String × String) :=
     ("Berry paradox",
      "THEOREM: no g : Fin n → Nat is surjective — finitely many short descriptions cannot name every natural; witness 1 + finMax"),
     ("Halting-style diagonal",
-     "THEOREM: no decode : Nat → (Nat → Bool) is surjective — Turing's 1936 diagonal; finite escape decide-verified and #eval-demonstrated"),
+     "THEOREM: no decode : Nat → (Nat → Bool) is surjective — no total enumeration of all of Nat → Bool, Cantor on total functions; the Turing bridge to 'no halting decider' is informal commentary (it needs a machine model making the flipped diagonal computable; computable predicates are countable, so the cardinality fact alone does not decide halting); finite escape decide-verified and #eval-demonstrated"),
     ("Hypergame paradox",
      "THEOREM: no game h with ∀ g, moves g h ↔ Acc moves g — accessible points admit no self-loop"),
     ("Burali-Forti / Girard",

@@ -13,7 +13,10 @@ are explicit theorem hypotheses — abstract operators `K`, `B`, `D`, `Prov` of
 type `Prop → Prop` together with the axioms the story attributes to them.
 Each theorem then shows those principles are jointly contradictory, or entail
 the story's surprising conclusion.  Everything is core Lean 4: no imports, no
-axioms, no `sorry`.
+axiom *declarations*, no `sorry` — but the two Fitch theorems use classical
+logic (`Classical.byContradiction`, hence the `Classical.choice` axiom), as
+the external audit noted this header once failed to disclose; everything
+else in the file is constructive.
 -/
 
 namespace Paradoxes.EpistemicBelief
@@ -34,11 +37,24 @@ namespace Paradoxes.EpistemicBelief
    an implication for a propositional setting), and `knowable` (every
    truth is possibly known).  Conclusion: ∀ q, q → K q.
 
-   Resolution / lesson: the engine is the Moore sentence `q ∧ ¬K q`
-   ("q, but q is not known"), which is *provably unknowable* (lemma
-   below).  If q were an unknown truth, that Moore sentence would be a
-   truth whose knowledge is impossible — contradicting knowability.  So
-   under the knowability principle there are no unknown truths.  Either
+   Resolution / lesson: the historical engine is the Moore sentence
+   `q ∧ ¬K q` ("q, but q is not known"), which is *provably unknowable*
+   (lemma below).  If q were an unknown truth, that Moore sentence would
+   be a truth whose knowledge is impossible — contradicting knowability.
+   So under the knowability principle there are no unknown truths.
+
+   HONESTY NOTE (from the external audit): for THIS propositional
+   signature the Moore engine is not load-bearing.  `necneg` as stated —
+   `∀ p, ¬p → ¬D p` — is classically just `D p → p` ("whatever is
+   possible is true"), so `knowable` alone already collapses everything:
+   see `fitch_shortcut` below, which derives `∀ q, q → K q` with neither
+   `dist` nor `fact` nor any Moore sentence.  Real Fitch does not have
+   this shortcut, because there the move from ⊢ ¬p to ⊢ ¬◇p is a RULE
+   (necessitation), applicable only to theorems — a shallow Prop-level
+   embedding cannot express "p is a theorem", so it must strengthen the
+   rule to the implication `necneg`, and that strengthening flattens ◇.
+   The historical proof is kept above for its interest; the shortcut
+   below shows the toy's true strength.  Either way the moral stands:
    give up verificationism or weaken the knowability principle.
    ====================================================================== -/
 
@@ -63,8 +79,24 @@ theorem fitch_knowability_collapse (K D : Prop → Prop)
     necneg (K (q ∧ ¬ K q)) (moore_unknowable K dist fact q)
       (knowable (q ∧ ¬ K q) ⟨hq, hnKq⟩)
 
+/-- The audit's shortcut: for this signature the collapse needs neither
+`dist` nor `fact` nor the Moore sentence.  `necneg` applied to `K q`
+says a false `K q` cannot be possible; `knowable` says a true `q` makes
+`K q` possible — so `¬K q` and `q` already clash, and one
+`Classical.byContradiction` finishes.  This is the honest measure of the
+propositional toy: its `necneg` is classically "possibility is factive",
+which real Fitch avoids by keeping necessitation a rule. -/
+theorem fitch_shortcut (K D : Prop → Prop)
+    (necneg : ∀ p, ¬ p → ¬ D p)
+    (knowable : ∀ p, p → D (K p)) :
+    ∀ q, q → K q := fun q hq =>
+  Classical.byContradiction fun hnKq =>
+    necneg (K q) hnKq (knowable q hq)
+
 #eval IO.println s!"Fitch: 'every truth is knowable' + factive, ∧-distributing K ⟹ \
-'every truth is KNOWN' (theorem fitch_knowability_collapse) — verificationism collapses omniscience-ward."
+'every truth is KNOWN' (theorem fitch_knowability_collapse) — verificationism collapses \
+omniscience-ward.  Audit: for this Prop-level signature, necneg + knowable alone already \
+collapse (theorem fitch_shortcut) — the Moore engine is historical, not load-bearing here."
 
 /- ======================================================================
    2. MOORE'S PARADOX  (G. E. Moore, 1940s — epistemology/philosophy of language)
@@ -328,7 +360,7 @@ gerrymandered in grue-speak as 'grue' is in green-speak."
 
 def catalog : List (String × String) :=
   [("Fitch's knowability paradox",
-    "THEOREM: knowability + factive ∧-distributing K entail, classically, every truth is already known"),
+    "THEOREM: knowability + factive ∧-distributing K entail, classically (Classical.choice via byContradiction), every truth is already known; audit's fitch_shortcut shows necneg + knowable alone suffice at this Prop-level signature — the Moore engine is historical here, and real Fitch escapes the shortcut only by keeping necessitation a rule"),
    ("Moore's paradox",
     "THEOREM: 'q but I don't know/believe q' is unknowable, and unbelievable for consistent introspective belief"),
    ("The Knower (Kaplan–Montague)",

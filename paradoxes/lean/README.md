@@ -27,13 +27,44 @@ own contents honestly:
 | Status | Meaning |
 |---|---|
 | `THEOREM:` | fully proved (classical uses of `Classical.choice` are flagged in the entry) |
+| `IDENTITY:` | proved, but the proof just unfolds to the modeling definitions — the content is the model, not the derivation (taxonomy adopted from the external audit) |
 | `VERIFIED:` | exact finite/decidable check by `decide` (or `native_decide`, flagged) |
 | `DEMO:` | executed `#eval` exhibit (exact rationals or floats), not a theorem |
 | `GUARDED:` | a *rejection* captured as a build-checked artifact via `#guard_msgs` |
 | `NOTE:` | honestly not formalizable here, with the reason |
 
-Current totals (printed by `lake exe paradoxes`): **91 entries — 53
-THEOREM, 15 VERIFIED, 4 DEMO, 3 GUARDED, 16 NOTE**.
+Trust note: exactly one theorem in the whole suite — the UInt16 funext
+check `uint16_double` in `Expressibility` (all 65536 cases) — is closed by
+`native_decide`, i.e. by trusting the compiled evaluator rather than
+kernel `decide`; every other decidable check is reduced by the kernel
+itself.
+
+Current totals (printed by `lake exe paradoxes`): **91 entries — 50
+THEOREM, 3 IDENTITY, 15 VERIFIED, 4 DEMO, 3 GUARDED, 16 NOTE**.
+
+## Axiom ledger
+
+There are no axiom *declarations* anywhere in the suite.  What each
+flagship theorem *depends on* is machine-published by
+`Paradoxes/Audit.lean`, whose `#print axioms` lines run (and print) at
+every `lake build`.  Of the theorems in the ledger, exactly six depend on
+`Classical.choice` — precisely where the mathematics is classical:
+
+- `SelfReference.some_cretan_spoke_truly`
+- `EpistemicBelief.fitch_knowability_collapse`
+- `EpistemicBelief.fitch_shortcut`
+- `VagueIdentity.drinker`
+- `VagueIdentity.imp_or_converse`
+- `VagueIdentity.ravens_contrapositive`
+
+Everything else reports either the benign structural pair
+`propext`/`Quot.sound` or no axioms at all (plus the one `native_decide`
+compiler-trust axiom under `uint16_double`, per the trust note above).
+Two theorems were *de-classicalized* thanks to the external audit:
+`VagueIdentity.court_paradox` (previously proved via `Classical.em`,
+though the four conditionals are intuitionistically inconsistent) and
+`Infinity.urn_swells` (automation had accidentally dragged in
+`Classical.choice`; the term-mode proof is now axiom-free).
 
 ## Modules
 
@@ -61,8 +92,11 @@ findings:
   universes, not termination. The recursive-`def` liar dies at
   **termination** (Lean 4 `def`s can see their own name — a folklore
   correction). `partial` accepts only functions, and its divergence is
-  **quarantined from `Prop`**: the compiled liar exists, but `rfl` and
-  `decide` provably stick on its opaque constant — it asserts nothing.
+  **quarantined from `Prop`**: the compiled liar exists, and `rfl` and
+  `decide` provably stick on its opaque constant — yet it is not
+  meaning-free: in the logic the sealed liar is a total inhabitant, so its
+  defining equation is *refutable* (`liarRun_ne` — the audit's
+  "chiasmus v3"): Lean judges what it refuses to run.
 - `noncomputable` is *almost* Julia's "inexpressible": Julia's boundary
   deletes the object; Lean's deletes only the verb *run*.
 - Via `#guard_msgs`, Lean exhibits-and-checks what it cannot say — the

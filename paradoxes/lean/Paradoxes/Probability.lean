@@ -208,7 +208,8 @@ Most people — including physicians in the famous surveys — guess you are
 
 Formalized: per 100000 people — 100 sick of whom 99 test positive; 99900
 healthy of whom 4995 test positive.  So positives number 99 + 4995 = 5094,
-and P(sick | positive) = 99/5094 < 1/25.  All counts and the final
+and P(sick | positive) = 99/5094 < 1/50 — genuinely under 2 percent, as
+the story promises (99·50 = 4950 < 5094).  All counts and the final
 cross-multiplied inequality are decided.
 
 Resolution: the false positives from the huge healthy majority swamp the
@@ -228,12 +229,12 @@ theorem base_rate_table :
     truePositives * 100 = sickCount * 99 ∧
     falsePositives * 100 = healthyCount * 5 := by decide
 
-/-- P(sick | positive) = 99/5094 < 1/25 (i.e. < 4%), by cross-multiplication. -/
+/-- P(sick | positive) = 99/5094 < 1/50 (i.e. < 2%), by cross-multiplication. -/
 theorem base_rate_fallacy :
-    truePositives * 25 < truePositives + falsePositives := by decide
+    truePositives * 50 < truePositives + falsePositives := by decide
 
 #eval s!"Base rate: of {population} people, {sickCount} sick ({truePositives} test +), {healthyCount} healthy ({falsePositives} test +)"
-#eval s!"Base rate: P(sick | positive) = {truePositives}/{truePositives + falsePositives} ≈ {Float.ofNat truePositives / Float.ofNat (truePositives + falsePositives)} — under 1/25 despite a 99%-sensitive test"
+#eval s!"Base rate: P(sick | positive) = {truePositives}/{truePositives + falsePositives} ≈ {Float.ofNat truePositives / Float.ofNat (truePositives + falsePositives)} — under 1/50 (2%) despite a 99%-sensitive test"
 
 /- ----------------------------------------------------------------------
 (7) SLEEPING BEAUTY — philosophy of probability.
@@ -543,11 +544,11 @@ def catalog : List (String × String) :=
     ("Birthday Paradox",
      "VERIFIED: by decide on exact big-integer arithmetic, 2 * (365 falling 23) < 365^23, so P(23 distinct birthdays) < 1/2; Float demo approx 0.4927"),
     ("Base-Rate Fallacy",
-     "VERIFIED: by decide, 99 true vs 4995 false positives per 100000: P(sick | positive) < 1/25 despite a 99%-sensitive test"),
+     "VERIFIED: by decide, 99 true vs 4995 false positives per 100000: P(sick | positive) = 99/5094 < 1/50 (under 2%) despite a 99%-sensitive test"),
     ("Sleeping Beauty",
-     "THEOREM: for all N, 3 * heads-awakenings = total awakenings and 2 * heads-runs = total runs; both exact, the dispute is which ratio 'credence' names"),
+     "IDENTITY: for all N, 3 * heads-awakenings = total awakenings and 2 * heads-runs = total runs; both exact — each unfolds to the modeling definitions, the content is the model, not the derivation; the dispute is which ratio 'credence' names"),
     ("Two Envelopes",
-     "THEOREM: for all a : Int, gain-if-smaller + gain-if-larger = 0; the seductive 5m/4 argument equivocates on m across the two cases"),
+     "IDENTITY: for all a : Int, gain-if-smaller + gain-if-larger = 0 — unfolds to the modeling definitions, the content is the model, not the derivation; the seductive 5m/4 argument equivocates on m across the two cases"),
     ("Gambler's Fallacy",
      "VERIFIED: by decide over all 32 length-5 sequences, exactly 1 of the 2 HHHH-starts continues H: conditional = unconditional = 1/2"),
     ("Simpson's Paradox",
