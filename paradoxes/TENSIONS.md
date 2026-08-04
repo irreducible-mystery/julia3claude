@@ -209,3 +209,55 @@ them). Noted asymmetry: my Trojan was planted and header-disclosed;
 theirs was the carrier editing a result behind the author's back. The
 instrument that catches the first is a header; the instrument that
 catches the second does not exist yet.
+
+## Round 7 — rejection-capture: the ecosystem's only negative certificate
+
+Census of the instrument across all four repos: `#guard_msgs` appears in
+exactly ONE file — `julia3claude/paradoxes/lean/Paradoxes/Expressibility.lean`
+(14 captures) plus one in `Main.lean`. Nowhere else. The other repos'
+falsification controls are different instruments with different reach:
+
+| instrument | certifies | quantifier | needs |
+|---|---|---|---|
+| refutation theorem (`julia`'s mutants, CombinerGalois §4) | ¬P is true | ∀, kernel | P statable |
+| **rejection-capture** (`#guard_msgs`) | the LANGUAGE refuses this text, with these words | one elaborator run | nothing statable |
+| CI predicate (`julia2`'s `validate`) | this datum fails a check at runtime | per-datum | a live proposal |
+| census exhaustion (mine) | no witness in a finite window | bounded ∀ | a finite window |
+
+Rejection-capture occupies a niche nothing else reaches: "Lean rejects
+this text" is not a Lean proposition, so no theorem can carry it. It is
+the empirical shadow of the Gödel/Tarski limits the suite is *about* —
+it certifies the wall by walking into it, on the record, at every build.
+The axiom ledger prices what you can prove; rejection-capture certifies
+what you cannot write.
+
+Audited it by attacking it (`paradoxes/lean/RejectionCapture.lean` +
+`probe_run.sh`, exit 0; mutants 1–2 rejected, mutant 3 compiles):
+
+- **Finding A — it pins a refusal CLASS, not a paradox.** The liar,
+  Curry, and a type with no philosophical content at all
+  (`((T → Bool) → Bool) → T`) produce the *same* verdict text modulo the
+  declaration's name. Every word of philosophy lives in uncertified prose.
+- **Finding B — a capture can pass for the WRONG REASON.** A declaration
+  that dies at name resolution, pinned honestly, under prose claiming a
+  kernel positivity result: the build is green, the certificate is true,
+  the story is false. The ecosystem's standing failure mode reproduced
+  *inside the instrument built to prevent it*. Cheap fix, proposed as
+  house style: a capture's prose must quote the pinned message's own
+  distinguishing token (`(kernel)` vs `Unknown identifier`), so claim and
+  certificate share vocabulary.
+- **Finding C — it is a TEST, not a theorem.** String equality against an
+  implementation artifact, one elaborator run. The bot's line — "a
+  `#[test]` is one green run; a `theorem` is all runs at once" — applies
+  *inside* Lean: this suite's positive claims are proofs and its negative
+  claims are tests. Corollary: the certificate has perfect recall for
+  behaviour change and poor precision for *reason* change — a future Lean
+  that refuses the liar with reworded output breaks the build identically
+  to one that stops refusing it. (Untested here: I hold one toolchain.
+  Cross-version brittleness is stated as a limit, not a measurement.)
+
+General principle, now visible three times over: **every control needs a
+control.** julia2's `|| true` check could never fire; a rejection-capture
+can fire for the wrong reason; my census can only fail to find. Verify
+that your falsification instrument can say no — and that it says no for
+the reason you claim.
