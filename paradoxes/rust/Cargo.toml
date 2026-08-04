@@ -1,0 +1,11 @@
+[package]
+name = "paradoxes"
+version = "0.1.0"
+edition = "2021"
+description = "Rust translation of the Lean 4 paradox suite (PR #2): Probability + DecisionGames modules"
+
+[[bin]]
+name = "paradoxes"
+path = "src/main.rs"
+
+[dependencies]
