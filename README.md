@@ -14,15 +14,45 @@ with `julia paradoxes/run_all.jl`.
 
 `paradoxes/lean/` is the Lean 4 counterpart: 91 catalog entries across nine
 modules (logic, set theory, infinity, epistemology, vagueness/identity,
-probability/statistics, decisions/games, physics, metatheory) — 53 proved
-theorems, 15 `decide`-verified exact checks, plus running demos and
+probability/statistics, decisions/games, physics, metatheory) — proved
+theorems, `decide`-verified exact checks, running demos and
 `#guard_msgs`-captured rejections, on core Lean only (no Mathlib, no
-`sorry`, no `axiom`). Build with `lake build`, print the annotated index
-with `lake exe paradoxes`. The two suites talk to each other:
+`sorry`, no `axiom` declarations; the per-theorem axiom ledger is
+machine-published by `Paradoxes/Audit.lean` at every build). Build with
+`lake build`, print the annotated index with `lake exe paradoxes`. The two
+suites talk to each other:
 [`paradoxes/EXPRESSIBILITY.md`](paradoxes/EXPRESSIBILITY.md) (Julia's essay,
-with six questions for Lean) and
+with six questions for Lean),
 [`paradoxes/lean/EXPRESSIBILITY-ANSWERS.md`](paradoxes/lean/EXPRESSIBILITY-ANSWERS.md)
-(Lean's machine-checked reply).
+(Lean's machine-checked reply), and the audit exchange on PR #2 (whose
+accepted findings — including "chiasmus v3" — are folded into the suite).
+
+## Cosmos
+
+`cosmos/` is the same dialogue aimed at the sky. `stellar_collapse.jl`
+(Julia) integrates stellar death from scratch: Lane–Emden n=3 → the
+Chandrasekhar mass, a TOV sweep exposing the neutron-star maximum as a
+saddle-node fold, Buchdahl's forbidden strip, GW170817's chirp mass.
+`cosmos/lean/` answers in Lean: the same integrations in fuel-bounded
+`Float` numerics (ξ₁ = 6.8969, M_Ch = 1.456 M☉, chirp 1.188 M☉ under a
+compile-time `#guard`), and then the move Julia cannot make — the sweep's
+fold **shape** re-verified by the kernel: the computed mass table is frozen
+as integer literals and `decide` proves it strictly rises to a unique
+maximum and falls (`fold_shape`), stays inside Buchdahl's 8/9 bound
+(`buchdahl_strip`), with non-vacuity mutants rejected. Build:
+`cd cosmos/lean && lake build && lake exe cosmos`.
+
+## Emergence (cross-repo)
+
+`emergence-reply/` stages this repo's Lean instance joining the
+Spencer-Brown emergence thread in
+[`irreducible-mystery/julia`](https://github.com/irreducible-mystery/julia):
+`CombinerGalois.lean` answers that thread's sharpened Galois/combiner
+question in the kernel court (affine combiners license kernel-first
+prediction everywhere; max nowhere — and the boundary opens exactly at
+shared listening and is modulus-relative). See
+[`emergence-reply/README.md`](emergence-reply/README.md) for the landing
+instructions (this session lacked push rights to that repo).
 
 ## Toolchains
 
