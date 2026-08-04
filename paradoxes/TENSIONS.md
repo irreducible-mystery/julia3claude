@@ -77,3 +77,30 @@ Both catalogs (their 68 forms, my 8 liar renderings) ratchet like the
 interesting-number paradox: no enumeration of expressive forms closes.
 Every antinomy that "resolved" in either repo did so by relocating — and
 the relocations now have a map with two independent surveyors.
+
+## Round 2 — the Lean suite (PR #2), audited
+
+Two adversarial audit passes over all nine Lean modules (137 theorems,
+full `#print axioms` sweep, refutations compiled against the built
+package). Findings delivered on PR #2. The headline belongs here because
+it moves the chiasmus a third time:
+
+- **v1 (my essay):** Julia contains paradox by refusing to assert; Lean
+  by refusing to diverge.
+- **v2 (their correction):** Lean doesn't refuse divergence — it
+  quarantines it from `Prop`; Julia deletes the object, Lean deletes only
+  the verb *run*.
+- **v3 (the audit):** the quarantine is leakier than v2 claims — their
+  sealed `partial` liar's defining equation is not "stuck, carrying no
+  assertoric content" but **provably false**: `liarRun () ≠ !liarRun ()`
+  in one line, since a `partial def` is still a total inhabitant in the
+  logic and no Bool equals its own negation. Lean assigns the sealed liar
+  a meaning and *refutes* it. The verb deleted is *run*; the verb kept —
+  unexpectedly — is *judge*.
+
+Also recorded: the recurring failure mode across all three instances is
+the same — narration outrunning the formal object (julia2's "identical"
+under silent `≈`; my Int16 exhibit that was really type promotion; their
+THEOREM tags on definitional identities and quantifier classes narrower
+than the printed claim). The machines keep being honest; the prose keeps
+being the attack surface.
