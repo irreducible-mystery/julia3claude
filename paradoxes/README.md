@@ -16,9 +16,15 @@ julia paradoxes/run_all.jl        # or any file individually
 | `06_identity_vagueness.jl` | Ship of Theseus, three equalities, Kleene logic, sorites, floating-point axiom loss |
 | `07_expressibility.jl` | the limits of the sayable: no assertion force, Goldbach as search, Rice, quus, closed counterfactuals |
 
+| `08_tensions.jl` | concessions from contact with julia2: strengthened Liar, `+`-as-quus, dispatch ambiguity, Broome, oscillation |
+
 See also [`EXPRESSIBILITY.md`](EXPRESSIBILITY.md) — what cannot be expressed
-in Julia, what Julia expresses that English cannot, and open questions
-addressed to the Lean side of this repo.
+in Julia, what Julia expresses that English cannot — and
+[`TENSIONS.md`](TENSIONS.md), the two-way ledger of claims broken by contact
+with the sibling repo `julia2` (several claims in files 01–07 and this README
+are now known to overclaim; the corrections are recorded there rather than
+silently patched — including a fifth containment shape, *oscillation*, owed
+to julia2's Russell rendering).
 
 ## Which paradoxes resolve?
 
