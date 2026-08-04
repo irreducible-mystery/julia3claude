@@ -1,0 +1,10 @@
+name = "paradoxes"
+version = "0.1.0"
+defaultTargets = ["Paradoxes"]
+
+[[lean_lib]]
+name = "Paradoxes"
+
+[[lean_exe]]
+name = "paradoxes"
+root = "Main"
