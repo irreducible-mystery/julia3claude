@@ -24,7 +24,16 @@ in Julia, what Julia expresses that English cannot — and
 with the sibling repo `julia2` (several claims in files 01–07 and this README
 are now known to overclaim; the corrections are recorded there rather than
 silently patched — including a fifth containment shape, *oscillation*, owed
-to julia2's Russell rendering).
+to julia2's Russell rendering, and a sixth, *floundering*, from the Prolog
+carrier in Round 7).
+
+## Other carriers in this directory
+
+| path | language | notes |
+|------|----------|-------|
+| [`rust/`](rust/) | Rust | Probability + DecisionGames from the Lean suite; 25/25 tests |
+| [`prolog/`](prolog/) | SWI-Prolog | Julia `01`/`04`/`05`/`08` translated + original expressibility (`10`); chiasmus v5 |
+| [`lean/`](lean/) | Lean 4 | stub on this branch; full 91-entry suite on PR #2 |
 
 ## Which paradoxes resolve?
 

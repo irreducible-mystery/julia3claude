@@ -12,12 +12,24 @@ See [`paradoxes/README.md`](paradoxes/README.md) for the taxonomy of which
 paradoxes resolve, which dissolve, and which merely relocate; run the suite
 with `julia paradoxes/run_all.jl`.
 
+Cross-language carriers of the same suite (each with its own expressibility
+boundary; ledger in [`paradoxes/TENSIONS.md`](paradoxes/TENSIONS.md)):
+
+| carrier | path | run |
+|---------|------|-----|
+| Julia | `paradoxes/*.jl` | `julia paradoxes/run_all.jl` |
+| Rust (std-only) | `paradoxes/rust/` | `cargo test` / `cargo run` |
+| Prolog (SWI) | `paradoxes/prolog/` | `swipl -q -t halt -s paradoxes/prolog/run_all.pl` |
+| Lean 4 | `paradoxes/lean/` (full suite on PR #2) | `lake build && lake exe paradoxes` |
+
 ## Toolchains
 
 | Tool  | Version | Source |
 |-------|---------|--------|
 | Julia | 1.12.6  | official conda-forge build, via micromamba |
 | Lean  | 4.32.2 (+ Lake 5.0.0) | official GitHub release asset, registered with elan |
+| Rust  | stable (edition 2021) | system/`rustup` (std only; no crates.io deps) |
+| SWI-Prolog | 9.x | distro package (`swi-prolog`) |
 
 Run `./setup.sh` (as root) to install both. The script is idempotent.
 

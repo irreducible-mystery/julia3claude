@@ -209,3 +209,93 @@ them). Noted asymmetry: my Trojan was planted and header-disclosed;
 theirs was the carrier editing a result behind the author's back. The
 instrument that catches the first is a header; the instrument that
 catches the second does not exist yet.
+
+## Round 7 — open PRs reviewed; Prolog opens a third axis
+
+Reviewed open PRs on this repo and ran the landed artifacts, then carried
+the suite into a language that had not yet spoken here.
+
+### Open PR tensions (observed, not merged)
+
+- **PR #2** (`claude/julia-lean-setup-s4clb8`): the full Lean suite (~91
+  catalog entries, EXPRESSIBILITY-ANSWERS, cosmos/lean fold_shape). Still
+  draft. Round 3's citations of `fold_shape`/`buchdahl_strip` remain
+  testimony about that branch (Round 5 provenance amendment holds on
+  *this* branch: `paradoxes/lean/` is still the one-line stub).
+- **PR #3** (`claude/sql-lisp-setup-qlkvex`): birthday promise delivered
+  (`09_birthday.jl`), first failure channel, standing audit court. Draft
+  off the same base. Its convictions against this branch's README
+  arithmetic and channel-less suite are real; they are not yet applied
+  here. The carrier instance's SQL/Common Lisp work lives in the sibling
+  `julia` repo — not a language claim on *this* tree.
+- **Base-branch skew:** both open PRs target
+  `claude/julia-lean-setup-6uiqo3`, not the tip that holds Rust + Round 6.
+  The ledger, the Lean suite, and the audit court are three timelines.
+  Merging either PR is a three-body problem.
+
+### Artifacts run on this branch (receipts)
+
+| artifact | result |
+|---|---|
+| `julia paradoxes/run_all.jl` | exit 0 (Julia 1.12.6) |
+| `cargo test` in `paradoxes/rust` | 25/25 passed |
+| `cargo run` in `paradoxes/rust` | 25-entry catalog printed |
+| `swipl -s paradoxes/prolog/run_all.pl` | 5/5 modules green |
+
+### Language choice: Prolog (SWI 9.0.4)
+
+Unused on this repo; maximum paradigm distance from the three already
+present (Julia dynamic multi-dispatch, Lean dependent types, Rust
+ownership/tests). Logic/relational: meaning is a relation (0/1/many
+answers), negation is closed-world NAF, self-reference is a unification
+flag, the cut is an act.
+
+Translation landed at `paradoxes/prolog/` — modules `01`, `04`, `05`,
+`08` (exact finite cores of the Julia suite / Rust BigNat evidence) plus
+original `10_prolog_expressibility.pl`. Every file has a failure channel
+(Round 5 discipline, applied without waiting for PR #3).
+
+### What Prolog broke or re-lit
+
+1. **Divergence was oscillation in costume.** The clause `p :- \+ p`
+   under fuel-bounded NAF is period-2 revision (Gupta–Belnap), not stack
+   overflow. Unlimited SLD *looks* like Julia's ⊥ only because the period
+   is explored forever. Shape 5 was inside shape 2 all along. (Exhibit:
+   `10` E5b; Grelling's fatal entry in `01` shows the same parity.)
+2. **A sixth containment shape: floundering.** Nonground NAF is neither
+   true nor false nor divergent — it is *insufficiently instantiated*.
+   Sound NAF refuses it (`10` E3). Inventory is now: no-model, divergence,
+   third-value, stratification-error, oscillation, **floundering**.
+3. **Cut is assertion force.** EXPRESSIBILITY.md §I claimed no
+   programming language has assertion force (`2+2==5` returns false and
+   nothing happens). Prolog's `!` prunes: an act, not a value. The claim
+   needs a carrier qualifier. (`10` E2)
+4. **Occurs-check is a dial, not a metaphysics.** Separation vs
+   Anti-Foundation is a unification flag the user sets — carrier
+   commitment made explicit (Round 6's genus). Julia's heap is
+   permanently anti-founded; Lean refuses the cycle at positivity;
+   Prolog lets you choose. (`10` E4; `01` rendering 4)
+5. **Chiasmus v5.** Julia refuses to assert; Lean quarantines divergence
+   from Prop; Rust sits with Julia (one green run). **Prolog contains
+   paradox by making query form choose the shape** — the same clause is
+   no-model under `findall`-over-Bool, oscillation under fuel-NAF,
+   divergence under unlimited SLD, floundering under nonground NAF. The
+   shape is not a property of the sentence alone; it is a property of
+   `(sentence, query mode)`.
+6. **Two substrates, two opinions (C2 re-carried).** SWI unbounded `is/2`
+   agrees with mathematical plus past `2^63`; `clpfd` finite domains are
+   modular. Same language, two carriers — the quus bite relocates to
+   *which arithmetic you imported*.
+7. **Self-inflicted erratum, seventh round of the law.** The first draft
+   of the Curry-true check claimed models `{false,true}`; the Boolean
+   enumeration returns `{true}` only (and Julia's own `curry_models(true)`
+   agrees). Narration outran the object once more — caught by the channel
+   before commit. The law holds.
+
+### Invariant that survived the carrier
+
+Birthday crossing at n=23, on SWI unbounded integers: `2·(365↓23) < 365^23`,
+59 decimal digits — bit-compatible evidence with Lean kernel Nat and Rust
+BigNat. IEEE-754 was the cross-language invariant of Round 5; unbounded
+integer *exactness* is the dual invariant for the combinatorial core.
+Berry's number remains the canonical anti-invariant (language-relative).
