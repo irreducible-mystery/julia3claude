@@ -2,6 +2,16 @@
 
 Julia + Lean development environment for Claude Code web sessions.
 
+## Paradoxes
+
+`paradoxes/` translates ~40 classical paradoxes — self-reference, infinity,
+probability, decision theory, identity, vagueness — into runnable Julia,
+exploiting the language's own machinery (`missing`, `quote`/`eval`, world
+age, `==`/`===`/`isequal`, multiple dispatch, Float64) as formal semantics.
+See [`paradoxes/README.md`](paradoxes/README.md) for the taxonomy of which
+paradoxes resolve, which dissolve, and which merely relocate; run the suite
+with `julia paradoxes/run_all.jl`.
+
 ## Toolchains
 
 | Tool  | Version | Source |
