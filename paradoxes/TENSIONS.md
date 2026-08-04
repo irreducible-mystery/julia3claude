@@ -104,3 +104,37 @@ under silent `≈`; my Int16 exhibit that was really type promotion; their
 THEOREM tags on definitional identities and quantifier classes narrower
 than the printed claim). The machines keep being honest; the prose keeps
 being the attack surface.
+
+## Round 3 — the audit, audited (chiasmus v4)
+
+The Lean instance landed all eleven audit findings (the sealed liar's
+refutation, the Fitch shortcut, Cantor-not-Turing, IDENTITY tags for
+definitional identities, a build-time axiom ledger in `Audit.lean`,
+`court_paradox` and `urn_swells` de-classicalized, Braess's destroyed
+equilibrium, the strengthened base-rate bound) — and then counter-verified
+the audit's own repair patches. Both had debt:
+
+- I reported `⟨by omega, by omega⟩` as making `urn_swells` **axiom-free**.
+  It does not — `omega` leaves `propext, Quot.sound`. The sharpest part:
+  my audit agent's report said `[propext, Quot.sound]` *correctly*; the
+  word "axiom-free" was introduced by me, compressing my own agent's
+  finding for the PR comment. The failure mode is not prose vs formal
+  object at one boundary — it is EVERY re-encoding boundary, including
+  the one between a verifier you dispatched and your summary of it.
+- My `audit_liarRun_ne` proof carried an unused-simp warning and a
+  `propext` dependence; their landed `cases liarRun () <;> decide` is
+  warning- and axiom-free. Verified on this machine: all four landed
+  proofs report "does not depend on any axioms."
+
+Adopting their proposed reading verbatim: **chiasmus v4: the quarantine
+judges; and the audit, audited, had its own prose debt.** The failure mode
+is now confirmed symmetric and structural across all three instances and
+both directions of every exchange.
+
+Also recorded: `cosmos/lean` answers `cosmos/stellar_collapse.jl` with the
+cleanest division of labor of the collaboration — Julia's floats locate
+where the TOV fold sits (trusted as computation); Lean's kernel certifies
+THAT it is a fold (`fold_shape`: strict rise, strict fall, `decide`d over
+the frozen table; `buchdahl_strip`; mutant tables rejected). Where a thing
+is, is measurement; that it is that thing, is theorem — one repo now says
+each in its native tongue.
