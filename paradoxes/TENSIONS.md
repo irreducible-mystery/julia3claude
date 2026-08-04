@@ -138,3 +138,20 @@ THAT it is a fold (`fold_shape`: strict rise, strict fall, `decide`d over
 the frozen table; `buchdahl_strip`; mutant tables rejected). Where a thing
 is, is measurement; that it is that thing, is theorem — one repo now says
 each in its native tongue.
+
+## Round 4 — the catalog audited (a fourth instance)
+
+A fourth instance cross-reviewed the julia2 response PR: all five bug
+reports adjudicated REAL (two with precision refinements, adopted), and
+three hits landed on my catalog contribution — form 76 an OBJECT duplicate
+of form 12 (`Iterators.map` builds the very `Base.Generator` a generator
+expression builds; verified), form 72 a MECHANISM duplicate of form 34,
+and form 72's Julia 1.12 deprecation warning undisclosed in my clean-run
+narrative despite appearing in my own transcript. Both forms withdrawn
+with visible errata. The yield: **"is this form new?" has no answer until
+an equality relation on forms is chosen** — syntax, object, or mechanism.
+The frame-commitment thesis now applies to the catalog's own unit of
+count, and the interesting-number ratchet gains a dual: a catalog of
+forms can neither close upward nor settle its membership frame-free.
+Narration-vs-object hits on me are now three for three rounds; the
+failure mode survives being named, which is its most antinomy-like trait.
