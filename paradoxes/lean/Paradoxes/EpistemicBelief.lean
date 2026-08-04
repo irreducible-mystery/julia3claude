@@ -243,7 +243,7 @@ the very lottery inconsistency (theorem preface := lottery), worn with pride."
    you will not know the day in advance."  Prisoner: "Tuesday is out —
    by Monday evening I'd know it.  But then Monday is out too — with
    Tuesday excluded, Monday would be predictable."  He rules out every
-   day... and is hanged Wednesday-surprised on Monday.
+   day... and is hanged, completely surprised, on Monday.
 
    Formalized: the honest propositional content of the prisoner's
    argument for two days: `hOne : H1 ∨ H2` (the announced hanging),
@@ -328,7 +328,7 @@ gerrymandered in grue-speak as 'grue' is in green-speak."
 
 def catalog : List (String × String) :=
   [("Fitch's knowability paradox",
-    "THEOREM: knowability + factive ∧-distributing K entail every truth is already known"),
+    "THEOREM: knowability + factive ∧-distributing K entail, classically, every truth is already known"),
    ("Moore's paradox",
     "THEOREM: 'q but I don't know/believe q' is unknowable, and unbelievable for consistent introspective belief"),
    ("The Knower (Kaplan–Montague)",

@@ -114,9 +114,10 @@ speed 1 that starts 1 ahead: whenever he reaches where it was, it has moved.
 
 Formalized (scaled by 2^n to stay in Nat): `covered n = Σ_{k<n} 2^k` encodes
 the distance 1/2 + 1/4 + … + 1/2^n after n stages, scaled by 2^n. We prove
-covered n + 1 = 2^n: every stage advances (strictly monotone), the remaining
-gap is always exactly 1 scaled unit (= 1/2^n, positive), yet the total stays
-below the scaled goal 2^n. Achilles: position 2t vs 1+t (scaled by any d):
+covered n + 1 = 2^n: every stage strictly advances (at the common scale
+2^(n+1): 2·covered n < covered (n+1)), the remaining gap is always exactly
+1 scaled unit (= 1/2^n, positive), yet the total stays below the scaled
+goal 2^n. Achilles: position 2t vs 1+t (scaled by any d):
 strictly behind for t < d, meets exactly at t = d, ahead after.
 
 Resolution: infinitely many positive steps can have a finite total; the
@@ -138,9 +139,12 @@ theorem covered_add_one (n : Nat) : covered n + 1 = 2 ^ n := by
     simp only [covered]
     omega
 
-/-- Every single stage makes strictly positive progress: infinitely many real steps. -/
-theorem zeno_every_step_pos (n : Nat) : covered n < covered (n + 1) := by
-  have h := two_pow_pos n
+/-- Every single stage makes strictly positive progress: infinitely many real
+    steps.  Compared at the common scale 2^(n+1) — i.e. 2·covered n vs
+    covered (n+1) — the position strictly increases (a stalled runner at a fixed
+    position c would give equality 2·(c·2^n) = c·2^(n+1), not <). -/
+theorem zeno_every_step_pos (n : Nat) : 2 * covered n < covered (n + 1) := by
+  have h := covered_add_one n
   simp only [covered]
   omega
 

@@ -328,7 +328,7 @@ def catalog : List (String × String) := [
   ("Grelling–Nelson",
    "THEOREM: for every applies-relation, no word h with applies h w ↔ ¬ applies w w"),
   ("Tarski undefinability",
-   "THEOREM: Tr L ↔ ¬Tr L is contradictory — the target the diagonal lemma feeds, so truth is undefinable internally"),
+   "THEOREM: Tr L ↔ ¬Tr L is contradictory — the target the diagonal lemma (not formalized here) feeds, so truth is undefinable internally"),
   ("Quine's paradox",
    "NOTE: needs quotation/syntax machinery; fixed-point content identical to liar/Tarski — #eval performs the string construction")
 ]

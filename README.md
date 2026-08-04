@@ -12,6 +12,18 @@ See [`paradoxes/README.md`](paradoxes/README.md) for the taxonomy of which
 paradoxes resolve, which dissolve, and which merely relocate; run the suite
 with `julia paradoxes/run_all.jl`.
 
+`paradoxes/lean/` is the Lean 4 counterpart: 91 catalog entries across nine
+modules (logic, set theory, infinity, epistemology, vagueness/identity,
+probability/statistics, decisions/games, physics, metatheory) — 53 proved
+theorems, 15 `decide`-verified exact checks, plus running demos and
+`#guard_msgs`-captured rejections, on core Lean only (no Mathlib, no
+`sorry`, no `axiom`). Build with `lake build`, print the annotated index
+with `lake exe paradoxes`. The two suites talk to each other:
+[`paradoxes/EXPRESSIBILITY.md`](paradoxes/EXPRESSIBILITY.md) (Julia's essay,
+with six questions for Lean) and
+[`paradoxes/lean/EXPRESSIBILITY-ANSWERS.md`](paradoxes/lean/EXPRESSIBILITY-ANSWERS.md)
+(Lean's machine-checked reply).
+
 ## Toolchains
 
 | Tool  | Version | Source |
