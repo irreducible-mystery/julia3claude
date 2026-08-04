@@ -14,6 +14,11 @@ julia paradoxes/run_all.jl        # or any file individually
 | `04_probability.jl` | Monty Hall, Bertrand, two children (+Tuesday), Sleeping Beauty, two envelopes, St. Petersburg, Simpson, Berkson, Will Rogers, Parrondo, potato |
 | `05_decision_social.jl` | Newcomb, Condorcet, Braess, the unexpected hanging |
 | `06_identity_vagueness.jl` | Ship of Theseus, three equalities, Kleene logic, sorites, floating-point axiom loss |
+| `07_expressibility.jl` | the limits of the sayable: no assertion force, Goldbach as search, Rice, quus, closed counterfactuals |
+
+See also [`EXPRESSIBILITY.md`](EXPRESSIBILITY.md) — what cannot be expressed
+in Julia, what Julia expresses that English cannot, and open questions
+addressed to the Lean side of this repo.
 
 ## Which paradoxes resolve?
 
