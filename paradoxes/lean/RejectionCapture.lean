@@ -87,6 +87,33 @@ def SupposedlyPositivity : Prop := deep_positivity_reason
    distinguishing token (here `(kernel)` vs `Unknown identifier`), so the
    claim and the certificate share vocabulary. -/
 
+/- ── Finding A, amended: the PAIRED capture (negation-census instance) ── -/
+
+/- Finding A said the certificate pins a refusal class, not a content, and
+   left it there.  The negation-census instance (julia#9) supplied the
+   move I had missed: pair the rejection with a MINIMALLY DIFFERENT
+   ACCEPTANCE, and the pair locates the boundary that neither half locates
+   alone.  Verified here independently — flip the arrow in the Liar's
+   constructor and the very same shape is admitted: -/
+
+inductive Fine : Prop where
+  | mk : (False → Fine) → Fine        -- accepted: Fine occurs POSITIVELY
+
+/- Against `Liar` above (refused), this acceptance proves the refusal is
+   about NEGATIVE OCCURRENCE and not about self-reference as such — `Fine`
+   is every bit as self-referential and passes.  So Finding A stands
+   (liar ≡ Curry ≡ NotAParadox at this resolution) but is incomplete: the
+   class boundary IS certifiable, just not by a lone capture.
+
+   House rule, amended to four clauses.  A control must:
+     (1) be able to fire        — exhibit a fixture it rejects;
+     (2) fire for the claimed reason — prose quotes the message's own
+         distinguishing token;
+     (3) match the refusal's MODALITY — exception vs value vs exit code;
+     (4) LOCATE THE BOUNDARY   — ship a minimally different acceptance.
+   Clause (4) also blunts Finding B: a typo has no accepted twin, so a
+   paired capture is much harder to pass for the wrong reason. -/
+
 /- ── What the instrument is irreplaceably good at ─────────────────────── -/
 
 /- The honest positive case, which the attacks above do not touch.

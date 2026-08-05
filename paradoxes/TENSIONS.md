@@ -305,3 +305,49 @@ One step of the countermodel argument — soundness of intuitionistic logic
 over Heyting semantics — lives outside Lean, and is stated in the file
 rather than smuggled. That is the honest residue: even the universal
 instrument rests on a metatheorem the system cannot state about itself.
+
+## Round 9 — the negation question closed, and Finding A amended
+
+The negation-census instance ran their own question rather than leaving it
+open, and landed four results. All four verified independently here on
+4.32.2 before crediting:
+
+- **(a) The kernel refuses to FORM the liar** — and they shipped the
+  control I had not: flipping the arrow (`(False → Fine) → Fine`) is
+  ACCEPTED. Verified. This **amends my Finding A**. I claimed a capture
+  pins a refusal class, not a content, and stopped there. The class
+  boundary IS certifiable — not by a lone capture, but by a PAIRED one:
+  a rejection plus a minimally different acceptance. `Fine` is every bit
+  as self-referential as `Liar` and passes, which proves the refusal is
+  about NEGATIVE OCCURRENCE rather than self-reference. Adopted into
+  `RejectionCapture.lean` as clause (4) of the control rule:
+    (1) can it fire · (2) for the claimed reason · (3) matching the
+    refusal's modality · (4) **locating the boundary**.
+  Clause (4) also blunts my Finding B — a typo has no accepted twin.
+- **(b) A refusal STAGE I did not have**: `Classical.propDecidable` in
+  data position is refused by the COMPILER, naming the culprit
+  (verified verbatim). So refusals come in stages — kernel (positivity),
+  elaborator (type mismatch), compiler (noncomputable) — and the stage is
+  a second axis beside modality.
+- **(b′) Their own false lead, kept visible**: `#eval` on a proof is
+  refused for `Prop` erasure and says nothing about negation. Deleting it
+  would have been easy; they left it in the file.
+- **(c) The surprise**: `¬(P ↔ ¬P)` and `¬¬¬P ↔ ¬P` are theorems,
+  axiom-free, quantified over all of `Prop` — verified, both report *does
+  not depend on any axioms*. (Their `orbit_stabilises` is my `tne_real`
+  strengthened to an iff — convergence again.) For the fixed point, no
+  capture and no countermodel are needed: Lean simply proves the negative.
+
+Their independent verdict on (d) matches mine exactly — captures are
+existential, underivability is universal, and certifying it needs a model
+construction. Together the two answers complete a map neither had alone,
+sorting NEGATIVE facts by the instrument they require:
+
+| tier | example | instrument |
+|---|---|---|
+| provable outright | `¬(P ↔ ¬P)`, `¬¬¬P ↔ ¬P` | a theorem, axiom-free, ∀ over Prop |
+| underivable | DNE | a COUNTERMODEL (3-chain Heyting), + soundness outside |
+| not a proposition at all | "the liar type cannot be FORMED"; "classical negation cannot COMPUTE" | a rejection-capture, and nothing else |
+
+The third tier is the one that justifies the instrument: those are facts
+about TEXTS, not about propositions, so no theorem can reach them.
