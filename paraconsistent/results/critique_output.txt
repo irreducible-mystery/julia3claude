@@ -1,0 +1,158 @@
+==============================================================================
+A. THE ENCODING PROBLEM: the biggest hidden decision point
+==============================================================================
+The logic begins at (mu, lam). The mapping WORLD -> (mu, lam) is not part
+of the formalism -- yet it determines everything downstream. Re-encode the
+SAME Berkeley 1973 data (H = 'admissions biased against women') five
+defensible ways. In the earlier paradox study I silently chose encoding E1.
+
+encoding                                             (mu,lam)      dc     dct region  decision
+E1 gap/2*max-rate (my earlier choice)          (0.66,0.61)    +0.052  +0.266 Q┬→t    ACCEPT
+E2 gap normalized by 0.5 (less aggressive)     (0.64,0.54)    +0.099  +0.184 Q┬→t    ACCEPT
+E3 one-sided (only positive gaps count)        (0.71,0.21)    +0.495  -0.079 Qt→┴    ACCEPT
+E4 dept-majority as counter-evidence           (0.85,0.67)    +0.187  +0.521 ┬       ACCEPT
+E5 significance-weighted (z-score squash)      (0.99,0.81)    +0.186  +0.797 ┬       UNDEC
+
+-> 5 defensible encodings, 3 distinct regions, 2 distinct decisions, dc spread = +0.443.
+-> The 'verdict of the paraconsistent analysis' was substantially MY verdict,
+   smuggled in through the encoding. The logic's rigor begins only after the
+   most consequential step is over. GIGO is not solved; it is DIGNIFIED.
+
+==============================================================================
+B. THE SHARP EDGES OF A LOGIC OF VAGUENESS
+==============================================================================
+PAL2v 'dissolved' the sorites by replacing a sharp heap/not-heap line with
+regions. But the REGIONS have sharp boundaries, and decision_output is a
+STEP FUNCTION. Probe a hair's width around region borders:
+  (0.7499999,0.2500000) -> region=Qt→┴   decision=1.0
+  (0.7500001,0.2500000) -> region=t      decision=1.0
+    delta inputs = 2e-7 -> DISCONTINUOUS jump in output.
+
+  (0.6200000,0.3799999) -> region=Qt→┴   decision=1.0
+  (0.6200000,0.3800001) -> region=Qt→┬   decision=1.0
+    delta inputs = 2e-7 -> DISCONTINUOUS jump in output.
+
+  Scanning 20,001 points along a lattice chord: 5 sharp label transitions,
+  each an unmarked cliff where 'quasi-true' becomes 'inconsistent' by 5e-5 of evidence.
+-> HIGHER-ORDER SORITES: 'exactly which (mu,lam) is the last quasi-true
+   point?' has a sharp, arbitrary answer -- the very thing the logic was
+   praised for not having. The vagueness was not dissolved; it was RELOCATED
+   into the metalanguage (region definitions, FtC, decision thresholds).
+   Fuzzy borders of fuzzy borders: an infinite regress bought off with one
+   hard-coded partition.
+
+==============================================================================
+C. REVENGE: the sentence PAL2v cannot place
+==============================================================================
+Ordinary Liar found a fixed point at the center I -- the lattice's escape
+hatch. Now close the hatch with a sentence about its own LATTICE POSITION:
+   R:  'R's own degree of certainty is negative'   (i.e. lam > mu: 'I sit on
+       the FALSE side of the lattice.')
+Faithfulness map: annotate R according to whether what R says holds of R's
+current annotation:
+   if lam > mu  (R's claim TRUE)  -> conclusive evidence FOR R  -> (1, 0)
+                                     ...whose dc=+1 is NOT negative.
+   if lam <= mu (R's claim FALSE) -> conclusive evidence AGAINST -> (0, 1)
+                                     ...whose dc=-1 IS negative.
+Iterate F(m,l) = (1,0) if l>m else (0,1) from anywhere, incl. the center:
+  start (0.3,0.3): orbit -> [(0.3, 0.3), (0.0, 1.0), (1.0, 0.0), (0.0, 1.0), (1.0, 0.0)] ...
+  start (0.9,0.9): orbit -> [(0.9, 0.9), (0.0, 1.0), (1.0, 0.0), (0.0, 1.0), (1.0, 0.0)] ...
+  start (0.5,0.5): orbit -> [(0.5, 0.5), (0.0, 1.0), (1.0, 0.0), (0.0, 1.0), (1.0, 0.0)] ...
+  start (1.0,0.0): orbit -> [(1.0, 0.0), (0.0, 1.0), (1.0, 0.0), (0.0, 1.0), (1.0, 0.0)] ...
+  start (0.0,1.0): orbit -> [(0.0, 1.0), (1.0, 0.0), (0.0, 1.0), (1.0, 0.0), (0.0, 1.0)] ...
+  Fixed point requires F(m,l)=(m,l): at (1,0) the claim '0>1' is false, so
+  F=(0,1) != (1,0); at (0,1) the claim '1>0' is true, so F=(1,0) != (0,1).
+  NO FIXED POINT EXISTS; every orbit enters the 2-cycle (1,0)<->(0,1) --
+  verified above. Even the center (0.5,0.5), which absorbed the ordinary
+  Liar, is expelled: '0.5>0.5' is false -> (0,1) -> (1,0) -> ... oscillation.
+  And note: DAMPING no longer rescues it. Averaged updates converge to
+  (0.5,0.5), but at (0.5,0.5) R's claim 'dc<0' is determinately FALSE while
+  the annotation asserts perfect indeterminacy -- the fixed point is now
+  UNFAITHFUL to the semantics it was meant to represent. The escape hatch
+  is closed from the inside.
+-> The lattice tamed the Liar only because the Liar spoke the OLD language.
+   A sentence that speaks PAL2v's language ('my dct is negative') resurrects
+   the paradox INSIDE the machinery meant to contain it. Every richer logic
+   mints the currency of its own revenge. PAL2v cannot state -- let alone
+   place -- its own semantic self-reference.
+
+==============================================================================
+D. CURRY'S PARADOX: triviality without contradiction
+==============================================================================
+C: 'if C is true, then 0=1'.   Derivation uses ONLY modus ponens and
+contraction -- NO negation, NO inconsistency anywhere:
+   1. Suppose C.       [assumption]
+   2. C -> (0=1).      [that IS C, line 1]
+   3. 0=1.             [MP 1,2]
+   4. C -> (0=1).      [discharge 1-3]
+   5. C.               [4 is what C says]
+   6. 0=1.             [MP 4,5]
+Paraconsistency blocks EXPLOSION (a negation principle). Curry never uses
+negation: the ┬-vertex is never visited; there is nothing to quarantine.
+Demonstration that PAL2v's evidential state gives no purchase:
+  annotate C at maximal noncommitment: region=I, dct=+0.00
+  -- but the derivation above is insensitive to C's annotation: it operates
+  on the CONDITIONAL structure, which PAL2v's atomic (mu,lam) annotations do
+  not represent at all. The library has no conditional connective; 'C -> D'
+  cannot be written, so Curry cannot be STATED, hence neither solved nor
+  blocked -- merely invisible.
+-> Two failures in one: (i) expressive -- self-referential conditionals are
+   outside the language; (ii) strategic -- even in richer paraconsistent
+   logics, Curry forces surrender of contraction or MP, an amputation far
+   deeper than tolerating contradictions, and one PAL2v never discusses
+   because it cannot reach the question.
+
+==============================================================================
+E. NETWORK ORDER-DEPENDENCE: no canonical way to combine evidence
+==============================================================================
+Three sources about one hypothesis: S1=(0.9,0.2), S2=(0.4,0.7), S3=(0.6,0.5).
+Standard PANnet chaining (as in the library's own docs): downstream block
+takes mu = upstream muER, lam = 1 - other-upstream muER. Compare the three
+possible tree shapes:
+  (S1*S2)*S3: final (mu,lam)=(0.529,0.453) dc=+0.077 region=Qt→┴   ACCEPT
+  S1*(S2*S3): final (mu,lam)=(0.842,0.539) dc=+0.303 region=Q┬→t   ACCEPT
+  (S1*S3)*S2: final (mu,lam)=(0.661,0.646) dc=+0.014 region=Q┬→t   UNDEC
+
+-> Same three sources, dc spread across orderings = +0.288 (2 distinct decisions, 2 distinct regions).
+-> Fusion is NON-ASSOCIATIVE and NON-COMMUTATIVE, and the formalism
+   specifies no canonical tree. The analyst's wiring diagram is another
+   hidden free parameter -- like Simpson's paradox, the conclusion depends
+   on how you aggregate, and the logic that DIAGNOSED that problem for
+   statistics exhibits it, undiagnosed, in its own plumbing.
+
+==============================================================================
+F. WHAT (0.5, 0.5) CANNOT SAY: the missing third dimension
+==============================================================================
+  scenario                              annotation   dc     dct   region
+      1 studies pro,     1 studies con   (0.50,0.50)  +0.00  +0.00  I
+     10 studies pro,    10 studies con   (0.50,0.50)  +0.00  +0.00  I
+   5000 studies pro,  5000 studies con   (0.50,0.50)  +0.00  +0.00  I
+-> IDENTICAL lattice point for 2 anecdotes and 10,000 trials. Keynes's
+   'weight of argument' (1921) -- how MUCH evidence, as opposed to its
+   BALANCE -- is unstatable in two dimensions. Consequences are decision-
+   relevant: the value of gathering more information, the stability of the
+   verdict under one new study, the width of any confidence band -- all
+   invisible. PAL2v collapses (balance, weight) -> balance exactly the way
+   scalar probability collapses (mu, lam) -> one number: the same crime it
+   was recruited to expose, one floor up.
+   [The library's radial metrics d, D do not help: they too are functions of
+   the single point (mu,lam), blind to sample size behind it.]
+
+==============================================================================
+G. THE CONSISTENT BUREAUCRACY: source inspection of the classifier
+==============================================================================
+  classify_12_regions_asymmetric: 17 if-statements, ~21 crisp comparisons.
+  Every one is a BIVALENT decision: mu+lam-1 >= fd_pos is true or false,
+  never quasi-true, never inconsistent. Excerpt:
+      if dc >= th.ftc_pos:  return 't'
+      if dct >= th.fd_pos:  return '┬'
+-> The paraconsistent verdicts are produced by a classical machine. The logic
+   does not apply to its own application. This is not an implementation
+   accident but a THEOREM-SHAPED necessity: a classifier whose own outputs
+   were paraconsistently annotated would need a meta-classifier, and so on --
+   the regress is stopped only by a floor of bivalence. Paraconsistency is
+   therefore not an alternative FOUNDATION; it is a managed dialect,
+   spoken with permission, inside a classical host. (Da Costa knew this:
+   C-systems have a classical metatheory. The marketing seldom mentions it.)
+
+Artifacts written to results/.
