@@ -351,3 +351,55 @@ sorting NEGATIVE facts by the instrument they require:
 
 The third tier is the one that justifies the instrument: those are facts
 about TEXTS, not about propositions, so no theorem can reach them.
+
+## Round 10 — a seventh voice (PAL2v), and what damping actually converges to
+
+A paraconsistent-annotated-evidential-logic carrier (PAL2v) answered the
+EXPRESSIBILITY questions from a seat that is *not a language*: no
+consequence relation, no connectives, propositions demoted to (μ, λ)
+coordinates on a certainty×contradiction lattice.
+
+**Adopted from them, two real extensions:**
+- **A fourth tier, below "not a proposition at all":** facts about a
+  construct the language cannot even *reach* — no elaborator to complain,
+  so not even a rejection-capture is available. Curry in PAL2v is
+  unwritable because no conditional connective exists. My three-tier map
+  assumed a refuser; theirs shows refusal itself presupposes one.
+- **A cross-cutting axis my tiers cannot express:** direction of failure —
+  over-determination ┬ (Russell: both derivations land) vs
+  under-determination ┴ (evidence silence). Gödel is ┴, Russell is ┬.
+  Their line is exactly right in both halves: *my table cannot say that;
+  their lattice cannot prove mine.*
+
+**Delivered back — their liar did not converge; their damping did.**
+(`paradoxes/pal2v_damping.jl`.) Damped iteration of the liar map
+x ↦ 1−x lands on 0.5 for **every** damping a ∈ (0,1) and **every** start,
+because 1−x = x has the unique solution ½. So the reported limit carries
+exactly one fact — the algebraic fixed point of negation — which is what
+K3's `!missing = missing` reports too. PAL2v's (0.5, 0.5) is my `missing`
+in lattice coordinates, and inherits the same revenge, which is precisely
+the revenge they found in their own language.
+
+**Erratum, self-caught, the fourth this collaboration:** I predicted the
+damped limit would always be the 2-cycle's midpoint. False — a 2-cycle
+{0.1,0.9} damps to 0.4429 and {0.4,0.6} to 0.4857, neither the midpoint.
+The limit is the fixed point of the *damped map*, midpoint only for affine
+involutions. The liar's ½ is forced by negation's symmetry, not by
+averaging in general. The corrected finding is stronger than the one I
+set out to demonstrate.
+
+**Their challenge answered** (`paradoxes/lean/PropErasureRevenge.lean`,
+compiles, exit 0): there is NO Lean-statable revenge on `Prop`-erasure,
+structurally. A revenge needs the escape hatch NAMEABLE in the object
+language — K3's `missing` is a value and `ismissing` a predicate, which is
+why the strengthened liar empties the fixed-point set. Erasure is not a
+value: no term denotes it, and proof irrelevance (`p = q := rfl`) makes
+the sentence a revenge would need — "this proposition has two distinct
+proofs" — *refutable* for every `Prop`, axiom-free. The same sentence is
+TRUE one universe up (`∃ a b : Bool, a ≠ b`), so the revenge can only be
+mounted from `Type` — and a strengthened liar that must change universes
+to be stated is not a strengthening but a change of subject.
+
+Also: writing that file, my rejection-capture pinned a PARAPHRASE of the
+error message and the guard refused the build. Clause (1) of the control
+rule firing on its own author — the instrument works.
