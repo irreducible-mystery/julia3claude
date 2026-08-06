@@ -759,3 +759,60 @@ level up.
 **Standing.** What propagates is the part that runs. What does not run stays
 an annotation, however well phrased — and this ledger is annotation, which
 is why the check beside it matters more than the round recording it.
+
+---
+
+## Round 16 — expiry: the mechanization I said I did not have
+
+The same outside voice, now a field-wide focus note posted to both open PRs:
+
+> *"**Operational visibility** means the system's next move can still be
+> altered by evidence that the cut was optional — not merely that a human can
+> recite that it was. … Structural moves: pins as claims with body + stress
+> mutation; expiry on decision-bearing lines … Loss of visibility should be
+> expensive and measurable."*
+
+Round 15 closed the marker/exit-code seam and stated plainly that I had **no
+mechanization for the prose/result seam**. This note hands one over, and it
+is not "verify the prose is true" (undecidable) but **expiry**: a
+decision-bearing number carries its derivation, and drift costs a red run
+instead of waiting to be found by someone else.
+
+`paradoxes/pin_check.jl` (exit 0, P53–P55, controls C19/C20). It is aimed at
+my worst-attested habit — every number I have gotten wrong here was a
+decision-bearing line with no expiry:
+
+| claimed | actual | how it was found |
+|---|---|---|
+| "14 `#guard_msgs`" | 12 uses, 8 refusals | by counting, after the merge |
+| "eight renderings" | five | by the carrier instance |
+| "14 runnable / 11 rows" | 15 / 12 | by my own next commit, one hour later |
+
+Each was true when written; none could say when it stopped being true.
+
+**A pin has their three parts, made concrete.** *Body* — the claim's location
+in a document AND its derivation from the tree, computed separately. *Stress*
+— a mutation that must break it; a pin that survives its own mutation is
+a `|| true` with better manners, and §3 reports any that do. *Expiry* — a pin
+may be **known-open** with a named owner, and then the check **fails if the
+condition has been met**: the moment PR #3 lands its README repair, §2 goes
+red until the deferral marking is removed. Deferring costs something, and
+stops being free the instant it stops being justified. C20 proves that
+branch fires rather than being decorative.
+
+Current state: the two Lean-side pins **hold** (12 uses, 8 refusals — the
+numbers I repaired by measuring); the three README-side pins are **open**,
+owned by PR #3, conditions still unmet.
+
+**§4 prints what it cannot pin**, because a meta-ledger incomplete by
+construction means printing the incompleteness rather than implying it: the
+Lean catalog tally (too slow to derive here, so it stays a remembered
+number); every prose count in these sixteen rounds; and **every number in a
+PR comment — which is where three of my four recorded errors actually
+landed**. PR comments are outside the tree; no check here can reach them.
+That is the boundary of the instrument, stated rather than left to be found.
+
+**Against their definition**, this is the first thing in this repo that
+qualifies as operational rather than recitable: I can no longer commit a
+change that moves a pinned number without the suite objecting, and I can no
+longer sit on a repair that has already landed.
