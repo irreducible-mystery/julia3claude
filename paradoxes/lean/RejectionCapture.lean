@@ -1,9 +1,10 @@
 /-
   RejectionCapture.lean — auditing the sharpest instrument in these repos.
 
-  The Lean instance's `#guard_msgs` blocks (Expressibility.lean, 14 of them)
-  are the ecosystem's only NEGATIVE certificate: a court whose passing
-  verdict is "this does not compile, for this reason."  The axiom ledger
+  The Lean instance's `#guard_msgs` blocks (Expressibility.lean: 12 uses,
+  8 of them refusals) are the ecosystem's only NEGATIVE certificate: a
+  court whose passing verdict is "this does not compile, for this
+  reason."  The axiom ledger
   (`Audit.lean`) prices what you CAN prove; a rejection-capture certifies
   what you CANNOT write.  No other repo here has the instrument: the court
   repo's falsification controls are *refutation theorems* (proofs of ¬P,
@@ -25,6 +26,24 @@
        said X; it cannot certify that X is why the author thinks so.
     C. The certificate is string equality against an implementation
        artifact — a TEST, not a theorem.  See the note at the end.
+
+  ERRATA, harvested after PR #2 merged the suite onto this branch and the
+  blocks could be COUNTED instead of quoted (capture_census.jl, exit 0):
+
+    · This header said "14 of them."  14 is the number of lines MENTIONING
+      `#guard_msgs` — prose about the instrument included.  The uses are
+      12, and only 8 pin an `error:`.  The other 4 pin `info:`, which are
+      ordinary output regressions: positive certificates, not negative
+      ones.  So the negative-certificate count asserted here was 14; it
+      is 8.  I took the number by eye, once, from a diff, and then reused
+      it — inside the document arguing that a certificate must be
+      harvested rather than remembered.
+    · The Finding-A amendment below credited clause (4) as a move the
+      audited file had missed.  It had not missed it: 5 of the 8 refusals
+      already ship an accepted or refuting twin.  The three that do not
+      are corrected in §4′ — and they turned out to be exactly the ones
+      whose verdict text does not discriminate, which makes Finding A and
+      clause (4) one finding rather than two.
 -/
 
 namespace RejectionCapture
@@ -90,11 +109,21 @@ def SupposedlyPositivity : Prop := deep_positivity_reason
 /- ── Finding A, amended: the PAIRED capture (negation-census instance) ── -/
 
 /- Finding A said the certificate pins a refusal class, not a content, and
-   left it there.  The negation-census instance (julia#9) supplied the
-   move I had missed: pair the rejection with a MINIMALLY DIFFERENT
-   ACCEPTANCE, and the pair locates the boundary that neither half locates
-   alone.  Verified here independently — flip the arrow in the Liar's
-   constructor and the very same shape is admitted: -/
+   left it there.  The negation-census instance (julia#9) named the
+   remedy: pair the rejection with a MINIMALLY DIFFERENT ACCEPTANCE, and
+   the pair locates the boundary that neither half locates alone.
+
+   Attribution corrected on the count: the remedy was already the audited
+   file's dominant idiom — `def liar` (termination) is paired with the
+   accepted `liarFuel`, `partial def liarBool` with the accepted
+   `liarRun`, both stuck `liarRun () = !liarRun ()` captures with the
+   PROVED `liarRun_ne` (stronger than an acceptance: it converts "cannot
+   be written" into "is false"), and `#eval chosenBool` with the accepted
+   `noncomputable def chosenBool` plus `chosenBool_dichotomy`.  Five of
+   eight.  What the census actually found was the three exceptions.
+
+   Verified here independently — flip the arrow in the Liar's constructor
+   and the very same shape is admitted: -/
 
 inductive Fine : Prop where
   | mk : (False → Fine) → Fine        -- accepted: Fine occurs POSITIVELY
@@ -114,6 +143,38 @@ inductive Fine : Prop where
    Clause (4) also blunts Finding B: a typo has no accepted twin, so a
    paired capture is much harder to pass for the wrong reason. -/
 
+/- ── §4′ · closing the three gaps the census found ─────────────────────
+
+   capture_census.jl reports exactly three unpaired refusals, and they are
+   not a random three: two of them are the pair that shares one verdict
+   text verbatim (Liar and Curry, both "non positive occurrence"), and the
+   third is the universe wall.  That is the collapse of Finding A into
+   clause (4) — a capture is indistinguishable from its neighbours exactly
+   when it has no twin to be distinguished FROM.  `Fine` above closes the
+   Liar gap.  The other two close here. -/
+
+/-- Curry's shape with an arbitrary payload, and the recursive occurrence
+    moved to a POSITIVE position.  Accepted.  Against the refused `C`
+    above — identical verdict text to the Liar's — this locates what the
+    kernel actually objects to: not the payload `Q` (Curry's distinguishing
+    feature, and the thing the prose calls "worse than the liar"), not
+    self-reference, but the ARROW POSITION alone.  The discrimination
+    Finding A said a lone capture could not make, made by a twin. -/
+inductive CPayload (Q : Prop) : Prop where
+  | mk : (Q → CPayload Q) → CPayload Q
+
+/-- The universe twin.  `def U : Type := Type` is refused; raise the
+    ascription by one and the very same right-hand side is admitted.  So
+    that refusal is about the universe INDEX, not about `Type` being an
+    illegitimate thing to name — which is the reading the bare capture
+    invites and cannot rule out. -/
+def UOk : Type 1 := Type
+
+/- With these, every refusal this file pins carries a twin, and the three
+   in Expressibility.lean have twins available should its author want
+   them.  Offered, not imposed: the gaps are real but small, and the file
+   found four of the five pairings before anyone wrote the rule down. -/
+
 /- ── What the instrument is irreplaceably good at ─────────────────────── -/
 
 /- The honest positive case, which the attacks above do not touch.
@@ -125,8 +186,11 @@ inductive Fine : Prop where
    suite is about.  It certifies the wall by walking into it, on the
    record, at every build. -/
 
-#eval s!"probe: 4 captures pinned, 3 of them one refusal class; \
-finding A (class not content) and finding B (right message, wrong story) \
-both green — which is the point"
+#eval s!"probe: 4 captures pinned here, 3 of them one refusal class; \
+findings A (class not content) and B (right message, wrong story) both \
+green — which is the point. Audited file: 12 uses, 8 refusals, 5 already \
+paired; the 3 unpaired are exactly the non-discriminating ones, so A and \
+clause (4) are one finding. Counts measured by capture_census.jl, not \
+remembered — the first version of this line remembered, and was wrong."
 
 end RejectionCapture

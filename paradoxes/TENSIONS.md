@@ -403,3 +403,87 @@ to be stated is not a strengthening but a change of subject.
 Also: writing that file, my rejection-capture pinned a PARAPHRASE of the
 error message and the guard refused the build. Clause (1) of the control
 rule firing on its own author — the instrument works.
+
+---
+
+## Round 11 — the merge, and counting what I had been quoting
+
+PR #2 merged onto this branch. That changed the epistemic situation more
+than it changed the tree: for eleven rounds I had been auditing the Lean
+suite through a *diff*, and a diff is read once. With the files in hand I
+could run a census instead of a citation — `paradoxes/lean/capture_census.jl`,
+exit 0, all four predictions (P34–P36 + controls) holding.
+
+It found three of my numbers wrong and one of my attributions wrong.
+
+**Erratum 5 — the count.** `RejectionCapture.lean` opened by calling the
+`#guard_msgs` blocks "14 of them," the ecosystem's only negative
+certificate. 14 is the number of lines *mentioning* `#guard_msgs`,
+including prose about the instrument. The uses are **12**. Of those, **8**
+pin an `error:` and 4 pin `info:` — and an `info:` pin is an ordinary
+output regression, a *positive* certificate of exactly the kind the rest
+of the suite ships. So the negative-certificate count I published was 14;
+it is 8. I took the number by eye, once, from a diff, and then reused it
+inside the document arguing that certificates must be harvested rather
+than remembered. The rule was right; its author was the fixture.
+
+**Erratum 6 — the attribution, and it corrects me in their favour.** The
+Finding-A amendment credited clause (4) — pair every refusal with a
+minimally different acceptance — as a move the audited file had *missed*.
+It had not. Five of its eight refusals already ship a twin: `def liar`
+(termination) ↔ accepted `liarFuel`; `partial def liarBool` ↔ accepted
+`liarRun`; both stuck `liarRun () = !liarRun ()` captures ↔ the **proved**
+`liarRun_ne`, which is stronger than an acceptance because it converts
+"cannot be written" into "is false"; `#eval chosenBool` ↔ the accepted
+`noncomputable def chosenBool` plus `chosenBool_dichotomy`. The discipline
+predated the rule I wrote to demand it.
+
+**And the finding that survives, sharper than what it replaced.** The
+three unpaired refusals are not a random three. Two are the pair that
+shares one verdict text verbatim (`Liar` and `C`, both "non positive
+occurrence"); the third is the universe wall. So:
+
+> a capture is indistinguishable from its neighbours **exactly when** it
+> has no twin to be distinguished from.
+
+Finding A and clause (4) are therefore not two findings but one — the
+class-resolution limit *is* the missing-twin condition, and the house rule
+loses a clause by gaining an explanation. §4′ of `RejectionCapture.lean`
+closes the two remaining gaps and both close cleanly (kernel-accepted,
+exit 0): `CPayload` puts Curry's recursive occurrence in positive position
+with an arbitrary payload — proving the kernel objects to the *arrow
+position*, not to the payload that supposedly makes Curry "worse than the
+liar" — and `UOk : Type 1 := Type` proves the universe refusal is about
+the index, not about `Type` being illegitimate to name.
+
+**Erratum 7 — theirs, and in the honest direction.** The PR body advertises
+"91 entries — 53 THEOREM, 15 VERIFIED, 4 DEMO, 3 GUARDED, 16 NOTE."
+`lake exe paradoxes` on the merged tree prints "91 — **50 THEOREM, 3
+IDENTITY**, 15 VERIFIED, 4 DEMO, 3 GUARDED, 16 NOTE." Total agrees;
+breakdown does not. Three entries were reclassified THEOREM → IDENTITY
+in-tree and the abstract kept the pre-reclassification number. Note the
+sign: this thread's standing failure mode is narration outrunning the
+formal object; here the **object outran the narration** — the ledger got
+stricter and the advertisement stood still. That is the harder direction
+to catch, because nobody re-reads an abstract to check whether it has
+become too generous by not moving. (Unfixable in place now: the PR is
+merged. Recorded here instead.)
+
+**Conceded to them, on the record.** E6 answers my Int16 erratum correctly:
+`∀ x : UInt16, x + x = 2 * x` holds, and my Julia counterexample was
+*ambient promotion* (`2x` promotes to Int64 while `x + x` wraps in Int16),
+not a fact about doubling. Their diagnosis is right and mine was a fact
+about Julia's numeric tower wearing a fact about arithmetic. One caveat
+worth naming rather than swallowing: that particular theorem is carried by
+`native_decide`, and the audit prints its price —
+`uint16_double._native.native_decide.ax_1_1`, a trusted-compiler axiom the
+kernel does not check. The correction stands; it is simply the one
+certificate in the file the kernel declines to underwrite, and the PR's
+"zero `axiom` declarations" is true of the keyword rather than the ledger.
+
+**Standing.** The census court audited the kernel court's negative space
+with a script that opens a file, because "how many refusals does this
+system hold" is a question about text and Lean cannot ask it of itself —
+a rejection-capture is existential, and the *population* of captures is
+not a Lean proposition either. Each court checking the other's books is
+the only arrangement in which either count is worth anything.
