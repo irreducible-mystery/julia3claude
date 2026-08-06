@@ -1,0 +1,110 @@
+==============================================================================
+1. LIAR PARADOX  --  L: 'This sentence is false'
+==============================================================================
+Encoding: the evidence FOR L is exactly the evidence AGAINST L (if L is
+true it is false, if false it is true). Iterate the self-referential update:
+   mu(t+1)  = credence that L is false  = lam-side estimate = 1 - mu(t)... but
+under PAL2v we track BOTH annotations: new (mu,lam) = (lam_prev_belief_L_false
+consistency), i.e. the map (mu,lam) -> ( (1-mu+lam)/2 smoothing-free would
+oscillate; we use the direct fixed-point map (mu,lam) <- (0.5*(mu+(1-lam)) swap):
+   mu'  = 1 - mu_estimate_of_truth ... classical bivalent iteration OSCILLATES.
+We show: (a) classical bivalent iteration never converges; (b) PAL2v annotation
+iteration converges to (0.5, 0.5) -- the exact CENTER of the lattice, the point
+of perfect undefinedness, and the paradox is quarantined there.
+
+(a) Classical bivalent iteration: [1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0]
+    -> permanent 2-cycle, no truth value exists (revenge oscillation)
+
+(b) PAL2v evidential iteration (with evidential averaging, weight 0.5):
+  after 25 iterations: mu=0.5000, lam=0.5000
+  (mu=0.500, lam=0.500) -> dc=+0.000  dct=+0.000  muER=0.500  region=I      decision=UNDECIDED
+  NOTE: Converges to the lattice CENTER 'I' (perfectly undefined): PAL2v assigns the Liar a stable fixed point instead of oscillating -- the paradox is contained.
+
+  Pure instantaneous encoding (mu=1 given L false, lam=1 given L true):
+  (mu=1.000, lam=1.000) -> dc=+0.000  dct=+1.000  muER=0.500  region=┬      decision=UNDECIDED
+  NOTE: Lands exactly on the INCONSISTENT vertex (top of lattice): total conflict, recognized as such, trivializing nothing.
+
+==============================================================================
+2. RUSSELL'S PARADOX  --  R = {x : x not in x};  is R in R?
+==============================================================================
+Encoding: naive comprehension yields a PROOF that R in R (from assuming
+R not in R) and a PROOF that R not in R (from assuming R in R). Two maximally
+valid derivations = full favorable evidence AND full unfavorable evidence.
+  (mu=1.000, lam=1.000) -> dc=+0.000  dct=+1.000  muER=0.500  region=┬      decision=UNDECIDED
+  NOTE: Region '┬' (inconsistent vertex). dc=0: zero net certainty; dct=+1: maximal contradiction. The theory *records* the antinomy rather than collapsing.
+
+  NON-EXPLOSION TEST (ex contradictione non sequitur quodlibet):
+  Classical logic: from {R in R, R not in R} derive ANY proposition Q.
+  PAL2v: propositions carry their own annotations; Q about which we have
+  no evidence stays paracomplete regardless of Russell's antinomy:
+  (mu=0.000, lam=0.000) -> dc=+0.000  dct=-1.000  muER=0.500  region=┴      decision=UNDECIDED
+  NOTE: Q sits at the PARACOMPLETE vertex '┴' (dct=-1): total ignorance. The Russell contradiction does NOT propagate certainty to Q -> explosion fails, as desired.
+  With no inferential path, Q remains (mu=0, lam=0) -> region ┴.  In classical logic Q would be THEOREM. Here: undecided/unknown.
+
+==============================================================================
+3. SORITES PARADOX  --  when does a heap stop being a heap?
+==============================================================================
+Encoding: n grains from 10,000 down to 1. Favorable evidence 'heap' from a
+logistic community-judgment curve centered at 100 grains; unfavorable evidence
+from the induction premise pressure ('removing ONE grain can't destroy a heap')
+which asserts heap-hood all the way down -- these clash in the penumbra.
+
+ grains     mu    lam      dc     dct  region   decision
+      1  0.002  0.998  -0.995  +0.000  f       NOT-HEAP
+     10  0.047  0.953  -0.905  +0.000  f       NOT-HEAP
+  10000  0.998  0.002  +0.995  +0.000  t       HEAP
+
+  Penumbra (|dc| < FtC): n in [49, 201] grains -> 10 of 53 tested sizes are 'quasi' states.
+  (mu=0.525, lam=0.475) -> dc=+0.050  dct=+0.000  muER=0.525  region=Qt→┬   decision=ACCEPT
+  NOTE: The vague midpoint sits near the center-line: NO sharp cut-off exists; heap-hood degrades through labeled quasi-regions instead of a forced bivalent boundary. The induction premise is 'almost true' everywhere but accumulates measurable contradiction in the penumbra -- dissolving the paradox gradually.
+
+==============================================================================
+4. SIMPSON'S PARADOX  --  UC Berkeley 1973 graduate admissions (real data)
+==============================================================================
+
+Aggregate admission rates: men 44.5% vs women 30.4%  -> aggregate FAVORS MEN (gap +14.2%)
+ dept  men rate  women rate   favors
+    A     62.1%       82.4%    WOMEN
+    B     63.0%       68.0%    WOMEN
+    C     36.9%       34.1%      men
+    D     33.1%       34.9%    WOMEN
+    E     27.7%       23.9%      men
+    F      5.9%        7.0%    WOMEN
+-> 4/6 departments favor WOMEN: stratified data REVERSES the aggregate.
+
+Encoding of hypothesis H = 'admissions are biased against women':
+  favorable evidence mu  : normalized aggregate gap (aggregate view supports H)
+  unfavorable evid. lam  : per-department evidence against H (weighted share of
+                           applicants in departments favoring women + reversed gaps)
+  (mu=0.659, lam=0.607) -> dc=+0.052  dct=+0.266  muER=0.508  region=Q┬→t   decision=ACCEPT
+  NOTE: Both analyses are internally sound yet contradict -> positive dct=+0.27 and region Q┬→t (quasi-inconsistent). muER collapses to ~0.51, i.e. essentially the indecision point: nearly all apparent certainty is destroyed. The flagged contradiction is precisely the signal that a LURKING VARIABLE (department choice) must be modeled.
+
+==============================================================================
+5. CONDORCET PARADOX  --  cyclic majorities A>B, B>C, C>A
+==============================================================================
+Pairwise majorities:
+  A beats B: 66.7% of voters
+  B beats C: 66.7% of voters
+  C beats A: 66.7% of voters
+
+Encoding of H = 'A is the collective best choice':
+  mu  = A's average pairwise win share (A beats B 2/3)
+  lam = evidence against, from A's pairwise LOSS (C beats A 2/3)
+  (mu=0.667, lam=0.667) -> dc=+0.000  dct=+0.333  muER=0.500  region=Q┬→t   decision=UNDECIDED
+  NOTE: dc=0 with positive dct: the cycle manifests as pure contradiction with zero net certainty -- identically for B and C by symmetry. PAL2v exposes that majority aggregation itself is inconsistent here (no Condorcet winner), rather than crowning an arbitrary candidate.
+  candidate B: dc=+0.000 dct=+0.333 region=Q┬→t (symmetric)
+  candidate C: dc=+0.000 dct=+0.333 region=Q┬→t (symmetric)
+
+==============================================================================
+CROSS-DOMAIN SUMMARY
+==============================================================================
+paradox                       dc     dct  region  decision
+Liar                      +0.000  +0.000  I       UNDECIDED
+Liar (instant)            +0.000  +1.000  ┬       UNDECIDED
+Russell                   +0.000  +1.000  ┬       UNDECIDED
+Unrelated Q (no evidence)  +0.000  -1.000  ┴       UNDECIDED
+Sorites (n=108)           +0.050  +0.000  Qt→┬    ACCEPT
+Simpson (Berkeley)        +0.052  +0.266  Q┬→t    ACCEPT
+Condorcet (cand. A)       +0.000  +0.333  Q┬→t    UNDECIDED
+
+All artifacts written to results/.

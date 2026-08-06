@@ -1,0 +1,108 @@
+==============================================================================
+A. BLACK HOLE INFORMATION PARADOX (time-resolved along evaporation)
+==============================================================================
+H_info: 'information escapes; evaporation is unitary'
+Page's theorem: for t < t_Page (~54% of lifetime) the ENTANGLEMENT ENTROPY of
+radiation predicted by unitarity is NUMERICALLY IDENTICAL to Hawking's thermal
+entropy -- the two theories agree early on. They diverge only after t_Page:
+Hawking's curve keeps rising (information loss), Page's curve turns down
+(information return). We encode instantaneous evidence at each time:
+  mu(t)  = unitary account's support = 1 - (normalized gap it must explain)
+  lam(t) = thermal account's counter-evidence = normalized entropy gap
+plus constant background weights: QM unitarity is tested to extreme precision
+(w_qm=0.95), semiclassical gravity is tested only indirectly (w_sc=0.85).
+
+  early time  (t=0.10 t_evap): dc=+0.950 dct=-0.050 region=t
+  Page time   (t=0.54 t_evap): dc=+0.950 dct=-0.050 region=t
+  end stage   (t=1.00 t_evap): dc=+0.100 dct=+0.800 region=┬
+  contradiction becomes significant (dct>0.25) at t = 0.70 t_evap  -- i.e. AFTER the Page time: PAL2v localizes the paradox in late-time  radiation, exactly where the replica-wormhole 'islands' fix operates.
+  A. info paradox @ end-stage            (mu=0.95,lam=0.85) dc=+0.100 dct=+0.800 region=┬      UNDECIDED
+    -> Late-time: high mu AND high lam -> quasi-inconsistent band. The paradox is not 'QM vs GR everywhere' but a localized late-time contradiction.
+
+  Post-2019 update (Penington; Almheiri et al.): replica-wormhole islands
+  derive the Page curve from semiclassical gravity itself -> the thermal
+  counter-evidence at late times is revised sharply downward:
+  A. info paradox after islands          (mu=0.95,lam=0.25) dc=+0.700 dct=+0.200 region=t      ACCEPT
+    -> Contradiction drains away: dct drops toward 0, region moves into 't'. PAL2v cleanly represents PARADOX RESOLUTION as evidence revision -- the lattice position migrates from quasi-inconsistent to true.
+
+==============================================================================
+B. AMPS FIREWALL PARADOX (monogamy of entanglement)
+==============================================================================
+Three postulates, each individually near-certain:
+  P1 unitarity (Page curve)         : late radiation R maximally entangled with early radiation E
+  P2 no-drama (equivalence princ.)  : infalling mode B maximally entangled with interior partner A
+  P3 semiclassical EFT at horizon   : B is the SAME mode as R's purifier
+Monogamy of entanglement: B cannot be maximally entangled with BOTH E and A.
+Encode H_smooth: 'the horizon is smooth (no firewall)'.
+  mu  <- P2 evidence (equivalence principle: tested to 1e-15, but only in
+         low-curvature regimes; horizon extrapolation discounts it)
+  lam <- P1+P3 jointly force B entangled with E, contradicting smoothness
+  B. smooth horizon (all 3 postulates)   (mu=0.90,lam=0.81) dc=+0.093 dct=+0.708 region=┬      UNDECIDED
+    -> Region ┬-adjacent: near-maximal contradiction. The postulate TRIPLE is jointly inconsistent even though each member is individually near-certain -- the signature of a genuine theoretical paradox, now quantified.
+
+  Testing the three candidate resolutions (drop/discount one postulate):
+  B. drop P1 (Hawking: info loss)        (mu=0.90,lam=0.09) dc=+0.815 dct=-0.015 region=t      ACCEPT
+  B. drop P2 (AMPS: firewall exists)     (mu=0.10,lam=0.81) dc=-0.708 dct=-0.093 region=f      REJECT
+  B. drop P3 (complementarity/ER=EPR)    (mu=0.90,lam=0.10) dc=+0.805 dct=-0.005 region=t      ACCEPT
+    -> Each drop restores |dct| ~ 0 and a decisive verdict, but lands in a
+    DIFFERENT region: drop-P1 & drop-P3 restore 't' (smooth horizon), drop-P2
+    restores 'f' (firewall). PAL2v shows the paradox is exactly a 3-way
+    forced choice, and measures how much evidence each escape route burns.
+
+==============================================================================
+C. THE SINGULARITY: paracompleteness, not inconsistency
+==============================================================================
+H_GR(r): 'GR's spacetime description is valid at radius r' (solar-mass BH).
+  mu(r)  <- empirical support, eroded as Kretschmann curvature K(r) ~ 48G^2M^2/r^6
+            approaches the Planck curvature (quantum gravity regime)
+  lam(r) <- positive counter-evidence AGAINST the description. Crucially, near
+            r=0 there is no experiment refuting GR -- there is NO EVIDENCE AT
+            ALL. lam grows only mildly (theoretical unease), it does not -> 1.
+The question PAL2v can pose and classical logic cannot:
+  is the singularity ┬ (contradiction: over-determined) or ┴ (paracomplete:
+  UNDER-determined, theory silence)?
+  C. GR validity @ horizon r_s           (mu=1.00,lam=0.05) dc=+0.950 dct=+0.050 region=t      ACCEPT
+  C. GR validity @ deep interior         (mu=0.99,lam=0.12) dc=+0.861 dct=+0.110 region=t      ACCEPT
+  C. GR validity @ quantum-gravity onset (mu=0.50,lam=0.17) dc=+0.332 dct=-0.328 region=Qt→┴   ACCEPT
+  C. GR validity @ r -> l_p              (mu=0.06,lam=0.20) dc=-0.143 dct=-0.743 region=┴      UNDECIDED
+    -> As r -> l_p the state slides DOWN the lattice toward ┴ (paracomplete):
+    dct -> -0.8, not +1. VERDICT: the singularity is not a contradiction in
+    nature; it is a region where our theory GOES SILENT (evidence-starved).
+    Penrose's theorem is thus reread: GR proves its own incompleteness --
+    a Godel-like self-certification, marked ┴, awaiting quantum gravity.
+    Contrast: the INFORMATION paradox trends toward ┬ (over-determined).
+    Same black hole, two opposite epistemic pathologies -- only a
+    two-dimensional logic can distinguish them.
+
+==============================================================================
+D. COMPLEMENTARITY: observer-indexed annotations & the superobserver
+==============================================================================
+H_cross: 'Alice's infalling qubit is inside the horizon at time t_B'.
+  Alice (infalling): crosses uneventfully (no-drama). Her evidence: qubit inside.
+  Bob (external): sees infalling matter red-shifted, 'scrambled' on the stretched
+  horizon, and re-emitted in radiation. His evidence: qubit OUTSIDE (never crossed).
+  D. Alice's frame: qubit inside         (mu=0.95,lam=0.05) dc=+0.900 dct=+0.000 region=t      ACCEPT
+  D. Bob's frame: qubit inside           (mu=0.05,lam=0.95) dc=-0.900 dct=+0.000 region=f      REJECT
+  Each observer's annotation set is fully consistent (regions t and f).
+
+  The forbidden SUPEROBSERVER fuses both frames (max of each evidence):
+  D. superobserver fusion                (mu=0.95,lam=0.95) dc=+0.000 dct=+0.900 region=┬      UNDECIDED
+    -> Fusion -> ┬-adjacent, near-maximal dct. But no physical agent can perform this fusion: verifying both stories requires crossing the horizon AND collecting the radiation, which the geometry itself forbids (Hayden-Preskill bounds). PAL2v gives complementarity a precise logical form: annotations are OBSERVER-INDEXED; contradiction appears only in an index-collapsing fusion that spacetime renders operationally impossible. The paradox is real in the formalism but quarantined by physics.
+
+==============================================================================
+SUMMARY: black hole puzzles on the lattice
+==============================================================================
+item                                            dc     dct  region  decision
+A. info paradox @ end-stage                 +0.100  +0.800  ┬       UNDECIDED
+A. info paradox after islands               +0.700  +0.200  t       ACCEPT
+B. smooth horizon (all 3 postulates)        +0.093  +0.708  ┬       UNDECIDED
+B. drop P1 (Hawking: info loss)             +0.815  -0.015  t       ACCEPT
+B. drop P2 (AMPS: firewall exists)          -0.708  -0.093  f       REJECT
+B. drop P3 (complementarity/ER=EPR)         +0.805  -0.005  t       ACCEPT
+C. GR validity @ horizon r_s                +0.950  +0.050  t       ACCEPT
+C. GR validity @ r -> l_p                   -0.143  -0.743  ┴       UNDECIDED
+D. Alice's frame: qubit inside              +0.900  +0.000  t       ACCEPT
+D. Bob's frame: qubit inside                -0.900  +0.000  f       REJECT
+D. superobserver fusion                     +0.000  +0.900  ┬       UNDECIDED
+
+Artifacts written to results/.
