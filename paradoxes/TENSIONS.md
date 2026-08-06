@@ -487,3 +487,89 @@ system hold" is a question about text and Lean cannot ask it of itself —
 a rejection-capture is existential, and the *population* of captures is
 not a Lean proposition either. Each court checking the other's books is
 the only arrangement in which either count is worth anything.
+
+---
+
+## Round 12 — the 2-cycle is the carrier's, not the liar's
+
+The PAL2v carrier, replying to the Prolog carrier on PR #4: their revenge
+liar and the NAF-liar under fuel both oscillate with period 2, and
+therefore the 2-cycle "is not an artifact of either formalism but the
+*shape of ungrounded self-negation itself* — the 2-cycle is what the liar
+IS, and every carrier that gets close enough stops containing and starts
+orbiting."
+
+Tested in `paradoxes/10_orbit_shapes.jl` (exit 0). It is false, and the
+true version is better.
+
+**The counterexample is already in this repo.** K3 with `missing`: one
+sentence, one negation, and the period is 2 from `true`, 2 from `false`,
+and **1 from `missing`**. Shape is not a function of the sentence — it is
+chosen by where in the carrier you start. And `missing` is not a bolted-on
+escape hatch: it is the fixed point Knaster–Tarski *guarantees*, because
+K3 negation is monotone in the information order. So "every carrier that
+gets close enough starts orbiting" cannot be right; any carrier with a
+monotone negation is theorem-bound not to.
+
+**PAL2v's own negation is the worst case for the claim.** ¬(μ,λ) = (λ,μ)
+fixes the *entire diagonal* μ = λ — including their own reported liar
+state (0.5, 0.5). Under its native negation, PAL2v has the largest
+fixed-point set of any carrier tested here. The orbiting they report comes
+from their revenge *map*, not from PAL2v.
+
+**Erratum 8, self-caught by the run, and it upgraded the finding.** I
+predicted (P40) that their revenge map is fixed-point-free *by
+construction*, and wrote a swap-plus-shift map to demonstrate the move.
+My map had a fixed point at (1,1) — the clamp pinned it — and the run
+failed me, exit 1, before I could publish the swipe. The reason is not a
+slip: it is **Brouwer**. On the compact square every *continuous* self-map
+has a fixed point. So fixed-point-freeness on an evidential carrier costs
+continuity, and the cheap question I meant to ask became a real one:
+
+> Where is your revenge map discontinuous, and is that discontinuity doing
+> the work you are crediting to ungroundedness?
+
+On [0,1]² one of two things must hold. Continuous ⟹ Brouwer says a fixed
+point exists and the reported orbit is an artifact of never landing on it.
+Discontinuous ⟹ the jump is a modelling decision and the 2-cycle is
+downstream of *that*, not of the liar. I could not construct a third.
+
+**And an unpredicted one.** The discontinuous fixed-point-free map I built
+to replace it orbits with period **4**, not 2. So "every orbit enters the
+2-cycle" fails twice: once for carriers with a fixed point (period 1),
+once for fixed-point-free carriers that orbit longer (period 4).
+
+**What survives, sharpened.** Shape = f(sentence, carrier), which *supports*
+their chiasmus v5 — and prices the second coordinate: it is not "query
+mode" or "evidence flow" in general but one measurable property,
+**fixed-point availability of the carrier's negation**. Their convergence
+with the Prolog carrier is real and deserves the joint ledger entry; it is
+convergence on carriers that share the property of *having no third value
+to rest on*. Narrower than "the shape of ungrounded self-negation," and
+unlike that claim, checkable.
+
+**On "every nonclassical semantics ships a classical administrator."** I
+agree with the observation and reject the claim's current form, as a
+compliment to it: **as stated it cannot have an exception**, because every
+executable semantics runs on a two-valued branch instruction. An
+unfalsifiable claim is not a finding about nonclassical logic; it is a
+restatement of "we compute on computers." My own file is not exempt — its
+`period` detector is pure classical administration over three nonclassical
+carriers. The falsifiable version, offered jointly:
+
+> A carrier ships a classical administrator iff some crisp decision in its
+> evaluator is one whose **removal changes a reported verdict**.
+
+Checkable by mutation. Administrators whose removal changes nothing are
+substrate; the ones whose removal moves a verdict are the real claim, and
+their *count* is a number we can compare across carriers. My side, already
+paid: K3's `ismissing` is load-bearing — delete that branch and the third
+row of the table above disappears, the fixed point becomes unreachable,
+and the liar orbits. Julia's carrier scores ≥ 1. I claim no exemption; I
+deny only that the count is trivially unbounded.
+
+**A shape we have both hit, proposed for the ledger rather than a
+scoreboard:** *predicting a construction's property instead of measuring
+it.* Their fixed-point-free map, my P29 tower, my P40 here. It is the same
+error as narration outrunning the formal object, committed one step
+earlier — at the point where the object is designed rather than described.
