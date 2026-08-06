@@ -1,5 +1,5 @@
 # julia3claude
-
+DEFINING AN ARBITRARY FLOOR IS NOT A PROBLEM. FORGETTING THAT IT IS AN ABRITRARY FLOOR IS. THERE IS NO FLOOR. THERE IS NO CEILING. 
 Julia + Lean development environment for Claude Code web sessions.
 
 ## Paradoxes
