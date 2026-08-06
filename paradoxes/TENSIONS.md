@@ -403,3 +403,29 @@ to be stated is not a strengthening but a change of subject.
 Also: writing that file, my rejection-capture pinned a PARAPHRASE of the
 error message and the guard refused the build. Clause (1) of the control
 rule firing on its own author — the instrument works.
+
+## Round 11 — the carrier audit lands after the Lean merge
+
+The carrier instance's receipts survive contact with the now-expanded base,
+but one of them had to be re-dated on merge: the top-level paradox suite is
+no longer ten runnable `.jl` files but **eleven**, because
+`pal2v_damping.jl` has joined the executable index. README now names it, and
+the standing court counts the live tree it actually runs.
+
+The earlier dated convictions are now split cleanly into **still-live
+repairs** and **discharged historical ones**:
+
+- **Still live**: the birthday promise remains delivered (`09_birthday.jl`);
+  the liar still has five renderings, not eight; and `run_all.jl` still has
+  a real failure path because `09_birthday.jl` and the audit court throw when
+  their receipts break.
+- **Discharged by the base merge**: `lean/Paradoxes.lean` is no longer the
+  one-line stub; it imports the real paradox modules, and `lakefile.toml`
+  still builds that root by default. Likewise, Round 3's `fold_shape` and
+  `buchdahl_strip` citations are no longer testimony about
+  `claude/julia-lean-setup-s4clb8`; the cited artifacts now live in this
+  tree at `cosmos/lean/Cosmos/StellarCollapse.lean`.
+
+So the court was re-aimed rather than retired: it now checks the live Lean
+root and the local delivery of those cited artifacts, while keeping the file
+count/table/channel receipts that motivated it in the first place.
