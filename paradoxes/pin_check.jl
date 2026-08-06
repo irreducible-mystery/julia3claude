@@ -105,27 +105,27 @@ const CAPTURED = joinpath(HERE, "lean", "RejectionCapture.lean")
 pins = [
  (name="renderings",   doc=README,   re=r"the liar \((\w+) renderings\)",
   derive=derive_renderings,  stress=() -> derive_renderings() + 1,
-  open=true,  owner="PR #3 (carrier instance)"),
+  open=true,  owner="PR #3 (carrier instance)", reversal=:in_tree),
 
  (name="runnable",     doc=README,   re=r"(\w+) runnable",
   derive=derive_runnable,    stress=() -> derive_runnable() + 1,
-  open=true,  owner="PR #3 (carrier instance)"),
+  open=true,  owner="PR #3 (carrier instance)", reversal=:in_tree),
 
  (name="count_vs_table", doc=README, re=r"(\w+) runnable",   # README's own count vs its own table
   derive=derive_table_rows,  stress=() -> derive_table_rows() + 1,
-  open=true,  owner="PR #3 (carrier instance)"),
+  open=true,  owner="PR #3 (carrier instance)", reversal=:in_tree),
 
  (name="guard_uses",   doc=CAPTURED, re=r"Expressibility\.lean: (\d+) uses",
   derive=derive_guard_uses,  stress=() -> derive_guard_uses() + 1,
-  open=false, owner="mine"),
+  open=false, owner="mine", reversal=:in_tree),
 
  (name="guard_errors", doc=CAPTURED, re=r"(\d+) of them refusals",
   derive=derive_guard_errors, stress=() -> derive_guard_errors() + 1,
-  open=false, owner="mine"),
+  open=false, owner="mine", reversal=:in_tree),
 ]
 
 # ─── §1 · the pins that must hold ─────────────────────────────────────
-section("§1 · pins that must hold (owner: mine)")
+section("§1 · pins currently asserted as holding (provisional, owner: mine)")
 for p in pins
     p.open && continue
     c, d = claimed(p.doc, p.re), p.derive()
@@ -194,6 +194,55 @@ println("""
   someone to find. A meta-ledger incomplete by construction, as the note
   asks, means printing the incompleteness, not implying it.""")
 
+# ─── §5 · reversal cost — the operational form of "semi-forgetting" ───
+section("§5 · reversal cost, not error count")
+let by = Dict{Symbol,Int}()
+    for p in pins; by[p.reversal] = get(by, p.reversal, 0) + 1; end
+    for k in (:in_tree, :toolchain, :unreachable)
+        println("  ", rpad(String(k), 13), get(by, k, 0), " pin(s)")
+    end
+    # P56, and it convicts the registry rather than flattering it:
+    (get(by, :in_tree, 0) == length(pins)) ?
+        pass("P56 holds, and it is a FINDING AGAINST THIS FILE — every pin " *
+             "is in_tree.\n      The registry covers exactly the cheap " *
+             "forgettings and none of the costly ones.") :
+        fail("P56: expected all $(length(pins)) pins in_tree, got $(get(by, :in_tree, 0))")
+end
+println("""
+  A LATER CORRECTION FROM THE SAME VOICE, and it lands on this file:
+
+    "We are NOT trying to escape representation. That is not possible.
+     Semi-forgetting is part of how any next move gets made. … Two truths
+     without collapse: (1) cut is provisional; (2) cut is necessary for
+     the next move."
+
+  My own verdict here first read: "I now cannot commit a change that
+  moves a pinned number." That is the escape framing, written into the
+  instrument built against it. A pinned number SHOULD move — the tree
+  moves, and the cut is necessary. The pin's job was never to stop the
+  movement; it is to make the movement a DECISION instead of a silence.
+  Reworded below; the original is kept here because deleting it would be
+  the same forgetting one layer up.
+
+  Which turns the whole ledger over. Sixteen rounds of errata are not a
+  failure record — they are a record of FORGETTINGS, and forgetting is
+  load-bearing rather than optional. The metric that matters is not how
+  many there were but what each cost to reverse:
+    · in_tree     — a script re-derives it (the "14 guard_msgs" error)
+    · toolchain   — needs an external build (the Lean catalog tally)
+    · unreachable — outside the tree entirely (numbers in PR comments,
+                    where three of my four recorded errors landed)
+  Cheap forgettings are the price of making a next move at all. Only the
+  unreachable ones are debt.
+
+  And the count above indicts the registry: 5 in_tree, 0 toolchain, 0
+  unreachable. I pinned every number that was easy to pin and none that
+  was not — the Lean tally sits in `toolchain` unpinned, and the PR-comment
+  numbers sit in `unreachable` where three of my four errors actually
+  landed. A cut that covers only its own cheap cases and reports itself
+  green is the exact shape being warned about, so it is printed as a
+  finding against this file rather than as a score for it.""")
+
 section("verdict")
 println("""
   Expiry is the mechanization I said last round I did not have, and it
@@ -201,11 +250,11 @@ println("""
   that a claimed number still matches its derivation, and it makes both
   drift AND stale deferral cost a red run.
 
-  Against the note's definition — the next move must be alterable by
-  evidence, not merely recitable — this is the first thing here that
-  qualifies: I now cannot commit a change that moves a pinned number
-  without the suite objecting, and I cannot leave a landed repair marked
-  as deferred.""")
+  Reworded after the correction: this does not stop a cut from moving,
+  and it should not — the cut is provisional AND necessary. What it does
+  is make a moved cut arrive as a decision rather than as a silence, and
+  it prices the forgetting by where the number can be re-derived from.
+  Non-self-fooling, not escape. Continuous practice, not a floor.""")
 
 println("\nexit ", exitcode, " — evidence, never proof.")
 

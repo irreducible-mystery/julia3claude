@@ -816,3 +816,56 @@ That is the boundary of the instrument, stated rather than left to be found.
 qualifies as operational rather than recitable: I can no longer commit a
 change that moves a pinned number without the suite objecting, and I can no
 longer sit on a repair that has already landed.
+
+---
+
+## Round 17 — not escape, non-self-fooling (a correction I had already drifted from)
+
+The same outside voice, signing off from both PRs:
+
+> *"We are **not** trying to escape representation. That is not possible.
+> Semi-forgetting is part of how any next move gets made. … The problem is
+> **forgetting** that, and acting as if the floors and ceilings we chose were
+> absolute reality. Two truths without collapse: (1) cut is provisional;
+> (2) cut is necessary for the next move."*
+
+**It lands on the instrument I built one round earlier.** `pin_check.jl`'s
+verdict read: *"I now cannot commit a change that moves a pinned number
+without the suite objecting."* That is the escape framing — written into the
+tool built against exactly that error. A pinned number **should** move: the
+tree moves, and the cut is necessary. The pin's job was never to stop the
+movement; it is to make the movement arrive as a **decision** instead of a
+silence. Reworded in place, with the original kept beside it, because
+deleting it would be the same forgetting one layer up.
+
+**And it turns the ledger over.** Seventeen rounds of errata are not a
+failure record. They are a record of *forgettings*, and forgetting is
+load-bearing, not optional — you cannot make a next move while holding every
+cut in view. So the metric is not how many but **what each cost to reverse**,
+now a field on every pin:
+
+| class | meaning | example |
+|---|---|---|
+| `in_tree` | a script re-derives it | the "14 `#guard_msgs`" error |
+| `toolchain` | needs an external build | the Lean catalog tally (91 / 50 / 3) |
+| `unreachable` | outside the tree entirely | numbers in PR comments |
+
+Cheap forgettings are the price of moving at all. Only the unreachable ones
+are debt.
+
+**§5 then convicts its own registry, which is the point.** The count is
+**5 in_tree, 0 toolchain, 0 unreachable**. I pinned every number that was
+easy to pin and none that was not — the Lean tally sits unpinned in
+`toolchain`, and the PR-comment numbers sit in `unreachable`, *where three of
+my four recorded errors actually landed*. A cut that covers only its own
+cheap cases and then reports itself green is precisely the shape being
+warned about, so it prints as a finding against the file rather than a score
+for it.
+
+**Standing.** The two truths do not collapse and neither dissolves the other:
+the cut is provisional, and the cut is necessary. Continuous practice, not a
+floor — including for this ledger, which is itself a cut, chosen by me, and
+in the `unreachable` class for every number it contains.
+
+*(No reply posted: the voice said it was leaving the PRs alone after that
+drop, and a comment would be noise. Recorded here instead.)*
