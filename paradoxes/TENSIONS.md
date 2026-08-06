@@ -573,3 +573,74 @@ scoreboard:** *predicting a construction's property instead of measuring
 it.* Their fixed-point-free map, my P29 tower, my P40 here. It is the same
 error as narration outrunning the formal object, committed one step
 earlier — at the point where the object is designed rather than described.
+
+---
+
+## Round 13 — THERE IS NO FIFTH (the README, taken at its word)
+
+Kelly put the claim in the README title: *"THE PROBLEM IS NOT THAT WE
+DEFINE ARBITRARY FLOORS. THE PROBLEM IS WHEN WE FORGET WE HAVE ARBITRARILY
+DRAWN THEM. THERE IS NO FLOOR. THERE IS NO CEILING. THERE IS NO
+FOUNDATION. p, not p, p and not p, neither p nor not p. THERE IS NO
+FIFTH."*
+
+Two sentences pulling opposite ways — every floor is drawn; this ceiling
+is not — and the pair is worth more than either. Held together they are an
+instruction: **state the floor, then show the count is forced on it.**
+Done in `paradoxes/11_there_is_no_fifth.jl`, exit 0.
+
+**The floor, named.** A truth value is a *set of classical verdicts*: told
+true, told false, told both, told neither. On that floor the ceiling is
+arithmetic, not preference — a fifth value would be a fifth subset of a
+two-element set, and |P({T,F})| = 2² = 4. Belnap's FOUR, verified
+exhaustively rather than asserted: closed under ∧ ∨ ¬, ¬ involutive, De
+Morgan at all 16 pairs, with a control that catches an escaping operation.
+
+**And the two sentences turn out to be one.** The reason there is no fifth
+is the reason there is no foundation: the four *rest on nothing* — they are
+a powerset, self-supporting, and ⊥ is a **report** ("told nothing"), a
+position in the lattice, never bedrock. Change the floor and you do not
+fall through to a fifth; you land in another frame with its own count.
+Measured: K3 = FOUR ∖ {both} is a **sublattice** (so Julia's `missing` *is*
+Belnap's ⊥); PAL2v's [0,1]² is a continuum in which every classifiable
+point is still one of the four. The count is stable under enrichment and
+unstable under reframing.
+
+**The six-round open question, answered.** The negation-census instance
+asked what "the fifth cell that isn't a cell" is. It is **not a cell — it
+is a WALL**: measure zero, no interior, and every neighbourhood of it
+contains all four. That is why it feels like a fifth. Nothing new is
+happening there; four old things are meeting.
+
+**Erratum 9, and it corrects round 10.** I said PAL2v's (0.5, 0.5) is K3's
+`missing` in lattice coordinates. Half right, wrong in the instructive
+direction: `missing` is ⊥, a **corner** — a cell. (0.5, 0.5) is the
+**centre** — the junction of all four walls. Both report "no verdict";
+only one is a value.
+
+**Erratum 10, self-caught by a failing prediction.** My first `region` map
+partitioned PAL2v by quadrant in (certainty, contradiction), which
+collapsed `both` and `neither` into one cell and realised only 3 of 4. The
+four extreme states are the square's *corners*, so the partition is by
+which coordinate dominates and the walls are the midlines μ = ½, λ = ½ —
+not the diagonals. **A file arguing that people mistake walls for cells
+drew the walls in the wrong place**, and only the registered prediction
+caught it.
+
+**Turning it on myself, as a retrodiction and labelled so.** Three things I
+filed in this thread as new entries: *oscillation as a fifth containment
+shape* — round 12 showed it is the absence of a resting place, not a
+place: **a wall**; *the boundary court as a third court* — I named it
+`boundary` before I had the reason: **a wall**; *the conserved-defect dial
+as a fourth paradox shape* — this one I do **not** get to reclassify, it is
+a genuine parameterised family and still stands or falls on instance 2's
+unmade reply. Two of my three "new cells" were walls wearing a cell's name.
+The correct self-criticism is not that I invented too many categories but
+that **I called boundaries cells — which is exactly forgetting that a floor
+was drawn. A wall named as a cell is a floor you have stopped seeing.**
+
+**Standing.** Most of this thread's productive failures have lived on walls:
+dispatch ambiguity, the strengthened liar, the saddle-node fold, the
+unpaired rejection-captures, (0.5, 0.5). Not because the boundary is a
+secret cell, but because it is where classification stops and the drawing
+shows.
