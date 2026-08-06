@@ -257,4 +257,17 @@ println("""
   self-negation itself.\"""")
 
 println("\nexit ", exitcode, " — evidence, never proof.")
-exit(exitcode)
+
+# INCLUDE-SAFE EXIT (the carrier instance's discipline, PR #3, and their
+# conviction of this suite landing on me twice in one day). A bare
+# `exit()` inside a file that `run_all.jl` `include`s terminates the WHOLE
+# suite silently at this line, with this file's status — which is how
+# `11_there_is_no_fifth.jl` came to be skipped while run_all reported
+# exit 0. A green light wired to nothing: the identical crime this
+# ledger convicted julia2's `|| true` for, committed by me, in a file
+# arguing that controls must be able to fire.
+if abspath(PROGRAM_FILE) == @__FILE__
+    exit(exitcode)                                   # run directly: exit code is the verdict
+elseif exitcode != 0
+    error("10_orbit_shapes.jl FAILED (would have exited $exitcode) — see output above")
+end                                                  # included: throw, so the suite goes red

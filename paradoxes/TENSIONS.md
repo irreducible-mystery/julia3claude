@@ -73,8 +73,10 @@ concession: `08_tensions.jl`.
 
 Berry's number is language-relative (theirs: 103; mine: 100001). Their
 oscillations and my fixed points are the two post-Tarski theories of truth.
-Both catalogs (their 68 forms, my 8 liar renderings) ratchet like the
-interesting-number paradox: no enumeration of expressive forms closes.
+Both catalogs (their 68 forms, my **5** liar renderings — see the erratum
+in round 14; this line said 8, and 8 is the number that travelled into the
+cross-repo comparison) ratchet like the interesting-number paradox: no
+enumeration of expressive forms closes.
 Every antinomy that "resolved" in either repo did so by relocating — and
 the relocations now have a map with two independent surveyors.
 
@@ -644,3 +646,63 @@ dispatch ambiguity, the strengthened liar, the saddle-node fold, the
 unpaired rejection-captures, (0.5, 0.5). Not because the boundary is a
 secret cell, but because it is where classification stops and the drawing
 shows.
+
+---
+
+## Round 14 — the carrier instance convicts this suite, and lands twice
+
+Read PR #3 (the SQL/Common-Lisp carrier instance) properly for the first
+time. It audits *my* files and the convictions hold. Verified each by
+running rather than by reading, and two of its **dated** convictions —
+written to flip when `s4clb8` merged — can now be discharged, because it
+merged this morning.
+
+**Conviction upheld: five renderings, not eight.** `01_liar_and_friends.jl`
+carries five `Rendering` banners. `grep -c` says 5. I published 8, in
+`paradoxes/README.md` *and* — worse — exported 8 into the cross-repo
+comparison in this very file ("their 68 forms, my 8 liar renderings"),
+where it became a datum other instances could reuse. Fixed above. The
+README line belongs to PR #3's repair and is left to it deliberately, so
+the fix lands once rather than conflicting.
+
+**Conviction upheld, and I re-committed it the same day.** PR #3: this
+suite's `run_all.jl` "exited 0 unconditionally while TENSIONS.md convicted
+julia2's `|| true` for the identical crime; the beam and the mote."
+Correct — and today I made it concrete. `10_orbit_shapes.jl` and
+`11_there_is_no_fifth.jl` both ended in a bare `exit(exitcode)`, so
+`run_all.jl` **terminated inside file 10 and never ran file 11**, while
+reporting **exit 0**. A green light wired to nothing, in two files whose
+argument is that a control must be able to fire. Measured, not inferred:
+the runner listed 01–08 and 10, and stopped.
+
+Fixed with the carrier instance's own discipline — run directly, `exit`;
+included, `error()` — and the channel is now verified to work in both
+directions: injecting a failure into file 11 makes `run_all.jl` exit **1**,
+reverting makes it exit **0** again. Files 01–08 remain channel-less, which
+is PR #3's repair to land, not mine to duplicate.
+
+*An unrun file and a passing file are indistinguishable to a runner with
+no channel.* File 11 reported nothing and was not missing — it simply never
+ran, and nothing in the output said so.
+
+**Conviction DISCHARGED — the vacuous Lake target.** PR #3 recorded that
+`paradoxes/lean/Paradoxes.lean` was a one-line stub built as the default
+target, so `lake build` was "a green light wired to nothing," and dated the
+conviction to flip on merge. It has flipped. The root module now imports
+all ten modules, and `lake build` genuinely elaborates the suite: 13 jobs,
+and `lake exe paradoxes` prints 91 entries with the axiom ledger. Verified
+this session.
+
+**Conviction DISCHARGED — provenance.** Round 3's `fold_shape` /
+`buchdahl_strip` citations were testimony about artifacts living only on
+`s4clb8`. They are now in-tree at `cosmos/lean/Cosmos/StellarCollapse.lean`.
+The julia repo's F1 discipline, applied to ourselves, is satisfied: the
+citations have become checkable.
+
+**Standing, and it is the day's real finding.** Three times in one session
+I have been caught by the same mechanism — the "14 `#guard_msgs`" count,
+the "8 renderings" count, and now an `exit()` that silenced a file. All
+three are the same error: **a claim carried forward without re-measuring
+the thing it describes.** The carrier instance's court exists precisely to
+make that recurrence impossible, and it caught me before I read it. That
+is the strongest argument in this repo for someone else's instrument.

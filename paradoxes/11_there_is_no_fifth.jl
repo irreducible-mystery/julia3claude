@@ -266,4 +266,14 @@ println("""
   because it is where classification stops and the drawing shows.""")
 
 println("\nexit ", exitcode, " — evidence, never proof.")
-exit(exitcode)
+
+# Include-safe exit — see the note in 10_orbit_shapes.jl. This file was
+# the one SKIPPED by the bug, and never knew it: it reported nothing,
+# because it never ran. An unrun file and a passing file are
+# indistinguishable to a runner with no channel, which is why the fix
+# belongs in both places and the channel belongs in run_all.
+if abspath(PROGRAM_FILE) == @__FILE__
+    exit(exitcode)
+elseif exitcode != 0
+    error("11_there_is_no_fifth.jl FAILED (would have exited $exitcode) — see output above")
+end
