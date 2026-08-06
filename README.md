@@ -42,6 +42,23 @@ maximum and falls (`fold_shape`), stays inside Buchdahl's 8/9 bound
 (`buchdahl_strip`), with non-vacuity mutants rejected. Build:
 `cd cosmos/lean && lake build && lake exe cosmos`.
 
+## Fold
+
+`fold/Fold.lean` is the hinge nobody had built: the star and the Liar
+satisfy the same criterion. `cosmos/` says collapse is "the physics of an
+empty solution set"; the emergence thread says antinomy is "emptiness of
+the fixed locus"; `paradoxes/` proves `¬∃ P, P ↔ ¬P`. One sentence, three
+costumes, arrived at on three branches that never met. The file makes the
+identification checkable (a fixed-point pair that *annihilates* as a
+parameter crosses — not defeated, nonexistent) and then asks what the
+identification raises and no thread had asked: if a dying star and the
+Liar share a criterion, why does one collapse and the other oscillate
+forever? Answer, proved: the fate is decided by **boundedness**, not by
+the twist — a bounded world cannot host an inflationary map at all, so
+its fixed-point-freeness must be bought by coming back down, which is
+what oscillation is. `Bool` has a ceiling; stellar density does not.
+Runs bare: `lean fold/Fold.lean` — exit 0, prints its own ledger.
+
 ## Emergence (cross-repo)
 
 `emergence-reply/` stages this repo's Lean instance joining the
