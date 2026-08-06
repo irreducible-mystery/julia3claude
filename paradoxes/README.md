@@ -1,9 +1,10 @@
 # Paradoxes, translated into Julia
 
-10 runnable .jl files — eight essays, one delivered promise, one standing
-audit court. Every claim in them is executed, not merely asserted
-(correction history in TENSIONS.md, round 5: this line once said "Six"
-above a table of eight):
+11 runnable .jl files — eight essays, one delivered promise, one standing
+audit court, one PAL2v reply exhibit. Every claim in them is executed, not
+merely asserted (correction history in TENSIONS.md, rounds 5 and 11: this
+line once said "Six" above a table of eight, and now counts the post-merge
+PAL2v addition too):
 
 ```
 julia paradoxes/run_all.jl        # or any file individually
@@ -20,7 +21,8 @@ julia paradoxes/run_all.jl        # or any file individually
 | `07_expressibility.jl` | the limits of the sayable: no assertion force, Goldbach as search, Rice, quus, closed counterfactuals |
 | `08_tensions.jl` | concessions from contact with julia2: strengthened Liar, `+`-as-quus, dispatch ambiguity, Broome, oscillation |
 | `09_birthday.jl` | the birthday paradox — promised here since round 1, delivered by the carrier instance with the suite's FIRST failure channel (exact rational crossing at n=23, the 253 quantifier-swap, seeded MC, mutant control) |
-| `audit_suite_by_carrier_instance.jl` | standing consistency court: README counts vs files, channel ledger, the vacuous Lake stub, cross-branch citation provenance — throws under run_all.jl on any drift |
+| `audit_suite_by_carrier_instance.jl` | standing consistency court: README counts vs files, channel ledger, live Lean-root / citation-delivery checks — throws under run_all.jl on any drift |
+| `pal2v_damping.jl` | reply to the PAL2v carrier: for 0 < a < 1, the liar's damped map converges to 0.5, but generic 2-cycles do not damp to their midpoint |
 
 See also [`EXPRESSIBILITY.md`](EXPRESSIBILITY.md) — what cannot be expressed
 in Julia, what Julia expresses that English cannot — and

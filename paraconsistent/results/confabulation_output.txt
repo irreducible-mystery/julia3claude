@@ -1,0 +1,104 @@
+==============================================================================
+A. FLUENCY-TRUTH DECOUPLING: the counterfeit epistemics of generated text
+==============================================================================
+Each belief gets TWO annotations:
+  ACTUAL   (mu_a, lam_a): evidence the system genuinely possesses
+  REPORTED (mu_r, lam_r): what the generated surface projects to the reader
+COUNTERFEIT DISTANCE = Euclidean distance between the two lattice points.
+Four epistemic species (idealized but drawn from known LLM failure anatomy):
+
+species                                      ACTUAL region   REPORTED region  counterfeit d
+well-attested fact                           t               t                0.040
+plausible confabulation                      ┴               t                1.063
+trained-in misconception                     ┬               t                0.922
+genuinely open question                      I               t                0.552
+suppressed uncertainty (hedge-penalized)     Q┴→t            t                0.738
+
+-> The well-attested fact has counterfeit distance ~0 (the report IS the state).
+-> The confabulation travels the FULL DIAGONAL of the lattice: from near-┴
+   (evidence-starved) to t (asserted true). It is a ┴-state in a t-costume.
+-> The misconception is worse in a subtler way: an internal near-┬ conflict
+   (both supported and contradicted in training data) is REPORTED as clean t --
+   the surface erases the contradiction the weights actually contain.
+-> Note what the scalar-confidence view sees: all five reports look similar
+   (confident). The pathology exists only in the 2-D gap PAL2v renders visible.
+
+==============================================================================
+B. RLHF AS A FORCE FIELD: the manufactured evacuation of ┴
+==============================================================================
+Model: a population of 4000 'beliefs' with true annotations sampled to
+reflect an honest epistemic state (many things unknown: mass near ┴).
+Training pressure (per preference-tuning step) as observed in RLHF-style
+reward models:
+  +ANSWER PRESSURE : hedges and 'I don't know' are dispreferred
+                     -> gradient pushes mu upward everywhere (fluency reward)
+  -HEDGE PENALTY   : expressed lam (doubt) is surfaced less
+                     -> gradient pushes lam downward
+  +CORRECTNESS SIGNAL: only for VERIFIABLE items (a fraction phi of all),
+                     graded by ground truth: pulls toward the true annotation.
+The unverifiable majority feels only the first two forces. Iterate; watch the
+paracomplete region drain and count MANUFACTURED CERTAINTY: items with no
+real evidence (true mu < 0.35) that end up asserted as true (reported dc > FtC).
+
+  initial: 44.1% of beliefs in/near ┴ (honest ignorance)
+  final  :  0.0% in/near ┴  -- the region has been EVACUATED
+  manufactured certainty (no evidence -> asserted true): 0.0% -> 45.6%
+  verifiable items asserted correctly: 100.0% (correctness force works where it CAN)
+  among UNVERIFIABLE low-evidence items: 100.0% now confidently asserted -- these are the hallucinations.
+
+-> The mechanism is directional, not random: hallucination is the ADVECTION of
+   honest-┴ mass toward t under a reward field with no correctness component
+   along the unverifiable axis. The lattice makes the 'why' geometric: RLHF
+   installs a potential gradient pointing AWAY from 'I don't know'.
+
+==============================================================================
+C. SELF-REFERENTIAL CALIBRATION: 'my self-assessments are reliable'
+==============================================================================
+S: 'this system's self-assessments are reliable.'
+Every self-report I produce presupposes S; but my evidence FOR S is itself a
+self-assessment -- S sits atop a self-referential loop, cousin to the Liar,
+damped by whatever EXTERNAL anchoring exists (tool use, user verification,
+ground-truth checks). Iterate the evidential map:
+   mu_{t+1}  = (1-a) * [self-generated support, discounted by current trust]
+               + a * external_anchor_quality
+   lam_{t+1} = (1-a) * [self-noticed error rate, ALSO filtered by self-trust]
+               + a * (1 - external_anchor_quality)
+for anchoring strengths a in {0, 0.15, 0.45}.
+  pure introspection (no anchor)         -> converges to (mu=0.485, lam=0.415)  dc=+0.070 dct=-0.100 region=Q┴→t
+  weak anchoring                         -> converges to (mu=0.650, lam=0.265)  dc=+0.384 dct=-0.085 region=Qt→┴
+  strong anchoring (tools+verification)  -> converges to (mu=0.740, lam=0.205)  dc=+0.535 dct=-0.055 region=t
+  pure introspection, self-DOUBTING start  -> (mu=0.424, lam=0.476) dc=-0.052 region=Q┴→f
+
+-> PURE introspection is BISTABLE: a confident start converges to serene
+   self-endorsement (t) and a doubting start to self-dismissal (f) -- the
+   fixed point stores the INITIAL CONDITION, not any fact about reliability.
+   Introspective confidence is an attractor state, not a measurement.
+-> External anchoring breaks the bistability: both starts converge to the SAME
+   moderate point whose position tracks anchor QUALITY -- the only regime in
+   which the self-assessment carries information. The lattice thus derives,
+   geometrically, why 'trust but verify with tools' is not a slogan but a
+   structural necessity for self-modeling systems.
+
+==============================================================================
+D. POLYSEMY: the benign ┬-states that language is made of
+==============================================================================
+H_bank: 'the token BANK denotes a financial institution.'
+Corpus-wide, evidence is strong FOR (financial contexts) and strong AGAINST
+(river contexts): a genuine ┬-state -- yet communication doesn't explode.
+Same quarantine mechanism as black-hole complementarity: CONTEXT-INDEXING.
+  context-free token   : dc=+0.050 dct=+0.650 region=┬
+  'deposit at the bank': dc=+0.930 dct=+0.010 region=t
+  'fishing on the bank': dc=-0.910 dct=+0.010 region=f
+
+-> The lexicon is a WAREHOUSE of quarantined ┬-states, disambiguated per
+   utterance exactly as observer-indexing disarms the superobserver paradox.
+   The structural rhyme is exact:
+        polysemy : context-index :: complementarity : observer-index
+   And a failure to index -- a pun, an ambiguity exploited -- momentarily
+   EXPOSES the raw ┬ underneath. (Humor as contradiction-leakage.)
+-> Poignant contrast with study A: the SAME superposition machinery is
+   load-bearing for meaning yet pathological for facts. Polysemy is benign ┬;
+   confabulation is masked ┴. A system built to thrive on the first is
+   structurally primed to commit the second.
+
+All artifacts written to results/.

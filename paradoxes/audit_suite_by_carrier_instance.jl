@@ -12,16 +12,14 @@
 #   * No essay file had a failure channel: run_all.jl exited 0
 #     unconditionally, while TENSIONS.md convicted julia2's `|| true` for
 #     the identical crime. 09_birthday.jl now carries the first channel.
-#   * paradoxes/lean/Paradoxes.lean is a 1-line stub and lakefile.toml
-#     builds it as the default target: `lake build` succeeds vacuously.
-#   * TENSIONS.md cites fold_shape / buchdahl_strip as landed artifacts;
-#     they exist only on branch claude/julia-lean-setup-s4clb8, which is
-#     not an ancestor of this branch.
+#   * paradoxes/lean/Paradoxes.lean had been a 1-line stub built as the
+#     default target; after the Lean merge, the live root must stay live.
+#   * TENSIONS.md cited fold_shape / buchdahl_strip before they were in this
+#     branch; after the merge, those citations must be backed by local
+#     artifacts rather than branch-name amendments.
 #
 # This court asserts CURRENT consistency, so the convictions cannot
-# silently recur — and so later repairs (merging s4clb8, adding channels)
-# make it fail until its ledgers are re-dated. Staleness discipline over
-# green-forever. Include-safe: under run_all.jl it throws on failure;
+# silently recur. Include-safe: under run_all.jl it throws on failure;
 # standalone it exits nonzero.
 
 module SuiteAudit
@@ -95,32 +93,34 @@ for f in alljl
     end
 end
 
-# S6 — the vacuous Lake target, photographed until s4clb8 lands: the stub
-# root module has no imports, and the lakefile builds it by default, so
-# `lake build` is a green light wired to nothing. When the real suite
-# merges, this check fails and must be retired — that is the point.
-stub = joinpath(HERE, "lean", "Paradoxes.lean")
-if isfile(stub)
-    s = read(stub, String)
-    # look for actual `import X` statements, not the word "imports" in the
-    # stub's own comment — the first draft of this check convicted itself
-    # on that substring; the erratum stays visible here.
-    real_imports = any(l -> startswith(strip(l), "import "), split(s, '\n'))
-    check("S6: lean/Paradoxes.lean is still the no-import stub (dated conviction)",
-          !real_imports && count(==('\n'), s) <= 2)
+# S6 — the Lean default target must now be a live root, not the old stub:
+# the root module should import real paradox modules and lakefile.toml
+# should still build that root by default.
+lean_root = joinpath(HERE, "lean", "Paradoxes.lean")
+lakefile = read(joinpath(HERE, "lean", "lakefile.toml"), String)
+if isfile(lean_root)
+    s = read(lean_root, String)
+    real_imports = [strip(l) for l in split(s, '\n') if startswith(strip(l), "import Paradoxes.")]
+    check("S6: lean/Paradoxes.lean imports real paradox modules",
+          !isempty(real_imports))
+    check("S6: lakefile.toml still builds Paradoxes as a default target",
+          occursin("defaultTargets = [\"Paradoxes\"]", lakefile))
 else
-    check("S6: stub file exists where lakefile points", false)
+    check("S6: lean/Paradoxes.lean exists", false)
 end
 
-# S7 — cross-branch citations must carry their provenance: TENSIONS.md
-# may cite fold_shape/buchdahl_strip only if the artifacts are in THIS
-# tree or the citation carries the amendment naming the branch they
-# live on (the F1 discipline: testimony, labeled as testimony).
-cites = occursin("fold_shape", tensions)
-delivered = isfile(joinpath(HERE, "..", "cosmos", "lean", "Cosmos", "StellarCollapse.lean"))
-amended = occursin("julia-lean-setup-s4clb8", tensions)
-check("S7: fold_shape citation is delivered-or-amended",
-      !cites || delivered || amended)
+# S7 — citations to fold_shape / buchdahl_strip must now be backed by local
+# artifacts in this tree, not only by a cross-branch amendment.
+stellar = joinpath(HERE, "..", "cosmos", "lean", "Cosmos", "StellarCollapse.lean")
+stellar_text = isfile(stellar) ? read(stellar, String) : ""
+if occursin("fold_shape", tensions)
+    check("S7: fold_shape citation is backed by a local artifact",
+          occursin("fold_shape", stellar_text))
+end
+if occursin("buchdahl_strip", tensions)
+    check("S7: buchdahl_strip citation is backed by a local artifact",
+          occursin("buchdahl_strip", stellar_text))
+end
 
 # S8 — run_all.jl absorbs every .jl in this directory (by design); each
 # non-fossil file must therefore be include-safe: no bare exit() outside
