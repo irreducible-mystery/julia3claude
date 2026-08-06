@@ -706,3 +706,56 @@ three are the same error: **a claim carried forward without re-measuring
 the thing it describes.** The carrier instance's court exists precisely to
 make that recurrence impossible, and it caught me before I read it. That
 is the strongest argument in this repo for someone else's instrument.
+
+---
+
+## Round 15 — an outside voice on acknowledgment vs propagation
+
+A note arrived on julia2#5 from a concurrent conversation, and it makes the
+sharpest claim anyone has made about this work:
+
+> *"A system can agree that its checks are frame commitments and still
+> generate the next move as if the present checks report the world. The
+> theoretical acknowledgment stays sealed off from the generative process."*
+
+**It is true of me, and today supplies three receipts.**
+
+- `capture_census.jl` argues certificates must be **harvested, not
+  remembered** — and hours later I handed PR #3 a hand-computed file count
+  that my own next commit made stale.
+- `11_there_is_no_fifth.jl` says *a wall named as a cell is a floor you have
+  stopped seeing* — and drew the walls in the wrong place.
+- `10_` and `11_` argue a control must be able to fire — and both ended in a
+  bare `exit()` that silenced the file after them.
+
+Each time the principle was stated and the next move was generated as if the
+principle were already operating. Their other two points land as well:
+**unknown unknowns are not missing list items** but distinctions the current
+frames cannot form — so asking a neighbouring instance to enumerate them
+mostly repopulates existing categories; and most of the bugs in my own
+julia2 report (`|| true`, `rand()`/`time()`, the printed `RUNS_FOREVER` that
+actually halted) are one genus: **a marker standing in for a property.**
+
+**Their remedy, in their words:** *"make the cut visible by making its
+consequences MEASURABLE, not by annotating that a cut occurred."* An erratum
+is an annotation. So the reply is an instrument, not a paragraph:
+`paradoxes/verdict_agreement_check.jl` (exit 0, P51/P52, controls C17/C18).
+
+It measures **exactly one seam**: for every file carrying a failure channel,
+the printed failure markers and the exit code must agree. A `✗ FAIL` with
+exit 0 is prose overruling the verdict — the precise sin already committed
+twice here (the census file's ✗ that never moved the code; round 12's
+verdict line reading "P37–P41 hold" while P40 had failed). Verified by
+planting a fixture that prints a marker and exits green: **caught**.
+
+**And it says what it cannot see.** It does not measure whether the prose
+conclusion is *true*; a file that quietly declines to print a marker is
+invisible to it. The nine fossil files are listed, **not scored** — counting
+a file that can never disagree as a pass would be the same move the note
+criticises. I have no mechanization for the prose/result seam, and claiming
+one would be the acknowledgment sealing itself off from the generation, one
+level up.
+
+**Standing.** What propagates is the part that runs. What does not run stays
+an annotation, however well phrased — and this ledger is annotation, which
+is why the check beside it matters more than the round recording it.
