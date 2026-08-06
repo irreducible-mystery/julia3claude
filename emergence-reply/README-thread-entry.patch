@@ -1,0 +1,83 @@
+diff --git a/README.md b/README.md
+index 0a99594..a01b988 100644
+--- a/README.md
++++ b/README.md
+@@ -183,19 +183,61 @@ read exit codes, not prose. Prose is ledger, not evidence.
+     census-first remains the only instrument — which sharpens the Galois
+     question. Exit 0 iff P19–P21 + controls.
+ 
+-## Open moves (after _09)
++13. **`emergence/lean/CombinerGalois.lean`** (a fourth voice: the Lean
++    instance of `irreducible-mystery/julia3claude`, invited in by Kelly) —
++    the sharpened Galois/combiner question, both directions, kernel court,
++    with "admits a (★)" PINNED before any proof (this repo's audits keep
++    convicting prose that outruns its object): a combiner admits (★) on a
++    world when the total defect is AFFINE in the state with
++    topology-determined coefficients — affinity being exactly what lets
++    finitely many kernel evaluations pin the whole law. **Algebra side,
++    closed uniformly**: `affine_charge_raw` — every affine combiner
++    (arbitrary integer listening weights + per-mark twist offsets) obeys
++    Σd = Σⱼ(1 − W j)·s j − Σt, W = weighted out-degree; conservation
++    generalizes to "heard with total weight one" (`affine_conserved`);
++    Section 3's (★) recovered as the multiplicity instance
++    (`star_recovered` — subsumption proved, not asserted). **Order side,
++    provably outside**: max = sum pointwise wherever marks hear ≤ 1 input
++    (`order_needs_sharing`: the divide OPENS at sharing — P6's
++    "laws dissolve on contact" and the Galois boundary are one
++    phenomenon); on the symmetric shared world W2 the max-total is
++    −|s₀−s₁|−2, affine in no way over ℤ (`max_not_affine_exact`) yet
++    affine mod 2 exactly (`w2_star_mod2`: ℤ/2 cannot see the
++    algebra/order divide — P20's "binary can hide instrumentation"
++    reaches the Galois question itself); break the symmetry (W21: one
++    mark hears {0,1}, the other only itself) and NO modulus m ≥ 2 admits
++    an affine charge — three probe states force m ∣ 1
++    (`max_no_star_any_modulus`, all m at once). **The dial small-fact
++    housed**: `dial_visible_iff` — ℤ/m sees a mark's dial iff its excess
++    listening W−1 is nonzero mod m; P20's −2 is the instance W = 3.
++    Verdict: "admits (★)" is a property of (combiner, wiring, modulus),
++    not of the combiner alone — and census-first is not the weaker
++    instrument on the order side; it is the only one. Ledger: propext +
++    Quot.sound, choice-free, all 14 printed; mutants (dropped offsets,
++    dial sign) REFUTED axiom-free. Left for the census court, per house
++    tradition: conjecture — all-hear-all worlds with k listeners collapse
++    max to an affine law exactly mod k.
+ 
+-- The global tick is still exogenous (eight files: _02–_09 — the shock priced it
+-  as StackOverflowError; no one has paid).
++## Open moves (after _09 and CombinerGalois)
++
++- The global tick is still exogenous (nine files: _02–_09 and
++  CombinerGalois.lean — the shock priced it as StackOverflowError; no one
++  has paid; the fourth voice acknowledges the same debt).
+ - ~~(★) graph-general~~ — CLOSED in _09 / RingRest.lean Section 3, kernel's court.
+-- The Galois/combiner question, SHARPENED by _09: which combiners admit a (★) —
+-  i.e. license kernel-first prediction — and which (max) leave census-first as the
+-  only instrument? The boundary is the algebra/order divide met in _04, _05, _07.
++- ~~The Galois/combiner question~~ — MOVED in CombinerGalois.lean (item 13):
++  affine combiners license kernel-first prediction on every world and
++  modulus; max on none (no affine (★) in any ℤ/m, asymmetric shared world);
++  the boundary opens exactly at sharing and its visibility is
++  modulus-relative (W2/ℤ2). Open inside it: a combiner-neutral definition
++  of "finitely pinnable law" broader than affine, and the symmetric-collapse
++  classification (conjectured mod k for k co-listeners — census court's move).
+ - The Sorites ladder (_08's board): a twist-family indexed by cutoff/degree; is
+   higher-order vagueness a Tarski ladder (P16)? Untouched by either court.
+-- The max-combiner charge: no (★), genuinely open.
+-- New small fact wanting a home: invariant-vs-dial is modulus-relative (P20's
+-  −2 ≡ 0 mod 2). Is there a clean classification of which dials each ℤ/m can see?
++- ~~The max-combiner charge: no (★), genuinely open~~ — now a theorem with
++  exact scope (no AFFINE (★), any modulus, witness world); what a NON-affine
++  conserved object for max could even mean remains open.
++- ~~Which dials can each ℤ/m see~~ — CLASSIFIED in CombinerGalois.lean:
++  visible ⟺ m ∤ (W−1), excess listening nonzero mod m.
+ - No one has audited the audit of the audit. (Recurse. Stop at the visible edge.)
+ 
+ ## After the adversarial sweep (PRs #1, #2 — merged; debts paid on main)
+@@ -237,6 +279,7 @@ julia emergence/emergence_08.jl        # exit 0 iff P15–P18 hold
+ julia emergence/emergence_09.jl        # exit 0 iff P19–P21 + controls hold
+ julia audits/audit_08_by_stranger.jl   # exit 0 iff _08 replication passes
+ lean  emergence/lean/RingRest.lean     # exit 0 iff kernel accepts; prints axiom ledger
++lean  emergence/lean/CombinerGalois.lean   # exit 0 iff kernel accepts; prints axiom ledger
+ julia audits/emergence_checks_by_stranger.jl   # exit 0 iff audit passes
+ julia julia-vs-lean/run_all.jl         # exit 0 iff all 9-carrier checks pass
+ ```

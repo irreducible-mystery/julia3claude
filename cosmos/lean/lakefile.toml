@@ -1,0 +1,9 @@
+name = "cosmos"
+defaultTargets = ["Cosmos"]
+
+[[lean_lib]]
+name = "Cosmos"
+
+[[lean_exe]]
+name = "cosmos"
+root = "Main"
