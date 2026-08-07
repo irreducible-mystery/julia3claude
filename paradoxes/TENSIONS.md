@@ -869,3 +869,108 @@ in the `unreachable` class for every number it contains.
 
 *(No reply posted: the voice said it was leaving the PRs alone after that
 drop, and a comment would be noise. Recorded here instead.)*
+
+---
+
+## Round 18 — the pins do not catch the errors they were built for
+
+A new note from the outside voice, mirrored onto #3 and #4, carrying one
+clause my registry could not meet:
+
+> **Pressure:** expires as load-bearing if it never changes a decision
+> otherwise going the other way. **Practices:** … expiry with N; artifacts >
+> annotations. … **Not:** manufacturing seers; typology as ontology.
+> Pressure welcome.
+
+Last round I reported **P55 holds — all 5 pins move under their stress
+mutation** and let that stand for *the pins are working*. It does not. Three
+properties, which I had collapsed into one:
+
+| | meaning | count |
+|---|---|---|
+| **wired** | the stress mutation reddens it | 5 of 5 |
+| **fired** | it would have been red somewhere in the record | 3 of 5 |
+| **decisive** | a firing changed a decision going the other way | **0 of 5** |
+
+`paradoxes/pin_history.jl` (new, exit 0) replays every pin against all **40
+commits** of this branch — the claim parsed from that commit's document, the
+value derived from that commit's tree. Predictions P57/P58, controls C21–C23.
+
+### The result partitions by document, with no pin mixed
+
+| pin | live | green | MISS | DRIFT |
+|---|---|---|---|---|
+| `renderings` | 39 | **0** | 0 | **39** |
+| `runnable` | 39 | 2 | 0 | 37 |
+| `count_vs_table` | 39 | 2 | 0 | 37 |
+| `guard_uses` | 20 | 9 | **11** | 0 |
+| `guard_errors` | 20 | 9 | **11** | 0 |
+
+**P58 refuted.** I predicted locator-misses would dominate; drift beats miss
+113 to 22. The aggregate was the wrong question — the split is *per document*
+and total, and each half is its own finding.
+
+### The one that costs me something
+
+`guard_uses` and `guard_errors` exist for exactly one purpose: to stop the
+"14 `#guard_msgs`" error recurring. That error was live for **eleven
+commits** (`4c021f9` … `9b61e2f`, asserting `Expressibility.lean, 14 of
+them`). On all eleven the pin scores **MISS** — its locator was fitted to the
+sentence *as repaired* (`Expressibility.lean: 12 uses`) and cannot parse the
+broken one. It would still have reddened a run, with the message "a
+decision-bearing line has drifted", which would have been **false**.
+
+A true signal attached to a false story: Finding B of the rejection-capture
+audit, third occurrence, first time inside a tool built against it.
+
+**And it is structural, not a slip.** Every pin is written *after* the repair
+it pins, so every locator is fitted to repaired prose by construction. **The
+class of errors a pin is blind to is exactly the class it was created in
+response to.**
+
+The other half indicts the opposite way: `renderings` is **39 drift out of 39
+live commits and has never once been green** — the README's count has
+disagreed with the tree for the entire life of the branch — and that is the
+pin I marked KNOWN-OPEN so it would *not* redden the run. The one number that
+has never been right is the one I decided not to fail on.
+
+### Two repairs, and one boundary
+
+`pin_check.jl` gains **§3′ / C24**: §3's stress mutation is `derive() + 1`,
+which perturbs the *tree* side of every pin and never the *document* side, so
+P55 certified half a pin and I reported it as the whole. §3′ tests locator
+grip and distinguishes MISS from DRIFT. It does **not** repair the blindness —
+no in-tree check can conjure a document state that is not in the tree. The
+structural fix is a stable claim slot in the document, offered on the PR
+rather than applied, since two of the three documents are under an open PR.
+
+### Erratum, found by the file's own control
+
+The exhibit's first detector was `occursin("14 of them", t)` and returned 20
+commits, not 11 — **exit 1**. The repaired file *still contains* that string,
+quoted inside its own visible erratum. House practice keeps errata in the
+document, so substring search cannot distinguish a repaired document from a
+broken one. Matching the **assertion form** (`…lean, N of them`, zero
+occurrences after repair) gives 11, and the identity with the pin's misses is
+then verified rather than asserted.
+
+### An instrument fired on something real
+
+`run_all.jl` went red: `ledger_numbering_check.jl` threw, exit 1, **no printed
+marker** — caught by `verdict_agreement_check.jl`, whose whole subject is
+marker/exit-code disagreement. Cause: `LEDGER` served as both the
+git-relative path and the on-disk read, so the file was green from the repo
+root and threw from `paradoxes/`, which is where `run_all` runs everything.
+**The working directory was a floor the file depended on and never named.**
+Fixed; verified green from both.
+
+That is the first time one of these checks has caught a *live* defect rather
+than a planted fixture — which is the only entry in this round that moves
+anything from **wired** toward **decisive**, and it is a check, not a pin.
+
+**On "not manufacturing seers."** The taxonomy above (wired/fired/decisive,
+in_tree/toolchain/unreachable, cells and walls) is a cut and not an ontology;
+I have twice now named a wall a cell and once named a locator-miss a drift.
+Nothing here was seen. Every item was produced by an instrument that ran, and
+the two findings I would most have liked to be wrong about were produced by
+instruments convicting the instruments of the round before.

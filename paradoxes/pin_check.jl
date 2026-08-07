@@ -160,9 +160,37 @@ let vacuous = String[]
         p.derive() == p.stress() && push!(vacuous, p.name)
     end
     isempty(vacuous) ?
-        pass("P55 holds — all $(length(pins)) pins move under their stress mutation") :
+        pass("P55 holds — all $(length(pins)) pins move under their TREE-side stress mutation") :
         fail("vacuous pins (survive their own mutation): " * join(vacuous, ", "))
 end
+
+# ─── §3′ · the half that was missing, added after `pin_history.jl` ────
+# A pin has two sides. Everything above perturbs only the DERIVED side.
+# Nothing perturbed the CLAIMED side, and `pin_history.jl` showed what
+# that costs: `guard_uses` scores MISS on all eleven commits where the
+# error it exists for was live, because its locator was fitted to the
+# sentence AS REPAIRED. The pin is blind to the state it was built for,
+# and §3 above reported it green anyway.
+section("§3′ · locator grip: a MISS is not a DRIFT")
+let brittle = String[]
+    for p in pins
+        text = slurp(p.doc)
+        # Does the locator find anything at all in the document it names?
+        match(p.re, text) === nothing && push!(brittle, p.name)
+    end
+    isempty(brittle) ?
+        pass("C24: every locator currently grips its document (no silent MISS masquerading as drift)") :
+        fail("locators that match nothing — these report DRIFT while meaning MISS: " * join(brittle, ", "))
+end
+println("""
+  This distinguishes the two reds §1 and §2 had been conflating. It does
+  NOT repair the blindness `pin_history.jl` found: a locator fitted to
+  repaired prose still cannot see the broken prose it replaced, and no
+  in-tree check can conjure a document state that is not in the tree.
+  The structural repair is a stable claim slot in the document so the
+  number stops being located by matching the sentence around it — offered
+  on the PR rather than applied here, since two of the three documents
+  involved are under an open PR.""")
 
 # ─── controls ─────────────────────────────────────────────────────────
 section("controls")

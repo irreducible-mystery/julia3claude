@@ -62,7 +62,18 @@ fail(m) = (global exitcode = 1; println("  ✗ FAIL: ", m))
 pass(m) = println("  ✓ ", m)
 section(t) = println("\n── ", t, " ", "─"^max(0, 56 - length(t)))
 
-const LEDGER = "paradoxes/TENSIONS.md"
+# ERRATUM (round 18), reported as found. `LEDGER` was used for BOTH the
+# git-relative path and the on-disk read, so `read(LEDGER, String)` only
+# resolved when the process happened to start at the repo root. Run from
+# `paradoxes/` — which is where `run_all.jl` runs everything — it threw,
+# exit 1 with no printed marker. Green from one working directory and red
+# from another: the CWD was a floor this file depended on without ever
+# naming it. Caught by `verdict_agreement_check.jl` (markers=0, exit=1 —
+# narration and verdict disagreeing), which is that instrument's first
+# catch of a LIVE defect rather than a planted fixture.
+const LEDGER = "paradoxes/TENSIONS.md"                      # repo-relative, for `git show`
+const REPO   = dirname(@__DIR__)
+const LEDGER_ON_DISK = joinpath(REPO, LEDGER)               # absolute, for the working tree
 
 # The branches that currently carry a copy of the ledger.
 const SOURCES = [
@@ -86,8 +97,8 @@ function rounds(text::AbstractString)
     return out
 end
 
-read_ledger(ref) = ref === nothing ? read(LEDGER, String) :
-                   read(`git show $(ref):$(LEDGER)`, String)
+read_ledger(ref) = ref === nothing ? read(LEDGER_ON_DISK, String) :
+                   read(`git -C $REPO show $(ref):$(LEDGER)`, String)
 
 """
     collisions(sources) -> Dict{Int, Set{String}}
