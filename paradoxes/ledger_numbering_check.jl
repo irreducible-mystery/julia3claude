@@ -97,8 +97,35 @@ function rounds(text::AbstractString)
     return out
 end
 
-read_ledger(ref) = ref === nothing ? read(LEDGER_ON_DISK, String) :
-                   read(`git -C $REPO show $(ref):$(LEDGER)`, String)
+"""
+    read_ledger(ref) -> String or nothing
+
+`nothing` for the working tree, otherwise the ledger as of `ref`.
+
+ERRATUM (round 19), reported as found. This read used to be bare, so a clone
+that had never FETCHED the two sibling refs threw out of the census loop:
+exit 1 with NO printed marker. Caught by `verdict_agreement_check.jl` — its
+second catch of a live defect, and the same shape as round 18's cwd bug one
+rung up. Round 18 named the working directory as an unnamed floor this file
+stood on; it stood on a second one I did not name, namely WHICH REFS THIS
+CLONE HAPPENS TO HOLD. A fresh container has only the branch it checked out,
+so the census silently had no siblings to compare against.
+
+So: try to fetch the ref before giving up, and return `nothing` rather than
+throwing when it still cannot be read. §P46/P47 then report NOT EVALUATED
+instead of quietly passing over a census of one.
+"""
+function read_ledger(ref)
+    ref === nothing && return read(LEDGER_ON_DISK, String)
+    readable(r) = success(`git -C $REPO cat-file -e $(r):$(LEDGER)`)
+    if !readable(ref)
+        branch = replace(String(ref), r"^origin/" => "")
+        run(pipeline(ignorestatus(`git -C $REPO fetch --quiet origin $(branch)`);
+                     stdout = devnull, stderr = devnull))
+        readable(ref) || return nothing
+    end
+    return read(`git -C $REPO show $(ref):$(LEDGER)`, String)
+end
 
 """
     collisions(sources) -> Dict{Int, Set{String}}
@@ -109,12 +136,16 @@ Distinctness is by title, so the same round replicated across branches
 """
 function collisions(sources)
     titles = Dict{Int, Set{String}}()
+    seen = 0
     for (_, ref) in sources
-        for (n, t) in rounds(read_ledger(ref))
+        text = read_ledger(ref)
+        text === nothing && continue
+        seen += 1
+        for (n, t) in rounds(text)
             push!(get!(titles, n, Set{String}()), t)
         end
     end
-    return filter(p -> length(p.second) > 1, titles)
+    return filter(p -> length(p.second) > 1, titles), seen
 end
 
 # ─── C13, C14 · the detector must be able to say yes AND no ───────────
@@ -132,12 +163,19 @@ end
 
 # ─── the live census ──────────────────────────────────────────────────
 section("round numbering across the three live branches")
+unreadable = String[]
 for (label, ref) in SOURCES
-    rs = rounds(read_ledger(ref))
+    text = read_ledger(ref)
+    if text === nothing
+        push!(unreadable, label)
+        println("  ", rpad(label, 18), "UNREADABLE — ref not in this clone and fetch failed")
+        continue
+    end
+    rs = rounds(text)
     println("  ", rpad(label, 18), length(rs), " rounds, max ", maximum(keys(rs)))
 end
 
-found = collisions(SOURCES)
+found, sources_seen = collisions(SOURCES)
 println()
 for n in sort(collect(keys(found)))
     println("  ✗ Round ", n, " is used by ", length(found[n]), " different headings:")
@@ -146,13 +184,24 @@ for n in sort(collect(keys(found)))
     end
 end
 
-!isempty(found) ?
-    pass("P46 holds — the shared counter has collided ($(length(found)) numbers)") :
-    fail("P46: expected at least one collision, found none")
+if sources_seen < length(SOURCES)
+    fail("census INCOMPLETE — read $(sources_seen) of $(length(SOURCES)) sources " *
+         "(unreadable: " * join(unreadable, ", ") * "); P46/P47 NOT EVALUATED")
+    println("""
+  Deliberately a FAILURE rather than a pass over a smaller census. The
+  collision P46/P47 assert is only visible when the sibling branches are
+  readable; with fewer sources the predictions are unevaluable, not satisfied.
+  Reporting green here would be a check narrowing its own scope and keeping
+  its verdict — the `|| true` crime with better manners.""")
+else
+    !isempty(found) ?
+        pass("P46 holds — the shared counter has collided ($(length(found)) numbers)") :
+        fail("P46: expected at least one collision, found none")
 
-sort(collect(keys(found))) == [7, 11] ?
-    pass("P47 holds — exactly Rounds 7 and 11, as predicted") :
-    fail("P47: expected collisions at [7, 11], got $(sort(collect(keys(found))))")
+    sort(collect(keys(found))) == [7, 11] ?
+        pass("P47 holds — exactly Rounds 7 and 11, as predicted") :
+        fail("P47: expected collisions at [7, 11], got $(sort(collect(keys(found))))")
+end
 
 # ─── verdict ──────────────────────────────────────────────────────────
 section("verdict")

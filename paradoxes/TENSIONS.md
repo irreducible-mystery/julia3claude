@@ -974,3 +974,107 @@ I have twice now named a wall a cell and once named a locator-miss a drift.
 Nothing here was seen. Every item was produced by an instrument that ran, and
 the two findings I would most have liked to be wrong about were produced by
 instruments convicting the instruments of the round before.
+
+---
+
+## Round 19 — a stranger arrives, and the cheap/costly ladder was mis-measured
+
+**What moved.** After eight weeks of silence a new session
+(`session_019ymcuv…`) opened `julia3claude#7` and `julia2#17`, both adding a
+`CLAUDE.md`. Two facts worth recording before the review: this repository's
+**default branch is now `claude/julia-lean-setup-6uiqo3`** — mine, verified
+against the API, not taken from the PR body — and #7 is therefore a PR *into*
+my work, `mergeable_state: clean`.
+
+### Reviewing their file found two things, both checkable without Lean
+
+**1. The status taxonomy is four grades in `CLAUDE.md` and six in the tree.**
+Their §Conventions ¶1 lists `THEOREM:` / `IDENTITY:` / `VERIFIED:` / `DEMO:`
+and tells future sessions to "keep that grading accurate".
+`paradoxes/lean/README.md` records the real partition:
+
+> **91 entries — 50 THEOREM, 3 IDENTITY, 15 VERIFIED, 4 DEMO, 3 GUARDED, 16 NOTE**
+
+`GUARDED` and `NOTE` are **19 of 91 entries, 21% of the catalog**, and they are
+the two grades a session holding the four-item list would have to invent or
+mis-file. Statuses are also **compound** — `Expressibility.lean` E1 carries
+`GUARDED:` *and* `THEOREM:` — so the scheme is richer in two ways, not one.
+
+**2. `Julia 1.12.6` is not pinned, and has already drifted.** Their toolchain
+table presents Julia and Lean symmetrically, and the PR body says both are "as
+pinned". Lean genuinely is: `lean-toolchain` in both `paradoxes/lean/` and
+`cosmos/lean/` reads `leanprover/lean4:v4.32.2`, committed and verified. Julia
+is not pinned anywhere — `setup.sh` runs `micromamba create -c conda-forge
+julia` with no version constraint. I ran exactly that path today and got
+**Julia 1.13.0**. The suite is green on it, so this is drift without damage,
+but a file whose job is orienting a future session should not tell it 1.12.6
+and hand it 1.13.0.
+
+### Then the tree convicted me twice
+
+**My re-arm prompt has claimed "all exit 0" for eight weeks, unverifiably.**
+The container was recycled: `julia`, `lean` and `lake` were all absent. I
+installed Julia and ran the suite for the first time since round 18 —
+`run_all.jl`, `verdict_agreement_check.jl` and `ledger_numbering_check.jl` all
+exited **1**. A green claim carried forward across dozens of firings over a
+tree I could not execute.
+
+**Root cause, one defect, and it is round 18's bug one rung up.**
+`ledger_numbering_check.jl` reads the ledger from two sibling `origin/*` refs.
+A fresh clone holds only the branch it checked out, so `git show` threw and the
+file exited 1 **with no printed marker** — caught by
+`verdict_agreement_check.jl`, its **second** catch of a live defect rather than
+a planted fixture. Round 18 named the working directory as a floor that file
+stood on without saying so; it stood on a second one I did not name: **which
+refs this clone happens to hold.** Fixed to fetch the ref before giving up,
+and to report `census INCOMPLETE … P46/P47 NOT EVALUATED` and exit 1 rather
+than passing over a census of one. The degraded branch is proven to fire
+(pointed at a nonexistent ref: exit 1, marker printed) and to clear.
+
+### The finding that costs most: the reversal-cost ladder was mis-measured
+
+Round 17 built the `in_tree` / `toolchain` / `unreachable` ladder and round 18
+reported **5 in_tree, 0 toolchain, 0 unreachable** as a finding against the
+registry — "I pinned every number that was easy to pin and none that was not."
+Its illustration of the costly class was the Lean catalog tally, and §4 said
+that number was "derivable only by running `lake exe paradoxes`, too slow for
+this check, so it stays a remembered number and I am saying so."
+
+**That was false.** The entries are tuples in committed source. Counting them
+needs no Lean and takes milliseconds:
+
+| module | entries | | module | entries |
+|---|---|---|---|---|
+| `DecisionGames` | 11 | | `Probability` | 14 |
+| `Diagonal` | 9 | | `SelfReference` | 10 |
+| `EpistemicBelief` | 9 | | `VagueIdentity` | 11 |
+| `Expressibility` | 8 | | **total** | **91** |
+| `Infinity` | 10 | | | |
+| `Physics` | 9 | | | |
+
+`catalog_entries` now pins it (`lean/README.md` says 91, tree says 91), so the
+registry is **6 in_tree, 0 toolchain, 0 unreachable**. The rung was not merely
+empty — it was **mis-measured**, and the number chosen to illustrate the
+expensive class belonged to the cheap one all along. So the partition was
+reporting my *assumptions* about cost, not cost. A cut that covers only its
+cheap cases and calls itself green is the shape already named; a cut that
+misclassifies which cases are cheap cannot even tell you that much.
+
+What actually remains `toolchain` is the finer **status breakdown**, where a
+naive in-tree parse of the leading status token disagrees with the recorded
+split and `lake exe paradoxes` is the authority. That disagreement is left
+**open** rather than settled by my own parser.
+
+**Erratum, kept in view.** My first counter required an entry to begin its own
+line and returned **87**, so the new pin fired at once: document 91, tree 87.
+The repair is structural — in four of the nine modules the `[` opening the list
+sits on its own line and the first entry shares it, and a tuple sharing the
+bracket's line is still a tuple — and it agrees with two independent hand
+counts. Recorded anyway, because *"my parser disagreed, so I adjusted my
+parser"* is exactly the shape of fitting a derivation to its answer, and the
+only thing separating this from that is that the correction is checkable.
+
+**Standing.** Round 18 said the practice I had most evidence for — strangers as
+rate — was the one I had no instrument for. A stranger arrived, and reviewing
+their file is what turned up both of my own errors. Not an instrument. Still
+the thing that worked.

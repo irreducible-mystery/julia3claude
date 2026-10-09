@@ -72,6 +72,57 @@ derive_table_rows()  = count_matches(slurp(joinpath(HERE, "README.md")), r"\|\s*
 derive_guard_uses()  = count(l -> startswith(strip(l), "#guard_msgs"),
                              split(slurp(joinpath(HERE, "lean", "Paradoxes", "Expressibility.lean")), '\n'))
 
+"""
+    derive_catalog_entries() -> Int
+
+Catalog entries across the nine catalog-bearing Lean modules, counted FROM THE
+TREE by counting the tuples of each `def catalog : List (String × String)`.
+
+ROUND 19, and it is a correction to §4 below. §4 said this tally was
+"derivable only by running `lake exe paradoxes`, too slow for this check, so
+it stays a remembered number and I am saying so", and classified it
+`toolchain` in the reversal-cost ladder. That was WRONG, and nothing but my
+own assumption made it so: the entries are tuples in committed source, and
+counting them takes milliseconds with no Lean at all. The number was
+`in_tree` the whole time. §5's finding — "5 in_tree, 0 toolchain, 0
+unreachable, I pinned every cheap number and none of the costly ones" — used
+this very number as its example of the costly class, so the ladder's middle
+rung was mis-measured by the file that published it.
+
+ERRATUM, kept visible. The first draft of this counter required an entry to
+begin its own line (no bracket allowed before it) and returned 87, so the
+pin fired: document
+91, tree 87. The fix is NOT a fudge toward the document's number — in four of
+the nine modules the `[` opening the list sits on its own line and the first
+entry shares it, and a tuple that shares the bracket's line is
+still a tuple. The rule now allows that prefix and is scoped to the block, so
+every module is counted the same way: 11+9+9+8+10+9+14+10+11 = 91, which
+agrees with `lean/README.md` and with two independent hand counts. Recorded
+because "my parser disagreed and then I adjusted my parser" is the shape of
+fitting a derivation to its answer, and the only thing separating this from
+that is that the correction is structural and checkable — so it is stated
+rather than left for someone to wonder about.
+"""
+function derive_catalog_entries()
+    dir = joinpath(HERE, "lean", "Paradoxes")
+    isdir(dir) || return 0
+    n = 0
+    for f in readdir(dir)
+        endswith(f, ".lean") || continue
+        inblk = false
+        for line in split(slurp(joinpath(dir, f)), '\n')
+            if occursin(r"^\s*def catalog", line)
+                inblk = true
+            elseif inblk && occursin(r"^\s*\]\s*$", line)
+                inblk = false
+            elseif inblk && occursin(r"^\s*\[?\s*\(\"", line)
+                n += 1
+            end
+        end
+    end
+    return n
+end
+
 """Error-pinned `#guard_msgs` blocks: the docstring immediately above pins an `error:`."""
 function derive_guard_errors()
     lines = split(slurp(joinpath(HERE, "lean", "Paradoxes", "Expressibility.lean")), '\n')
@@ -101,6 +152,7 @@ end
 # ─── the registry (a cut, and named as one) ───────────────────────────
 const README   = joinpath(HERE, "README.md")
 const CAPTURED = joinpath(HERE, "lean", "RejectionCapture.lean")
+const LEANREADME = joinpath(HERE, "lean", "README.md")
 
 pins = [
  (name="renderings",   doc=README,   re=r"the liar \((\w+) renderings\)",
@@ -121,6 +173,11 @@ pins = [
 
  (name="guard_errors", doc=CAPTURED, re=r"(\d+) of them refusals",
   derive=derive_guard_errors, stress=() -> derive_guard_errors() + 1,
+  open=false, owner="mine", reversal=:in_tree),
+
+ # Round 19: the number §4 said could not be pinned from inside the tree.
+ (name="catalog_entries", doc=LEANREADME, re=r"\*\*(\d+) entries",
+  derive=derive_catalog_entries, stress=() -> derive_catalog_entries() + 1,
   open=false, owner="mine", reversal=:in_tree),
 ]
 
@@ -209,9 +266,12 @@ section("§4 · what this registry does not pin")
 println("""
   Pinned: $(length(pins)) numbers. NOT pinned, and each is a
   decision-bearing line somewhere in this repo:
-      · the Lean catalog tally (91 / 50 THEOREM / 3 IDENTITY) — derivable
-        only by running `lake exe paradoxes`, too slow for this check, so
-        it stays a remembered number and I am saying so;
+      · the catalog's STATUS BREAKDOWN (50 THEOREM / 3 IDENTITY / 15
+        VERIFIED / 4 DEMO / 3 GUARDED / 16 NOTE) — still toolchain-class.
+        A naive in-tree parse of the leading status token disagrees with
+        that split, and `lake exe paradoxes` is the authority, so the
+        breakdown stays unpinned and the disagreement stays OPEN rather
+        than being settled by my own parser;
       · every prose count in TENSIONS.md's fifteen rounds;
       · every number in a PR comment, which is where three of my four
         recorded errors actually landed.
@@ -257,19 +317,33 @@ println("""
   load-bearing rather than optional. The metric that matters is not how
   many there were but what each cost to reverse:
     · in_tree     — a script re-derives it (the "14 guard_msgs" error)
-    · toolchain   — needs an external build (the Lean catalog tally)
+    · toolchain   — needs an external build (the catalog's STATUS
+                    BREAKDOWN, 50/3/15/4/3/16, whose authority is
+                    `lake exe paradoxes`)
     · unreachable — outside the tree entirely (numbers in PR comments,
                     where three of my four recorded errors landed)
   Cheap forgettings are the price of making a next move at all. Only the
   unreachable ones are debt.
 
-  And the count above indicts the registry: 5 in_tree, 0 toolchain, 0
-  unreachable. I pinned every number that was easy to pin and none that
-  was not — the Lean tally sits in `toolchain` unpinned, and the PR-comment
-  numbers sit in `unreachable` where three of my four errors actually
-  landed. A cut that covers only its own cheap cases and reports itself
-  green is the exact shape being warned about, so it is printed as a
-  finding against this file rather than as a score for it.""")
+  ROUND 19 CORRECTION, and it is against this section. The example that
+  used to sit in `toolchain` was "the Lean catalog tally (91)", and the
+  §4 above said it was derivable only by running `lake exe paradoxes`.
+  That was false. The entries are tuples in committed source; counting
+  them needs no Lean and takes milliseconds, and `catalog_entries` now
+  pins it. So the rung was not merely empty — it was mis-measured, and
+  the number used to illustrate the costly class was in fact the cheap
+  class all along. What genuinely remains toolchain-class is the finer
+  STATUS BREAKDOWN, where a naive in-tree parse and the recorded split
+  disagree and the build is the authority.
+
+  The count still indicts the registry, now more precisely: $(length(pins))
+  in_tree, 0 toolchain, 0 unreachable. Every pin is cheap — but one of
+  them only looks cheap because I finally checked, which means the
+  partition was reporting my ASSUMPTIONS about cost rather than cost. A
+  cut that covers only its own cheap cases and reports itself green is
+  the shape being warned about; a cut that misclassifies which cases are
+  cheap cannot even tell you that much, so this prints as a finding
+  against this file rather than a score for it.""")
 
 section("verdict")
 println("""
