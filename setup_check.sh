@@ -16,18 +16,22 @@
 # instrument.
 #
 # It also supplies the pin class `paradoxes/pin_check.jl` §5 declares empty.
-# That registry pins five numbers, all `in_tree`, and prints the tally as a
-# finding against itself — "5 in_tree, 0 toolchain, 0 unreachable. I pinned
-# every number that was easy to pin and none that was not." The README's
-# toolchain table is a `toolchain`-class number: its derivation is
-# `julia --version`, not a file count, so no in-tree check can reach it. It
-# had drifted. The table said Julia 1.12.6; the script installs whatever
-# conda-forge publishes, which is 1.13.0 today.
+# That registry pins six numbers, every one `in_tree`, and prints the tally as
+# a finding against itself. Round 19 made the point sharper than the original
+# §5 did: the number that had been illustrating the costly `toolchain` class —
+# the Lean catalog tally — was countable from committed source all along, so
+# "the partition was reporting my ASSUMPTIONS about cost rather than cost."
 #
-# P56 is NOT touched. It is a registered claim about THAT registry and it
-# still holds there: every pin in pin_check.jl is in_tree. What changes is
-# that the gap the claim describes is now covered from outside the suite —
-# outside, because a box with Julia and no Lean should still get a green
+# A toolchain version cannot be misclassified that way. Nothing in this tree
+# can tell you which Julia conda-forge served; the binary is the only
+# authority. The README's toolchain row is that kind of number, and it had
+# drifted — the table said Julia 1.12.6 while the script was installing
+# 1.13.0.
+#
+# P56 is NOT touched. It asserts that every pin in THAT registry is in_tree,
+# and after the merge it still is (6 / 0 / 0). What changes is that the gap
+# the claim describes is now covered from outside the suite — outside,
+# because a box with Julia and no Lean should still get a green
 # `run_all.jl`, and a check that needs `lean` cannot promise that.
 #
 # ANATOMY, borrowed unchanged from pin_check.jl:

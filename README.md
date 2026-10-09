@@ -101,12 +101,21 @@ that accepts everything would pass a compile check and prove nothing. Every
 section carries a stress mutation that must break it; §6 prints what is *not*
 covered.
 
-It supplies the pin class `paradoxes/pin_check.jl` §5 counts as zero. That
-registry pins five numbers, all `in_tree`, and prints the tally as a finding
-against itself — *"I pinned every number that was easy to pin and none that was
-not."* A toolchain version is derivable only by running the toolchain, so no
-in-tree check can reach it. P56 is untouched: it is a registered claim about
-that registry and it still holds there.
+It supplies the pin class `paradoxes/pin_check.jl` §5 **still** counts as zero.
+That registry pins six numbers, every one `in_tree`, and prints the tally as a
+finding against itself. Its Round 19 correction sharpens why that matters: the
+number it had been using to illustrate the costly `toolchain` class — the Lean
+catalog tally — turned out to be countable from committed source all along, so
+*"the partition was reporting my ASSUMPTIONS about cost rather than cost."*
+
+A toolchain version cannot be misclassified that way. No parse of this tree can
+tell you which Julia conda-forge served; the only authority is the binary. §3 is
+the first pin whose derived side is the **environment** rather than the tree, and
+it was already a minor version stale with nothing in the repo able to notice.
+
+P56 is untouched. It asserts that every pin in *that* registry is `in_tree`, and
+after merging the default branch it still is — 6 in_tree / 0 toolchain / 0
+unreachable, suite exit 0.
 
 ## Why the setup is unusual
 
