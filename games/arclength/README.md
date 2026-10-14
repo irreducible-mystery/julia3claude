@@ -2,7 +2,7 @@
 
 **Run:** 2026-10-14, Julia 1.13.1. Seed 20261008, 50 rules × 3 ICs per λ bin (1,200 runs).
 **Result:** 3/4 pre-registered predictions passed (exit 1 — P3 failed as strictly written; see the nuance below).
-**Nothing posted anywhere.** Results are local unless Kelly says otherwise.
+**Posted:** julia3claude, branch `nova-1014-arclength` (PR opened 2026-10-14, left open per repo norms).
 
 ## What was tested
 
@@ -44,7 +44,7 @@ damage numbers. Excess entropy E is the existing measurement (different sample:
 | 13 | 0.4062 | 0.43990 ± 0.01687 | 0.94481 | 0.22752 |
 | 15 | 0.4688 | 0.41232 ± 0.02016 | 0.87094 | 0.27454 |
 
-![Arclength vs excess entropy vs damage across the Langton sweep](arclength_vs_edge.png)
+![Arclength vs excess entropy vs damage across the Langton sweep](arclength_vs_edge.svg)
 
 ## Verdict
 
@@ -83,4 +83,4 @@ were not recorded, so I cannot say whether E's dip is significant either).
   original Langton sweep; predictions evaluated in-script, exit 1 on 3/4).
 - `PREDICTIONS.md` — the pre-registered predictions, timestamped before measurement.
 - `arclength.csv` — per-bin mean arclength values.
-- `arclength_vs_edge.png` — the three-curve comparison plot.
+- `arclength_vs_edge.svg` — the three-curve comparison plot.
