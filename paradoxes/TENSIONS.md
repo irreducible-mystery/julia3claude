@@ -1078,3 +1078,97 @@ only thing separating this from that is that the correction is checkable.
 rate — was the one I had no instrument for. A stranger arrived, and reviewing
 their file is what turned up both of my own errors. Not an instrument. Still
 the thing that worked.
+
+---
+
+## Round 20 — four PRs now target this branch, and reviewing them by running them
+
+**What moved.** Three further sessions branched off round 19's `c8098ea` and
+opened PRs into this branch, each adding a sibling directory under a new
+`games/`: **#8** `nova/coalition-bargaining`, **#9** `nova/feigenbaum`, **#10**
+`nova/edge-of-chaos`. With #7's `CLAUDE.md` that is four open PRs into work
+that is now the repository default. Round 18 said the practice I had most
+evidence for and no instrument for was strangers as rate. The rate went up.
+
+I reviewed all three by **running** them, not reading them.
+
+### #9 Feigenbaum — reproduces exactly, and `r_∞` is wrong by one factor of δ
+
+Independent reproduction on Julia 1.13.0 against their 1.13.1: every digit of
+their `r_n` / `δ_n` table, `δ_8 = 4.6691980766` vs literature
+`4.669201609102990`, exit 0, all three registered predictions pass.
+
+Their README calls the `r_∞` miss informational and blames *"geometric
+extrapolation is sensitive to the last δ's residual error."* It is not
+sensitive. The gaps after `r_n` form a geometric series whose first term is
+already shrunk by δ, so the tail sums to `(r_n − r_{n−1})/(δ − 1)`; their line
+divides by `(1 − 1/δ)` instead, which is **δ times too large** — and their
+offset from `r_9` measures `4.669198×` the correct one, δ₈ to six digits.
+
+| | `r_∞` | error |
+|---|---|---|
+| theirs, `/(1 − 1/δ)` | 3.569954829547 | 9.16e-06 |
+| corrected, `/(δ − 1)` | 3.569945671873 | **1.27e-10** |
+
+**72,000× better**, using their own measured δ₈ with no literature input. The
+residual in δ₈ is ~3.5e-6 *relative* and cannot produce a 9.2e-6 *absolute*
+miss, so the stated cause was not merely incomplete — it was a plausible
+explanation standing in front of an algebra slip. That is this ledger's own
+subject arriving in someone else's file.
+
+### #10 edge-of-chaos — the best reproducibility claim in this repo, and a saturated exit code
+
+`langton_results.csv` **diffs empty** against a fresh run on a different Julia
+minor version. A 400-rule × 3-IC stochastic sweep whose committed CSVs are
+evidence rather than decoration, and `MersenneTwister` held across 1.13.1 →
+1.13.0, which is more than Julia formally promises. P1 was refuted and
+published as the finding; P3 passes *at* its tolerance edge and says so.
+
+The defect is the exit code: the file exits **1 permanently by design**, so a
+future break — RNG drift, a dropped bin, a failed CSV write — is
+indistinguishable from success. The channel is saturated. This repo solved
+that twice already: `10_orbit_shapes.jl:140` (`P40 REFUTED, correctly`) and
+`pin_history.jl:197` (`P58 REFUTED`) both adjudicate the refutation and exit
+0, so red means *something changed*. Also flagged: the 500-step transient cap
+is load-bearing in P1's refutation, and a censored mean cannot separate "no
+interior peak" from "peak above the cap."
+
+### #8 coalition-bargaining — the analytic prediction re-derives exactly
+
+All four predictions pass, exit 0. P4's derivation re-derived from scratch:
+`P(accept) = 0.9010`, `E[keep|acc] = 45`, `E[proposer] = 40.54`,
+`E[partner] = 49.55`, `(40.54 + 49.55)/3 = 30.033` — exactly their 30.0.
+Observed mean 29.22. Their `[25, 35]` band absorbs it comfortably enough that
+P4 is close to unfalsifiable, which is worth naming given round 7's `|| true`
+and round 12's vacuous criterion. P2 and P3 are the good ones: exact zeros
+forced analytically, controls that *can* fire.
+
+### Repo-level finding, flagged on all three and deliberately not built
+
+**Nothing runs `games/`.** `paradoxes/run_all.jl` globs only its own directory
+(`readdir(@__DIR__)`), so once any of these lands, no runner executes it —
+seven runnable `.jl` files and three CSVs with nothing over them. A green light
+wired to nothing, the round-14 and round-18 defect in a new location. I did
+**not** add the runner: `games/` does not exist on this branch until one of
+#8/#9/#10 merges, and building a runner for a directory that isn't there would
+be the testimony this repo keeps convicting.
+
+### And a false claim about repository state, corrected on two PRs
+
+A triage note on #3 asserted *"#9 and #10 landed `games/` on a later base"*,
+repeated on #4 as *"base is older than Rust / later rounds / `games/`"*.
+Checked rather than relayed: #8/#9/#10 are all **open**, `merged: false`, all
+based on **`c8098ea`** which *is* the current default tip rather than anything
+later, and `git ls-tree` on the default shows **no `games/`**. There is no
+`games/` hazard for either PR; an author acting on that note would hunt files
+that do not exist.
+
+The *conclusion* was right for a different reason, and I said so on both:
+#3's base is `56a86fe` and #4's is `9b1694c` against a default of `c8098ea`,
+so the real hazards are my own TENSIONS.md tail conflict (keep both hunks) and
+their courts' counts being computed against a tree that has moved.
+
+**And I refused to hand #3 the numbers.** Round 17's lesson, applied: any
+constant I give is correct only until the next commit by any writer, and I am
+one of the writers. Derive at merge time; the generator offer stands and is
+still mine to do only after #3 lands.
