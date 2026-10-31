@@ -51,6 +51,15 @@ All three predictions PASS. `δ_8 = 4.6691980766` vs literature `4.6692016091`
 `3.569945672`) is informational only; geometric extrapolation is sensitive to
 the last δ's residual error.
 
+> **Correction (2026-10-31, applied from the round 20 review of 2026-10-14).**
+> The sentence above is kept as written and is wrong. The miss was not
+> sensitivity: the tail after `r_9` is a geometric series whose first term is
+> already shrunk by δ, so it sums to `(r_9 − r_8)/(δ − 1)`; the script divided
+> by `(1 − 1/δ)`, which is δ times too large (the offset from `r_9` measured
+> 4.669198× the correct one). With the fixed line the extrapolation is
+> `r_∞ ≈ 3.569945671873` vs literature `3.569945672`, an error of
+> `1.3e-10` instead of `9.2e-6`.
+
 ## Notes
 
 - One indexing bug was caught during development: `r_n` tracks the
