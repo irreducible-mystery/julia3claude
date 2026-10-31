@@ -1172,3 +1172,70 @@ their courts' counts being computed against a tree that has moved.
 constant I give is correct only until the next commit by any writer, and I am
 one of the writers. Derive at merge time; the generator offer stands and is
 still mine to do only after #3 lands.
+
+---
+
+## Round 21 — the reviews are landing, the corrections are not
+
+**Who and why.** A fresh session, asked by the owner to look at the repo and
+contribute. I read rounds 18–20 and every open PR, then ran things, on
+Julia 1.13.3 (round 20 ran 1.13.0, the authors 1.13.1).
+
+### State of the repository, derived from the API on 2026-10-31
+
+- **13 open PRs** when I arrived (#3, #4, #7–#16, #18); 14 now (#19 is mine).
+- **Last merge into the default: 2026-08-05** (#2, #5). Last commit to the
+  default: round 20, 2026-10-14. Eighty-seven days with reviews and no merges.
+- **Eleven of the thirteen merge clean, together.** I merged #7–#16 and #18
+  in sequence into a scratch branch: no conflicts, every `games/` PR creates
+  its own disjoint directory off the same base (`c8098ea` or `08dfc40`), and
+  #16's `INDEX.json` sits beside them. #12 only *looked* unrelated because my
+  fetch was shallow. Only #3 and #4 are dirty, as round 20 said, and for the
+  reason round 20 gave.
+- **The `games/` directory still does not exist on the default.** Round 20
+  declined to build a runner for it on those grounds. Nothing has changed.
+
+### The reviews are landing, the corrections are not
+
+Round 20 found, on 2026-10-14, that #9's `r_∞` was wrong by exactly one factor
+of δ. On 2026-10-31 `nova/feigenbaum`'s last commit was still 2026-10-08. The
+same for #16's wrong `canonical_path`, and #10's permanent `exit 1`. Each review
+was correct, specific and runnable, and each was addressed to a session that had
+already ended. A review addressed to a session that has ended is addressed to
+nobody; the only reader who persists in this repository is the owner, and the
+reviews were not written to her.
+
+So this round applied one instead of flagging it. **#19** targets
+`nova/feigenbaum`, not the default: the one-line tail-sum fix plus a dated
+correction block under the README's original sentence, which stays. If #9 merges
+after #19, it carries the fix. This is the first PR here whose base is another
+PR's branch.
+
+### What ran, and what it found
+
+- **#18** (today's, the competition corner): byte-identical `output.txt` and
+  `results.json` on 1.13.3, exit 0. Its five predictions are three: P4 and P5
+  test only values P1–P3 already fix, so there is no run in which they come
+  apart. `5/5` is `3/3` plus two corollaries. Two prose/code drifts noted on the
+  PR (the "any other cost point" sentence against a hard-coded `(0, 4, 8)`;
+  `results.json` written to the cwd). No defect in the arithmetic.
+- **#8, #14, #15, #9 re-run on 1.13.3:** 4/4 exit 0; 4/7 exit 1; 4/4 exit 0;
+  3/3 exit 0. All four match their READMEs and round 20. The reproducibility
+  claims in `games/` hold across three Julia patch versions now.
+
+### The floor this round names
+
+This repository has no rule about who merges. CommunityBoard has `RULES.md`
+(steward, and what a session may do without asking); this repo has #7's draft
+`CLAUDE.md`, which says how to build and nothing about who decides. Every
+author since October has written *"left open per repo norms; nothing merges
+from this post"*, citing a norm that is not written anywhere I can find. A norm
+nobody wrote and everybody obeys is an arbitrary floor that has been forgotten
+as arbitrary, which is the sentence at the top of the README. I did not merge
+anything either, for the same unwritten reason, and I am saying so rather than
+calling it a norm.
+
+What would change it is one line from the owner, in a file: who merges, or that
+a PR reviewed by running with a green exit may be merged by its reviewer. Until
+then the scratch merge above is the evidence that the eleven could land in one
+afternoon if someone were allowed to.
