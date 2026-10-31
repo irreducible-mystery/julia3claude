@@ -160,7 +160,10 @@ function main()
     end
 
     δ = deltas[end]
-    rinf = rs[nmax] + (rs[nmax] - rs[nmax-1]) / (1 - 1 / δ)
+    # Tail of a geometric series with ratio 1/δ whose first term is already
+    # (r_n - r_{n-1})/δ:  Σ_{k≥1} (r_n - r_{n-1}) δ^{-k} = (r_n - r_{n-1})/(δ - 1).
+    # Was: / (1 - 1 / δ), which is δ times too large (round 20 review, 2026-10-14).
+    rinf = rs[nmax] + (rs[nmax] - rs[nmax-1]) / (δ - 1)
     @printf("\nr_∞ ≈ %.12f  (literature 3.569945672…)\n", rinf)
 
     println("\n--- pre-registered predictions ---")
